@@ -1,0 +1,236 @@
+@import "../styles/global.scss";
+
+@mixin border-bottom-color($beforeColor, $hoverColor) {
+  &:before {
+    border-bottom: 1px solid $beforeColor;
+  }
+
+  &:hover {
+    &:before {
+      border-bottom: 1px solid $hoverColor;
+    }
+  }
+}
+
+@mixin style-box-field($height) {
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  min-height: $height;
+}
+
+@mixin border-color($color, $height) {
+  &:hover {
+    & .NotchedOutline {
+      border: $height solid $color;
+    }
+  }
+
+  & .NotchedOutline {
+    border: $height solid $color;
+  }
+}
+
+.InputField {
+  color: $black_100;
+  font-size: 14px;
+  caret-color: $primary_orange;
+
+  &:hover {
+    & .LabelRoot {
+      color: $dark_blue_text;
+    }
+    & .LabelFocused {
+      color: $primary_orange;
+    }
+    & .LabelDisabled {
+      color: $black_40;
+    }
+    & .LabelError {
+      color: $dark_red;
+    }
+  }
+
+  & .LabelRoot {
+    font-weight: 300;
+    color: $black_60;
+  }
+  & .LabelFocused {
+    color: $primary_orange;
+  }
+  & .LabelError {
+    color: $dark_red;
+    &.LabelFocused {
+      color: $dark_red !important;
+    }
+  }
+
+  & .LabelDisabled {
+    color: $black_40;
+  }
+
+  & svg {
+    width: 22px;
+    height: 22px;
+    color: $black_40;
+    & + input {
+      margin-left: 9px;
+    }
+  }
+
+  & input {
+    &::placeholder {
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 20px;
+      letter-spacing: 0.25px;
+      color: $black_40;
+      opacity: 1;
+    }
+  }
+
+  & p.HelperTextRoot {
+    color: $black_60;
+    margin-top: 4px;
+  }
+
+  & p.HelperTextError {
+    color: $dark_red;
+    margin-top: 4px;
+  }
+
+  & .InputBaseDisabled {
+    svg {
+      color: $black_20;
+    }
+  }
+}
+
+.LineInputField {
+  & .LabelRoot {
+    transform: translate(0, 1.5px);
+  }
+
+  & input {
+    padding: 0;
+    font-size: 14px;
+  }
+
+  & .InputBaseRoot {
+    @include border-bottom-color($black_20, $dark_blue_text);
+    height: 2.75rem;
+    width: 100%;
+
+    &:after {
+      border-bottom: 2px solid $primary_orange;
+    }
+  }
+
+  & .InputBaseError {
+    &:after {
+      border-bottom: 2px solid $dark_red;
+    }
+  }
+
+  & .InputBaseDisabled {
+    @include border-bottom-color($black_20, $black_20);
+
+    & input {
+      -webkit-text-fill-color: $black_20;
+    }
+  }
+}
+
+.ContainerInputField {
+  & input {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  & svg + input {
+    padding: 0.5rem 1rem 0.5rem 0;
+  }
+
+  & .LabelRoot {
+    transform: translate(0, -22px);
+  }
+
+  & .NotchedOutline {
+    top: 0;
+    border-color: $black_40;
+    border-radius: 3rem;
+
+    legend {
+      display: none;
+    }
+  }
+
+  & p.HelperTextRoot {
+    margin: 0.25rem 0 0 0;
+  }
+
+  & .InputBaseRoot {
+    &:hover {
+      & .NotchedOutline {
+        border-color: $dark_blue_text;
+      }
+    }
+
+    &.InputBaseError {
+      @include border-color($dark_red, 1px);
+    }
+
+    &.InputBaseFocused {
+      @include border-color($primary_orange, 1.5px);
+
+      &.InputBaseError {
+        @include border-color($dark_red, 1.5px);
+      }
+    }
+
+    &.InputBaseDisabled {
+      background-color: $black_10;
+      @include border-color($black_10, 1px);
+
+      & input {
+        -webkit-text-fill-color: $black_40;
+      }
+    }
+  }
+}
+
+.TextareaField {
+  caret-color: $primary;
+
+  & svg {
+    height: 22px !important;
+
+    & + textarea {
+      margin-left: 9px;
+    }
+  }
+
+  & .InputBaseRoot {
+    padding: 2px 2px 2px 16px;
+
+    & textarea {
+      color: $black_100;
+      font-size: 14px;
+      resize: both;
+      padding: 0.5rem 1rem 0.5rem 0;
+    }
+  }
+
+  & .InputBaseDisabled {
+    & textarea {
+      resize: none;
+    }
+  }
+}
+
+.ContainerBox {
+  @include style-box-field(4rem);
+}
+
+.LineBox {
+  @include style-box-field(3.75rem);
+}
