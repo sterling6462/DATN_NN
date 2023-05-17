@@ -1,0 +1,19 @@
+@import '../styles/global.scss';
+
+.TextField {
+  width: 100%;
+}
+
+.Autocomplete {
+  & .Input {
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+  }
+}
+.ListBoxDropdown {
+  max-height: 12rem;
+}
+
+.CheckBox {
+  color: $black_80;
+}
