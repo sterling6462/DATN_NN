@@ -1,0 +1,58 @@
+@import 'components/styles/global.scss';
+
+.main {
+  width: 100%;
+
+  .title {
+    position: relative;
+    width: max-content;
+    color: $light_green;
+    margin: 1rem 0 2rem 0;
+    z-index: 2;
+
+    &::after {
+      position: absolute;
+      content: '';
+      // background: $default_orange;
+      height: 5px;
+      width: 120px;
+      right: 0;
+      bottom: 5px;
+      z-index: -1;
+    }
+  }
+
+  .secContent {
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}
+
+// MEDIA QUERIES
+
+@media screen and (min-width: 500px) {
+  .title {
+    font-size: 1.5rem;
+    &::after {
+      width: 155px !important;
+    }
+  }
+
+  .secContent {
+    grid-template-columns: repeat(2, 1fr);
+
+    .singleDestination {
+      height: auto;
+    }
+  }
+}
+
+@media screen and (min-width: 840px) {
+  .secContent {
+    grid-template-columns: repeat(3, 1fr);
+
+    .singleDestination {
+      height: auto;
+    }
+  }
+}

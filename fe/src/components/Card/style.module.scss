@@ -1,0 +1,267 @@
+@import '../styles/global.scss';
+
+@mixin text-color($textColor) {
+  color: $textColor;
+}
+
+@mixin card-container(
+  $padding,
+  $height,
+  $width,
+  $backgroundColor,
+  $marginBottomIcon,
+  $cardIconColor
+) {
+  cursor: pointer;
+  padding: $padding;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: $height;
+  width: $width;
+  border-radius: 1rem;
+  border: none;
+  box-shadow: none;
+  background-color: $backgroundColor;
+  .CardIcon {
+    height: 2rem;
+    width: 2rem;
+    margin-bottom: $marginBottomIcon;
+    color: $cardIconColor;
+  }
+}
+
+//CardHomePage
+
+.singleDestination {
+  height: 100%;
+  display: grid;
+  row-gap: 10px;
+  padding: 1rem;
+  border-radius: 10px;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(140, 140, 140, 0.549);
+  overflow: hidden;
+
+  &:hover {
+    background: $cardHover;
+    box-shadow: 1 4px 4px rgba(85, 85, 114, 0.549);
+    transition: 0.3 ease;
+  }
+
+  .imageDiv {
+    height: 180px;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: 2s ease;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .cardInfo {
+    padding: 1rem;
+    .destTitle {
+      @include text-color($dark_green);
+      font-size: 1.25rem;
+    }
+    .continent {
+      gap: 0.5rem;
+      margin: 0.3rem 0;
+
+      .icon {
+        @include text-color($text_primary);
+        font-size: 18px;
+      }
+      .name {
+        @include text-color($text_primary);
+        font-weight: 400;
+        font-size: 14px;
+      }
+    }
+
+    .fees {
+      width: 100%;
+      justify-content: space-between;
+      padding: 1rem 0;
+      margin: 1rem 0;
+      border-top: 1.5px solid $text_grey;
+      border-bottom: 1.5px solid $text_grey;
+
+      .roomAvailable {
+        max-width: 200px;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        small {
+          text-align: center;
+          background: $light_green;
+          border-radius: 1rem;
+          @include text-color($white);
+          padding: 1px 10px;
+          font-size: 10px;
+        }
+      }
+      .price {
+        // font-size: 1rem;
+        @include text-color($primary_orange);
+      }
+    }
+
+    .desc {
+      @include text-color($text_primary);
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    .detailButton {
+      margin-top: 1rem;
+      width: 7rem;
+      background-color: $light_green;
+    }
+  }
+}
+
+//CardHeader
+.CardHeader {
+  padding: 3rem 1rem 1rem 2rem;
+  .LeftCard {
+    padding: 0;
+    // padding-right: 2rem;
+    .CardContainer {
+      background-color: $pale_light_blue;
+
+      @include card-container(
+        0.5rem,
+        6rem,
+        100%,
+        $pale_light_blue,
+        0,
+        $default_orange
+      );
+
+      .HostInfo {
+        padding: 0 0.8rem;
+        .CardTitle {
+          @include text-color($pale_dark_blue);
+        }
+      }
+    }
+  }
+
+  .CenterCard {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0;
+    .CardContainer {
+      @include card-container(
+        0.5rem,
+        6rem,
+        6rem,
+        $background_orange,
+        0.5rem,
+        $default_orange
+      );
+      .CardTitle {
+        @include text-color($dark_green);
+        font-weight: 600;
+      }
+    }
+    .CardContainer:hover {
+      background-color: $default_orange;
+      .CardIcon {
+        @include text-color($dark_green);
+      }
+      .CardTitle {
+        @include text-color($white);
+      }
+    }
+  }
+  .RightCard {
+    display: grid;
+    padding: 0;
+    align-items: center;
+    justify-content: space-around;
+    .IconAddButton {
+      @include text-color($dark_green);
+      background-color: $default_orange;
+    }
+  }
+}
+
+.CardBill {
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  .LeftCard {
+    .CardContainer {
+      min-width: 10rem;
+      .GridContainer {
+        display: flex;
+        align-items: center;
+      }
+      @include card-container(
+        1rem,
+        100%,
+        100%,
+        $background_orange,
+        0.5rem,
+        $default_orange
+      );
+      .CardInfo {
+        padding-left: 1rem;
+        & .TextBill {
+          @include text-color($light_green);
+          font-weight: 600;
+        }
+
+        & .PriceInfo {
+          display: flex;
+          flex-direction: row;
+          & .Price {
+            @include text-color($dark_red);
+            font-size: 18px;
+          }
+        }
+      }
+
+      .CardIcon {
+        margin-bottom: 0 !important;
+      }
+    }
+
+    .CardContainer:hover {
+      background-color: $default_orange;
+      .CardIcon {
+        @include text-color($dark_green);
+      }
+      .TextBill {
+        @include text-color($white);
+      }
+    }
+  }
+
+  .RightCard {
+    display: grid;
+    padding: 0;
+    align-items: center;
+    justify-content: space-around;
+    .IconAddButton {
+      @include text-color($dark_green);
+      background-color: $default_orange;
+    }
+  }
+}
