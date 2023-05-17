@@ -1,1 +1,10 @@
-@import "../styles/global.scss";
+@import '../styles/global.scss';
+
+.SideMenu {
+  flex-shrink: 0;
+  .Paper {
+    top: 76px;
+    background: $background_pale_blue;
+    box-sizing: border-box;
+  }
+}

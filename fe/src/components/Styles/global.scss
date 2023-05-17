@@ -1,22 +1,5 @@
-@import "color";
-@import "typography";
-
-body {
-  overflow: hidden;
-}
-::-webkit-scrollbar {
-  width: 8px;
-  height: 2px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+@import 'color';
+@import 'typography';
 
 //style
 a {
@@ -51,24 +34,6 @@ li {
   align-items: center;
 }
 
-.btn {
-  padding: 0.6rem 1.5rem;
-  background: var(--gradientColor);
-  border-radius: 3rem;
-  outline: none;
-  border: none;
-  cursor: pointer;
-}
-
-.btn a {
-  color: var(--whiteColor);
-  font-weight: 500;
-}
-
-.btn:hover {
-  background: var(--SecondaryColor);
-}
-
 img,
 video {
   width: 100%;
@@ -80,5 +45,5 @@ input {
 }
 
 body {
-  background: var(--bodyColor);
+  background: $background_pale_blue;
 }
