@@ -1,0 +1,175 @@
+@import 'components/styles/global.scss';
+
+.container {
+  position: relative;
+  width: 100%;
+  background-color: $background_pale_blue;
+  min-height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    // transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    transition: 1s 0.7s ease-in-out;
+    justify-content: center;
+
+    .registerForm {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 3rem 5rem;
+      transition: all 0.2s 0.7s;
+
+      .formInput {
+        width: 70%;
+        min-width: 20rem;
+      }
+      .title {
+        color: $light_green;
+        font-weight: bold;
+        font-family: $FontFamily;
+        margin-bottom: 4rem;
+      }
+      & .Input {
+        width: 100%;
+        label {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 1rem;
+        }
+      }
+    }
+  }
+  .panelContainer {
+    // position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: grid;
+
+    .rightPanel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      text-align: center;
+      z-index: 6;
+      pointer-events: all;
+      padding: 3rem 5% 2rem 17%;
+      align-content: flex-end;
+
+      .content {
+        color: $white;
+        transition: transform 0.9s ease-in-out;
+        transition-delay: 0.6s;
+        .text {
+          font-family: $FontFamily !important;
+          padding: 0.5rem 0;
+        }
+      }
+      .imageLottie {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+    }
+  }
+}
+
+.container:before {
+  content: '';
+  position: absolute;
+  height: 2000px;
+  width: 2000px;
+  top: -10%;
+  background-color: $light_green;
+  transition: 1.8s ease-in-out;
+  border-radius: 50%;
+  z-index: 6;
+  transform: translate(100%, -50%);
+  right: 52%;
+}
+
+.button {
+  width: 150px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin: 10px 0;
+  transition: 0.5s;
+}
+
+@media (max-width: 870px) {
+  .container {
+    min-height: 800px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container:before {
+    width: 1500px;
+    height: 1500px;
+    bottom: 28%;
+    left: 50%;
+    transform: translate(-50%, 100%) !important;
+    transition: 2s ease-in-out;
+  }
+
+  .panelContainer {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    .rightPanel {
+      grid-row: 3/4;
+      .content {
+        position: absolute;
+        transform: translateY(0px);
+        padding-right: 15%;
+      }
+    }
+  }
+
+  .imageLottie {
+    width: 200px;
+    transition: transform 0.9s ease-in-out;
+    transition-delay: 0.6s;
+  }
+
+  .container:before {
+    width: 1500px;
+    height: 1500px;
+    transform: translate(-50%, 100%) !important;
+    left: 30%;
+    bottom: 15%;
+    right: initial;
+    top: initial;
+    transition: 2s ease-in-out;
+  }
+}
+
+@media (max-width: 570px) {
+  form {
+    padding: 0 1.5rem;
+  }
+
+  .image {
+    display: none;
+  }
+  .content {
+    padding: 0.5rem 1rem;
+  }
+  .container {
+    padding: 1.5rem;
+  }
+
+  .container:before {
+    bottom: 72%;
+    left: 50%;
+  }
+}
