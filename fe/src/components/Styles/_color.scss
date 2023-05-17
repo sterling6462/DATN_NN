@@ -1,18 +1,83 @@
-$PrimaryColor: hsl(199, 100%, 33%);
-$SecondaryColor: hsl(187, 85%, 43%);
+//primary
+$primary: #468cf2;
+$primary_dark: #0761f7;
+$primary_light: #6a9ff7;
 
 $gradientColor: linear-gradient(
   to right,
   hsl(187, 85%, 43%),
   hsl(199, 100%, 33%)
 );
-$whiteColor: hsl(0, 0%, 100%);
-$blackColor: hsl(201, 33%, 16%);
-$textColor: hsl(240, 4%, 36%);
-$whiteColorDeam: hsl(0, 0%, 93%);
-$greyText: rgb(190, 190, 190);
-$inputColor: rgb(239, 239, 239);
-$bodyColor: rgb(240, 240, 246);
-$cardBG: rgb(225, 225, 235);
+
+//text
+$text_primary: #58585f;
+$text_grey: rgb(190, 190, 190);
 
 $backgroundOverlay: rgb(47, 106, 127);
+
+// blue
+$dark_blue: #098edf;
+$light_blue: #34aff9;
+$background_blue: #ecf8fe;
+$btnShadowColor: 0px 4px 10px rgba(16, 156, 241, 0.24);
+
+//pale_blue
+$pale_dark_blue: #1c4a90;
+$pale_light_blue: #ccdcf6;
+$background_pale_blue: #f5f3ee;
+
+// yellow
+$dark_yellow: #e8a840;
+$default_yellow: #ffb846;
+$background_yellow: #fff7ed;
+
+// orange
+$primary_orange: #fc6719;
+$light_orange: #fe803c;
+$dark_orange: #e85305;
+$default_orange: #ffb130;
+$background_orange: #fbebd6;
+
+// red
+$dark_red: #de5d52;
+$default_red: #f7685b;
+$background_red: #ffeded;
+
+// green
+$dark_green: #083b36;
+$light_green: #1c4f4a;
+$default_green: #9eb1ac;
+$background_green: #dfe3de;
+
+$chip_dark_green: #14a683;
+$chip_default_green: #28d1a9;
+$chip_background_green: #c7f2e8;
+
+// purple
+$purple: #885af8;
+
+// gradient 1
+$gradient_1: linear-gradient(90deg, #3667b2 0%, #30c0d1 100.04%);
+
+// gradient 2
+$gradient_2: linear-gradient(90deg, #1f4075 0.01%, #0083ae 100.06%);
+
+// black
+$black_100: #192a3e;
+$black_80: #323c47;
+$black_60: #707683;
+$black_40: #90a0b7;
+$black_20: #c2cfe0;
+$black_10: #e3edfa;
+$inputColorDark: #333;
+$blackColor: hsl(201, 33%, 16%);
+
+// white
+$white: #ffffff;
+$body_color: rgb(240, 240, 246);
+$cardBG: rgb(225, 225, 235);
+$cardHover: rgb(255, 255, 255);
+$inputColor: rgb(239, 239, 239);
+
+// dark blue text
+$dark_blue_text: #334d6e;

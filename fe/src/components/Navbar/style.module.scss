@@ -1,96 +1,152 @@
-@import "../styles/global.scss";
+@import '../styles/global.scss';
 
-.header {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: $whiteColorDeam;
-  width: 100%;
-  padding: 1rem;
+.navBarSection {
+  position: sticky;
+  top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(2, 15, 29, 0.242);
-
-  .logo {
-    color: $blackColor;
-    font-weight: 600;
-    cursor: pointer;
+  .header {
+    display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    background: $background_pale_blue;
+    width: 100%;
+    padding: 1rem;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(2, 15, 29, 0.242);
 
-    .icon {
-      font-size: 25px;
-      color: $PrimaryColor;
-      transform: translateY(5px);
+    .LogoContainer {
+      .LogoTitle {
+        color: $light_green;
+        font-weight: 600;
+      }
+      .Icon {
+        font-size: 30px;
+        color: $primary_orange;
+        transform: translateY(5px);
+        margin-right: 10px;
+      }
     }
-  }
 
-  @media screen and (max-width: 768px) {
-    .navBar {
-      position: absolute;
-      background: $whiteColorDeam;
-      height: max-content;
-      width: 80%;
-      border-radius: 1rem;
-      top: -500rem;
-      left: 50%;
-      padding: 1rem;
-      transform: translate(-50%);
-      z-index: 2000;
-      box-shadow: 0 2px 4px rgba(2, 15, 29, 0.904);
-      transition: 0.5s ease-in-out;
+    @media screen and (max-width: 768px) {
+      .navBar {
+        position: absolute;
+        background: $background_pale_blue;
+        height: max-content;
+        width: 80%;
+        border-radius: 1rem;
+        top: -500rem;
+        left: 50%;
+        padding: 1rem;
+        transform: translate(-50%);
+        z-index: 2000;
+        box-shadow: 0 2px 4px rgba(2, 15, 29, 0.904);
+        transition: 0.5s ease-in-out;
 
-      .navLists {
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        margin: auto;
-        padding: 0.5rem 0;
-
-        .navItem {
+        .navLists {
+          flex-direction: column;
+          justify-content: center;
+          width: 100%;
+          margin: auto;
           padding: 0.5rem 0;
 
-          .navLink {
-            color: $textColor;
-            font-size: 0.9rem;
-            font-weight: 600;
-            &:hover {
-              color: $PrimaryColor;
+          .navItem {
+            padding: 0.5rem 0;
+
+            .navLink {
+              color: $light_green;
+              font-size: 1rem;
+              font-weight: 600;
+              &:hover {
+                color: $dark_orange;
+              }
             }
           }
         }
-
-        .btn {
-          margin-top: 1rem;
-          a {
-            font-weight: 600;
-            color: $whiteColor;
+        .closeNavbar {
+          position: absolute;
+          top: 1rem;
+          right: 1.5rem;
+          color: $light_green;
+          &:hover {
+            color: $default_orange;
           }
         }
       }
-      .closeNavbar {
-        position: absolute;
-        top: 1rem;
-        right: 1.5rem;
-        color: $PrimaryColor;
-        &:hover {
-          color: $SecondaryColor;
-        }
+
+      .activeNavbar {
+        top: 7rem;
       }
     }
 
-    .activeNavbar {
-      top: 7rem;
+    .toggleNavbar {
+      .icon {
+        font-size: 25px;
+        color: $primary_orange;
+      }
+      &:hover.icon {
+        color: $dark_orange;
+      }
     }
   }
+}
 
-  .toggleNavbar {
-    .icon {
-      font-size: 25px;
-      color: $PrimaryColor;
+.loginButton {
+  width: 7rem;
+  margin: 0 2rem;
+  text-transform: none;
+}
+
+.TextUsername {
+  color: $primary_orange;
+}
+
+// MEDIA QUERIES
+
+@media screen and (min-width: 769px) {
+  .toggleNavbar,
+  .closeNavbar {
+    display: none;
+  }
+  .header {
+    padding: 1.5rem 2rem;
+
+    .navBar {
+      .navLists {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        .navItem {
+          .navLink {
+            color: $light_green;
+            padding: 0 0.45rem;
+            font-size: 1rem;
+            font-weight: 600;
+
+            &:hover {
+              color: $dark_orange;
+            }
+          }
+        }
+      }
     }
-    &:hover.icon {
-      color: $SecondaryColor;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .header {
+    .navBar {
+      .navLists {
+        .navItem {
+          padding: 0 0.7rem;
+        }
+      }
     }
+  }
+}
+
+@media screen and (min-width: 1240px) {
+  .header {
+    padding: 1rem 8.5rem;
   }
 }

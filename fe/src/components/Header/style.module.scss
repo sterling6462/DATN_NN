@@ -1,1 +1,14 @@
-@import "../Styles/global.scss";
+@import '../styles/global.scss';
+
+.HostInfo {
+  display: flex;
+  align-items: center;
+  & .Icon {
+    width: 2rem;
+    height: 2rem;
+    color: $default_orange;
+  }
+  & .Title {
+    color: $pale_dark_blue;
+  }
+}

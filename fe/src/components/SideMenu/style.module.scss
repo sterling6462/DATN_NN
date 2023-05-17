@@ -1,0 +1,149 @@
+@import '../styles/global.scss';
+
+@mixin text-style($fontW, $fontS, $lineH, $letterS) {
+  font-weight: $fontW;
+  font-size: $fontS !important;
+  line-height: $lineH;
+  letter-spacing: $letterS;
+}
+
+@mixin flex($alignItem, $justifyContent: false) {
+  display: flex;
+
+  @if $justifyContent {
+    justify-content: $justifyContent;
+  }
+
+  align-items: $alignItem;
+}
+
+@mixin setSizeBox($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin hoverItem($color) {
+  cursor: pointer;
+  span {
+    color: $color !important;
+  }
+  svg {
+    fill: $color !important;
+  }
+}
+
+.SideMenu {
+  & .list {
+    width: 100%;
+    max-width: 360;
+    padding: 8px;
+    text-decoration: none;
+
+    & .link {
+      @include flex(center, center);
+      @include setSizeBox(100%, 100%);
+      text-decoration: none;
+      color: $black_100;
+    }
+
+    & .ListText {
+      text-align: center;
+      padding-top: 3px;
+      padding-left: 15px;
+      color: $light_green;
+
+      & span {
+        @include text-style(400, 14px, 20px, 0.1px);
+        text-align: start;
+      }
+    }
+
+    & .ListItemIcon {
+      min-width: 25px;
+      padding-left: 1rem;
+
+      svg {
+        width: 21px;
+        fill: $light_green;
+      }
+    }
+
+    & .active {
+      color: $dark_orange !important;
+      background-color: $background_orange;
+      border-radius: 0.5rem;
+
+      .ListText {
+        color: $dark_orange !important;
+      }
+
+      svg {
+        fill: $dark_orange !important;
+      }
+    }
+
+    & .MenuItem {
+      padding: 0;
+      height: 50px;
+
+      &:hover {
+        @include hoverItem($dark_orange)
+      }
+
+
+    }
+
+    & .linkSub {
+      @include flex(center);
+      text-decoration: none;
+      @include setSizeBox(100%, 100%);
+      padding-left: 2rem;
+
+      & .listItemButton {
+        color: $light_green;
+
+        span {
+          @include text-style(400, 14px, 20px, 0.25px);
+        }
+      }
+
+      & .iconData {
+        @include flex(center);
+        @include setSizeBox(10px, 10px);
+        margin-right: 8px;
+
+        svg {
+          @include setSizeBox(10px, 10px);
+          color: $dark_orange;
+        }
+      }
+    }
+
+    & .ListItemSub {
+      @include flex(center);
+      padding: 0;
+      height: 50px;
+
+      &:hover {
+        @include hoverItem($dark_orange)
+      }
+    }
+
+    & .ListIcon {
+      @include flex(center);
+      margin-right: 16px;
+
+      & svg {
+        fill: $light_green;
+      }
+    }
+
+    & .subActive {
+      color: $dark_orange !important;
+
+      svg {
+        fill: $dark_orange !important;
+      }
+    }
+  }
+}

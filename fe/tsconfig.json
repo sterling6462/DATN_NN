@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2019",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,7 +14,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./src"
+    // "paths": {
+    //   "*": ["src/*", "node_modules/*"],
+    //   "assets/*": ["assets/*"],
+    //   "constants/*": ["constants/*"],
+    //   "components/*": ["components/*"]
+    //   "pages/*": ["src/pages/*"]
+    // }
   },
-  "include": ["src", "typings.d.ts"]
+  "compileOnSave": true,
+  "include": ["src/**/*", "typings.d.ts"]
 }
