@@ -1,0 +1,73 @@
+@import '../styles/global.scss';
+
+@mixin flex() {
+  display: flex;
+  align-items: flex-start;
+}
+
+@mixin text-style($textWeight, $textColor: $black_80, $textSize: 14px) {
+  color: $textColor;
+  font-size: $textSize;
+  font-weight: $textWeight;
+}
+
+.DialogRoot {
+  & form {
+    width: 100%;
+  }
+  & .PaperRoot {
+    border-radius: 0.5rem;
+    height: max-content;
+    width: 35rem;
+  }
+
+  & .DialogTitleContent {
+    color: $black_100;
+    padding: 14px 1rem;
+    border-bottom: 1px solid $black_10;
+  }
+
+  & .DialogContentRoot {
+    @include flex();
+    padding: 1rem;
+    flex-direction: column;
+
+    & .DialogContentText {
+      font-weight: 300;
+      color: $black_100;
+    }
+  }
+
+  & .DialogActionsRoot {
+    padding: 1rem;
+    gap: 1rem;
+
+    & .TextButton {
+      text-transform: none !important;
+      background-color: $default_orange;
+      color: $dark_green;
+      font-weight: 500;
+
+      &.TextCancel {
+        color: $black_40 !important;
+        background-color: $white;
+      }
+    }
+  }
+}
+
+.ButtonAdd {
+  display: flex;
+  justify-content: flex-end;
+  & .Text {
+    text-transform: none !important;
+    background-color: $default_orange;
+    color: $dark_green;
+    font-weight: 500;
+  }
+}
+
+.PopupAdd {
+  padding-top: 1.5rem !important;
+  padding-bottom: 0 !important;
+}

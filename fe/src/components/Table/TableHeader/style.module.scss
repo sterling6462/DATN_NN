@@ -1,0 +1,13 @@
+@import '../../styles/global.scss';
+
+.TableHeader {
+  padding: 1rem;
+  padding-bottom: 0;
+  justify-content: space-between;
+  .TitleTable {
+    color: $default_orange;
+  }
+  .DescTitle {
+    color: $black_100;
+  }
+}
