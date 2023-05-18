@@ -1,27 +1,41 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Collection, Connection } from 'mongoose';
+import { compareHash, hashValue } from '../../utils';
 import { BaseLogger } from '../../core/logger';
+import { ClientRequestDto } from './dto';
 
 @Injectable()
-export class AuthService extends BaseLogger{
-
-      // private readonly userCollection: Collection;
-  constructor(@InjectConnection() private connection: Connection, private jwtService: JwtService) {
+export class AuthService extends BaseLogger {
+  private readonly userCollection: Collection;
+  constructor(
+    @InjectConnection() private connection: Connection,
+    private jwtService: JwtService,
+  ) {
     super(AuthService.name);
-    // this.userCollection = this.connection.collection('users');
+    this.userCollection = this.connection.collection('users');
   }
 
   async signIn(username: string, pass: string): Promise<any> {
-    const user ={userId:"1",username: "bao",password:"123"} 
-    // await this.userCollection.findOne(a=>a.username===username);
-    if (user?.password !== pass) {
+    const user = await this.userCollection.findOne({ username: username });
+
+    if (!compareHash(pass, user?.password)) {
       throw new UnauthorizedException();
     }
     const payload = { username: user.username, sub: user.userId };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+
+  async register(data: ClientRequestDto): Promise<any> {
+    const user = await this.userCollection.findOne({ username: data.username });
+    if(user) throw new BadRequestException({message:"Username is invalid"})
+    const newClient = await this.userCollection.insertOne({
+      ...data,
+      password: hashValue(data.password, 10),
+    });
+    return newClient;
   }
 }

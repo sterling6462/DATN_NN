@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './gaurd/auth.gaurd';
+import { RoomModule } from './modules/room/room.module';
 
 const config = ConfigService.getInstance();
 @Module({
@@ -16,6 +17,7 @@ const config = ConfigService.getInstance();
     UserModule,
     DataModule,
     AuthModule,
+    RoomModule,
   ],
   providers: [
     {

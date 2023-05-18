@@ -1,20 +1,33 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { MainValidationPipe } from '../../pipes';
 import { Public } from '../../core/decorator';
 import { AuthService } from './auth.service';
+import { ClientRequestDto, LoginRequestDto } from './dto';
 
+@Public()
 @Controller('auth')
+@UsePipes(new MainValidationPipe())
 export class AuthController {
-    constructor(private  readonly _service: AuthService){
-    }
-    @HttpCode(HttpStatus.OK)
-    @Public()
-    @Post('login')
-    signIn(@Body() signInDto: Record<string, any>) {
-      return this._service.signIn(signInDto.username, signInDto.password);
-    }
-    
-    @Get('a')
-    ab(){
-        return "ok" 
-    }
+  constructor(private readonly _service: AuthService) {}
+  // @Public()
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  signIn(@Body() signInDto: LoginRequestDto) {
+    return this._service.signIn(signInDto.username, signInDto.password);
+  }
+
+  // @Public()
+  @Post('register')
+  register(@Body() signInDto: ClientRequestDto) {
+    return this._service.register(signInDto);
+  }
 }
