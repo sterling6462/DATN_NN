@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export function isNullOrUndefined(value?: unknown): boolean {
   return value === undefined || value === null
 }
@@ -32,4 +34,19 @@ export const getCookie = (cname: string) => {
     }
   }
   return ''
+}
+
+export const dateFormat = (date: string) => {
+  return dayjs(date).format('DD/MM/YYYY')
+}
+
+export const dateTimeFormat = (date: string) => {
+  return dayjs(date).format('HH:mm:ss DD/MM/YYYY')
+}
+
+export const currencyFormat = (number: number) => {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  }).format(number)
 }
