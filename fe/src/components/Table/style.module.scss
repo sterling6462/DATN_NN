@@ -1,0 +1,8 @@
+@import '../styles/global.scss';
+
+.TableView {
+  margin: 1rem;
+  border-radius: 1rem;
+  background-color: $background_green;
+  overflow-x: auto;
+}
