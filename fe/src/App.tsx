@@ -1,10 +1,23 @@
 import { SnackbarProvider } from 'notistack'
-import Home from 'pages/home'
+import Bill from 'pages/host/Bill'
+import { RoomDetail } from 'pages/host/Room/RoomDetail'
+import RoomList from 'pages/host/Room/RoomList'
+import Service from 'pages/host/Service'
+import Settings from 'pages/host/Setting'
+import Tenant from 'pages/host/Tenant'
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { ThemeProvider, getCookie, useAuthStore } from './components'
+
+import {
+  NotificationProvider,
+  ThemeProvider,
+  getCookie,
+  useAuthStore
+} from 'components'
+import Dashboard from 'pages/dashboard'
 import { PATH } from './constants/Paths'
+import Home from './pages/home'
 import Login from './pages/login'
 import Register from './pages/register'
 
@@ -34,6 +47,7 @@ function App() {
         <BrowserRouter>
           {isLogged ? <AuthorizedRoutes /> : <UnAuthorizedRoutes />}
         </BrowserRouter>
+        <NotificationProvider />
       </SnackbarProvider>
     </ThemeProvider>
   )
@@ -45,6 +59,16 @@ function AuthorizedRoutes() {
       <Route path={PATH.HOME} element={<Home />} />
       <Route path={PATH.LOGIN} element={<Login />} />
       <Route path={PATH.REGISTER} element={<Register />} />
+
+      <Route path={PATH.DASHBOARD} element={<Dashboard />} />
+
+      <Route path={PATH.HOST.ROOM_LIST} element={<RoomList />} />
+      <Route path={PATH.HOST.ROOM_DETAIL} element={<RoomDetail />} />
+      <Route path={PATH.HOST.BILL} element={<Bill />} />
+      <Route path={PATH.HOST.SERVICE} element={<Service />} />
+      <Route path={PATH.HOST.TENANT} element={<Tenant />} />
+
+      <Route path={PATH.SETTINGS} element={<Settings />} />
     </Routes>
   )
 }
