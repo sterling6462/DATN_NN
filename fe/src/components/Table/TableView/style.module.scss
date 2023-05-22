@@ -66,4 +66,7 @@
 
 .ButtonDelete {
   @include setColor($black_40);
+  :hover {
+    @include setColor($default_orange);
+  }
 }

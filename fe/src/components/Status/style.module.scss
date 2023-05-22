@@ -1,0 +1,29 @@
+@import '../styles/global.scss';
+
+@mixin color {
+  color: $white;
+}
+
+.Active {
+  background-color: $chip_default_green;
+  @include color;
+}
+
+.Pending {
+  background-color: $default_yellow;
+  @include color;
+}
+
+.Off {
+  background-color: $default_red;
+  @include color;
+}
+
+.Error {
+  background-color: #fd0101;
+  @include color;
+}
+
+.notchedOutline {
+  border: none;
+}

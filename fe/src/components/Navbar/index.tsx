@@ -1,8 +1,10 @@
 import { Grid, Link, Typography } from '@mui/material'
 import clsx from 'clsx'
 import {
+  NavbarItemProps,
   NavbarProps,
   PrimaryButton,
+  capitalizedStr,
   removeCookie,
   useAuthStore
 } from 'components'
@@ -15,14 +17,8 @@ import styles from './style.module.scss'
 
 const dataHeader = [
   {
-    title: 'Home',
-    href: '/',
-    classNameLi: styles.navItem,
-    classNameLink: styles.navLink
-  },
-  {
     title: 'Management',
-    href: PATH.HOST.HOUSE_LIST,
+    href: PATH.HOST.ROOM_LIST,
     classNameLi: styles.navItem,
     classNameLink: styles.navLink
   },
@@ -31,24 +27,27 @@ const dataHeader = [
     href: '/#',
     classNameLi: styles.navItem,
     classNameLink: styles.navLink
-  },
-  {
-    title: 'Settings',
-    href: '/#',
-    classNameLi: styles.navItem,
-    classNameLink: styles.navLink
-  },
-  {
-    title: 'About',
-    href: '/#',
-    classNameLi: styles.navItem,
-    classNameLink: styles.navLink
   }
 ]
+
+const NavbarItem = (props: NavbarItemProps) => {
+  const { classNameLi, classNameLink, href, title } = props
+
+  return (
+    <li className={classNameLi}>
+      <a href={href} className={classNameLink}>
+        {title}
+      </a>
+    </li>
+  )
+}
 
 export const Navbar = (props: NavbarProps) => {
   const [active, setActive] = useState(styles.navBar)
   const { auth } = useAuthStore()
+
+  //TODO: replace role after login
+  const { role = 'host', post } = props
 
   //Functions to toggle navbar
   const showNav = () => {
@@ -80,17 +79,22 @@ export const Navbar = (props: NavbarProps) => {
         </div>
         <div className={active}>
           <ul className={clsx(styles.navLists, styles.flex)}>
-            {props.post &&
+            <NavbarItem
+              title="Home"
+              href="/"
+              classNameLi={styles.navItem}
+              classNameLink={styles.navLink}
+            />
+            {role === 'host' &&
               dataHeader.map((item) => {
-                return (
-                  <li className={item.classNameLi}>
-                    <a href={item.href} className={item.classNameLink}>
-                      {item.title}
-                    </a>
-                  </li>
-                )
+                return <NavbarItem {...item} />
               })}
-
+            <NavbarItem
+              title="About"
+              href="/"
+              classNameLi={styles.navItem}
+              classNameLink={styles.navLink}
+            />
             {auth?.username ? (
               <>
                 <Grid
@@ -104,7 +108,9 @@ export const Navbar = (props: NavbarProps) => {
                     {auth.username}
                   </Typography>
                   {/* TODO: add role name */}
-                  <Typography className={styles.Button}>Host</Typography>
+                  <Typography className={styles.Button}>
+                    {capitalizedStr(role)}
+                  </Typography>
                 </Grid>
                 <PrimaryButton className={styles.loginButton} onClick={logOut}>
                   Log out

@@ -47,6 +47,15 @@ export type PopupAlertProps = Partial<DialogProps> &
     entity?: Entity
   }
 
+export type PopupEditProps<T extends FieldValues = FieldValues> =
+  Partial<DialogProps> &
+    Partial<PopupBaseProps> & {
+      icon?: ReactNode
+      entity?: Entity
+      detail?: boolean
+      inputPopupEdit: Array<Control<T>>
+    }
+
 export type PopupAddProps<T extends FieldValues = FieldValues> =
   Partial<DialogProps> &
     Partial<PopupBaseProps> & {
@@ -281,4 +290,88 @@ export function PopupAlert(props: PopupAlertProps) {
     )
   }
   return <></>
+}
+
+export function PopupEdit(props: PopupEditProps) {
+  const {
+    popupClasses,
+    icon,
+    baseURLPopup = '',
+    id = '',
+    entity,
+    inputPopupEdit,
+    children,
+    ...rest
+  } = props
+  const onQuery = useListViewStore((store) => store.onQuery)
+  const { dispatchNotification } = useNotificationStore()
+  const formRef = useRef<UseFormProvider>(null)
+
+  const [open, setOpen] = useState(false)
+  const [isError, setError] = useState(false)
+
+  const onSubmitClick = () => {
+    !isError && formRef.current?.handleSubmit(onSubmit)()
+  }
+
+  const onSubmit = (params: Record<string, unknown>) => {
+    invokeRequest({
+      baseURL: baseURLPopup,
+      method: HttpMethod.PATCH,
+      params,
+      onSuccess() {
+        setOpen(false)
+        onQuery(id, { page: 1, size: 10 })
+        dispatchNotification(
+          'success',
+          <>
+            Edit successfully <strong>{entity?.label}</strong>
+          </>
+        )
+      },
+
+      onHandleError(e) {
+        if (typeof e.message == 'string') {
+          setOpen(false)
+          dispatchNotification(
+            'error',
+            <>
+              Cann't edit <strong>{entity?.label}</strong>
+            </>
+          )
+        } else
+          e.message?.map((m: { field: string; message: string }) => {
+            formRef.current?.setError(m.field, {
+              type: 'custom',
+              message: m.message
+            })
+          })
+      }
+    })
+  }
+
+  return (
+    <>
+      <IconButton onClick={() => setOpen(true)} className={popupClasses?.icon}>
+        {icon}
+      </IconButton>
+
+      <div onClick={() => setOpen(true)}>{children}</div>
+      <PopupBase
+        {...rest}
+        className={clsx(styles.DialogRoot, popupClasses?.popup)}
+        title="Notification"
+        open={open}
+        onClick={onSubmitClick}
+        onClose={() => setOpen(false)}
+      >
+        <FormProvider
+          handleErrors={(error) => setError(!!error)}
+          ref={formRef}
+          inputs={inputPopupEdit}
+          mode="onTouched"
+        />
+      </PopupBase>
+    </>
+  )
 }

@@ -1,0 +1,13 @@
+@import '../styles/global.scss';
+
+.Rating {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  .Icon {
+    color: $default_yellow;
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+}

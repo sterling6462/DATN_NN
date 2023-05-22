@@ -1,0 +1,80 @@
+@import '../styles/global.scss';
+
+@mixin before($bgColor) {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: $bgColor;
+}
+
+@mixin text-style($fontWeight, $spacing) {
+  font-size: 12px;
+  letter-spacing: $spacing;
+  font-family: $FontFamily;
+  font-weight: $fontWeight;
+}
+
+@mixin color-Alert-content($bgColor) {
+  background-color: $bgColor;
+
+  & .AlertMessage,
+  .AlertIcon {
+    color: #fff;
+    z-index: 2;
+  }
+}
+
+.AlertBase {
+  border-radius: 6px;
+  position: relative;
+  align-items: center;
+  .AlertContentLabel {
+    margin-bottom: 0;
+    margin-top: 2px;
+  }
+  & .AlertMessage {
+    @include text-style(500, 0.12px);
+  }
+
+  & .AlertIcon,
+  .AlertAction {
+    & svg {
+      width: 20px;
+      color: #fff;
+    }
+  }
+
+  .AlertAction {
+    margin-bottom: 4px;
+  }
+
+  &.AlertBaseLabel {
+    & .AlertLabel {
+      @include text-style(500, 0.12px);
+    }
+
+    & .AlertMessage {
+      @include text-style(400, 0.1px);
+    }
+  }
+
+  &.AlertInfoRoot {
+    @include color-Alert-content($dark_blue);
+  }
+
+  &.AlertSuccessRoot {
+    @include color-Alert-content($chip_dark_green);
+  }
+
+  &.AlertWarningRoot {
+    @include color-Alert-content($dark_yellow);
+  }
+
+  &.AlertErrorRoot {
+    @include color-Alert-content($dark_red);
+  }
+}
