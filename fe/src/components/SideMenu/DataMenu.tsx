@@ -1,4 +1,5 @@
 import {
+  AdminPanelSettingsRounded,
   CellWifiRounded,
   Dashboard,
   Face2Rounded,
@@ -8,23 +9,19 @@ import {
   SettingsRounded
 } from '@mui/icons-material'
 import { BsFillDoorOpenFill } from 'react-icons/bs'
+import { FaUserCog } from 'react-icons/fa'
 
 export const menus = [
   {
     icon: <Dashboard />,
-    title: 'Home',
-    path: '/'
+    title: 'Dashboard',
+    path: '/dashboard'
   },
   {
     icon: <Face2Rounded />,
     title: 'Host ',
     path: '/host',
     children: [
-      {
-        icon: <HouseRounded />,
-        title: 'My house',
-        path: '/host/my-house'
-      },
       {
         icon: <BsFillDoorOpenFill />,
         title: 'Room list',
@@ -47,7 +44,28 @@ export const menus = [
       }
     ]
   },
-
+  {
+    icon: <AdminPanelSettingsRounded />,
+    title: 'Admin ',
+    path: '/admin',
+    children: [
+      {
+        icon: <HouseRounded />,
+        title: 'My houses',
+        path: '/admin/house-list'
+      },
+      {
+        icon: <GroupsRounded />,
+        title: 'Host list',
+        path: '/admin/host-list'
+      },
+      {
+        icon: <FaUserCog />,
+        title: 'Role',
+        path: '/admin/role'
+      }
+    ]
+  },
   {
     icon: <SettingsRounded />,
     title: 'Settings',

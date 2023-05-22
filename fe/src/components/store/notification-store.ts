@@ -11,7 +11,6 @@ interface Notification {
   notification?: {
     type?: AlertColor
     label?: React.ReactNode
-    description?: string
     key?: string
   }
   dispatchNotification: DispatchNotification
@@ -25,7 +24,7 @@ export const useNotificationStore = create<Notification>((set) => {
       description?: string
     ) => {
       set({
-        notification: { type, label, description, key: new Date().toString() }
+        notification: { type, label, key: new Date().toString() }
       })
     }
   }

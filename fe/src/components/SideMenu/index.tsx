@@ -1,4 +1,4 @@
-import { ArrowDropDownRounded, ArrowDropUpRounded } from '@mui/icons-material'
+import { ArrowDropDownRounded } from '@mui/icons-material'
 import {
   Box,
   Collapse,
@@ -40,7 +40,7 @@ export const SideMenu = () => {
                       styles.link,
                       path.includes(item.path) && styles.active
                     )}
-                    to={item.path}
+                    to=""
                   >
                     <ListItemIcon
                       className={clsx(
@@ -64,11 +64,7 @@ export const SideMenu = () => {
                         path.includes(item.title.toLowerCase()) && styles.active
                       )}
                     >
-                      {item.title.toLowerCase() === selected.toLowerCase() ? (
-                        <ArrowDropUpRounded />
-                      ) : (
-                        <ArrowDropDownRounded />
-                      )}
+                      <ArrowDropDownRounded />
                     </Box>
                   </NavLink>
                 </ListItem>

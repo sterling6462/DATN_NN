@@ -18,9 +18,17 @@ type LayoutProps = {
   children?: ReactNode
 }
 
+export type NavbarItemProps = {
+  classNameLi?: string
+  classNameLink?: string
+  href?: string
+  title?: string
+}
+
 export type NavbarProps = {
   post?: boolean
   username?: boolean
+  role?: string
 }
 
 const theme = createTheme({ typography: { fontFamily: 'Poppins' } })

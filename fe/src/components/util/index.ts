@@ -50,3 +50,7 @@ export const currencyFormat = (number: number) => {
     currency: 'VND'
   }).format(number)
 }
+
+export const capitalizedStr = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}

@@ -15,15 +15,13 @@ const DataBillExample = [
     textBill: 'Electricity price',
     icon: <ElectricBolt className={styles.CardIcon} />,
     measure: 'KWh',
-    price: 18000,
-    descBill: 'Electricity price'
+    price: 18000
   },
   {
     textBill: 'Water price',
     icon: <WaterDamageRounded className={styles.CardIcon} />,
     measure: 'm3',
-    price: 20000,
-    descBill: 'Water price'
+    price: 20000
   },
   {
     textBill: 'Wifi price',
@@ -72,8 +70,6 @@ export const CardBillItem = (props: CardBillItemProps) => {
 }
 
 export const CardBill = (props: CardBillProps) => {
-  const { DataBillItem } = props
-
   return (
     <Grid container spacing={2} className={styles.CardBill}>
       {DataBillExample.map((item, index) => (
