@@ -1,4 +1,4 @@
-@import 'components/styles/global.scss';
+@import '../../components/Styles/global.scss';
 
 .main {
   width: 100%;
@@ -22,7 +22,8 @@
     }
   }
 
-  .secContent {
+  .ListContent {
+    display: grid;
     justify-content: center;
     gap: 1.5rem;
   }
@@ -38,7 +39,7 @@
     }
   }
 
-  .secContent {
+  .ListContent {
     grid-template-columns: repeat(2, 1fr);
 
     .singleDestination {
@@ -48,7 +49,7 @@
 }
 
 @media screen and (min-width: 840px) {
-  .secContent {
+  .ListContent {
     grid-template-columns: repeat(3, 1fr);
 
     .singleDestination {

@@ -99,10 +99,6 @@ export default function Login() {
     formRef.current?.handleSubmit(onLogin)()
   }
 
-  const showNoti = () => {
-    dispatchNotification('error', 'Username or Password is incorrectly')
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.panelContainer}>
@@ -144,7 +140,6 @@ export default function Login() {
           >
             Login
           </PrimaryButton>
-          <PrimaryButton onClick={showNoti}>show noti</PrimaryButton>
         </Box>
       </div>
     </div>
