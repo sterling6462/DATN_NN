@@ -1,6 +1,9 @@
 import { Card } from '@mui/material'
+import clsx from 'clsx'
 import { Data, PopupAddProps, TableHeader, useListViewStore } from 'components'
 import { useAPI } from 'hook'
+import { ReactNode } from 'react'
+import { CardView } from './CardView'
 import { TableView } from './TableView'
 import { TableHeaderProps, Type } from './decorator'
 import styles from './style.module.scss'
@@ -15,8 +18,14 @@ type Props<T> = {
   model?: Type<T>
   id: string
   baseURL?: string
-  tableViewClasses?: { tableHeader?: string }
+  listViewClasses?: {
+    listContainer?: string
+    listHeader?: string
+    listContent?: string
+  }
   dataSample?: Data
+  cardTemplate?: (args: Record<string, unknown>) => ReactNode
+  pagination?: boolean
 }
 
 export const ListView = <T extends object>(
@@ -24,7 +33,14 @@ export const ListView = <T extends object>(
 ) => {
   const onLoading = useListViewStore((store) => store.onLoading)
   const onData = useListViewStore((store) => store.onData)
-  const { model, id, baseURL = '', tableViewClasses } = props
+  const {
+    model,
+    id,
+    baseURL = '',
+    listViewClasses,
+    pagination,
+    cardTemplate
+  } = props
 
   const onShowLoading = () => onLoading(id)
 
@@ -37,9 +53,21 @@ export const ListView = <T extends object>(
   })
 
   return (
-    <Card className={styles.TableView}>
-      <TableHeader {...props} className={tableViewClasses?.tableHeader} />
-      {model && <TableView {...props} id={id} model={model} />}
-    </Card>
+    <>
+      {model && (
+        <Card className={clsx(styles.TableView, styles?.listContainer)}>
+          <TableHeader {...props} className={listViewClasses?.listHeader} />
+          <TableView {...props} id={id} model={model} />
+        </Card>
+      )}
+      {cardTemplate && (
+        <CardView
+          {...props}
+          id={id}
+          pagination={pagination}
+          className={listViewClasses?.listContent}
+        />
+      )}
+    </>
   )
 }
