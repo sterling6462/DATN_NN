@@ -1,0 +1,36 @@
+@import '../../styles/global.scss';
+
+@mixin text-color($textColor) {
+  color: $textColor;
+}
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .RoomInfo {
+    @include text-color($primary_orange);
+    font-weight: $Bold;
+    padding: 1rem;
+  }
+  .CardContainer {
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: $pale_light_blue;
+    width: 100%;
+    box-shadow: none;
+
+    .CardInfo {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      .Label {
+        @include text-color($pale_dark_blue);
+        font-weight: $Medium;
+      }
+      .Value {
+        @include text-color($pale_dark_blue);
+      }
+    }
+  }
+}
