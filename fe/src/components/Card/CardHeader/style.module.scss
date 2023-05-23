@@ -1,0 +1,100 @@
+@import '../../Styles/global.scss';
+
+@mixin text-color($textColor) {
+  color: $textColor;
+}
+
+@mixin card-container(
+  $padding,
+  $height,
+  $width,
+  $backgroundColor,
+  $marginBottomIcon,
+  $cardIconColor
+) {
+  cursor: pointer;
+  padding: $padding;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: $height;
+  width: $width;
+  border-radius: 1rem;
+  border: none;
+  box-shadow: none;
+  background-color: $backgroundColor;
+  .CardIcon {
+    height: 2rem;
+    width: 2rem;
+    margin-bottom: $marginBottomIcon;
+    color: $cardIconColor;
+  }
+}
+
+.CardHeader {
+  padding: 3rem 1rem 1rem 2rem;
+  .LeftCard {
+    padding: 0;
+    // padding-right: 2rem;
+    .CardContainer {
+      background-color: $pale_light_blue;
+
+      @include card-container(
+        0.5rem,
+        6rem,
+        100%,
+        $pale_light_blue,
+        0,
+        $default_orange
+      );
+
+      .HostInfo {
+        padding: 0 0.8rem;
+        .CardTitle {
+          @include text-color($pale_dark_blue);
+        }
+      }
+    }
+  }
+
+  .CenterCard {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0;
+    .CardContainer {
+      @include card-container(
+        0.5rem,
+        6rem,
+        6rem,
+        $background_orange,
+        0.5rem,
+        $default_orange
+      );
+      .CardTitle {
+        @include text-color($dark_green);
+        font-weight: 600;
+      }
+    }
+    .CardContainer:hover {
+      background-color: $default_orange;
+      .CardIcon {
+        @include text-color($dark_green);
+      }
+      .CardTitle {
+        @include text-color($white);
+      }
+    }
+  }
+  .RightCard {
+    display: grid;
+    padding: 0;
+    align-items: center;
+    justify-content: space-around;
+    .IconAddButton {
+      @include text-color($dark_green);
+      background-color: $default_orange;
+    }
+  }
+}
