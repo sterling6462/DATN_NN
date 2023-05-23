@@ -113,8 +113,12 @@ class RoomLists {
         {
           name: 'member',
           label: 'Member',
-          type: FormInputEnum.INPUT,
+          type: FormInputEnum.NUMBER,
           required: { value: true, message: 'Member is required' },
+          maxLength: {
+            value: entity.maxMember,
+            message: 'Enter member must be less than Max member'
+          },
           placeholder: 'Enter your member ',
           defaultValue: entity.member
         }
