@@ -90,8 +90,8 @@ export const Navbar = (props: NavbarProps) => {
                 return <NavbarItem {...item} />
               })}
             <NavbarItem
-              title="About"
-              href="/"
+              title="About us"
+              href={PATH.ABOUT}
               classNameLi={styles.navItem}
               classNameLink={styles.navLink}
             />

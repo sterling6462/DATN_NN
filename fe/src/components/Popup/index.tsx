@@ -64,7 +64,7 @@ export type PopupAddProps<T extends FieldValues = FieldValues> =
       textAlertSuccess?: string
       textAlertError?: string
       inputsPopup: Array<Control<T>>
-      data?: Record<string, any>
+      dataPopup?: Record<string, any>
     }
 
 export const PopupBase = (props: PopupBaseProps) => {
