@@ -1,3 +1,5 @@
 export * from './CardBill'
 export * from './CardHeader'
 export * from './CardHome'
+export * from './CardRoomInfo'
+export * from './CardService'
