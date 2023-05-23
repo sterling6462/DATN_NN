@@ -1,25 +1,28 @@
 import { SnackbarProvider } from 'notistack'
+import About from 'pages/about'
+import HostList from 'pages/admin/HostList'
+import HouseList from 'pages/admin/HouseList'
+import Role from 'pages/admin/Role'
+import Dashboard from 'pages/dashboard'
+import Home from 'pages/home'
 import Bill from 'pages/host/Bill'
 import { RoomDetail } from 'pages/host/Room/RoomDetail'
 import RoomList from 'pages/host/Room/RoomList'
 import Service from 'pages/host/Service'
 import Settings from 'pages/host/Setting'
 import Tenant from 'pages/host/Tenant'
+import Login from 'pages/login'
+import Register from 'pages/register'
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-
 import {
   NotificationProvider,
   ThemeProvider,
   getCookie,
   useAuthStore
-} from 'components'
-import Dashboard from 'pages/dashboard'
+} from './components'
 import { PATH } from './constants/Paths'
-import Home from './pages/home'
-import Login from './pages/login'
-import Register from './pages/register'
 
 function App() {
   const [isLogged, setIsLogged] = useState<boolean | undefined>(undefined)
@@ -57,6 +60,8 @@ function AuthorizedRoutes() {
   return (
     <Routes>
       <Route path={PATH.HOME} element={<Home />} />
+      <Route path={PATH.ABOUT} element={<About />} />
+
       <Route path={PATH.LOGIN} element={<Login />} />
       <Route path={PATH.REGISTER} element={<Register />} />
 
@@ -68,6 +73,10 @@ function AuthorizedRoutes() {
       <Route path={PATH.HOST.SERVICE} element={<Service />} />
       <Route path={PATH.HOST.TENANT} element={<Tenant />} />
 
+      <Route path={PATH.ADMIN.HOUSE_LIST} element={<HouseList />} />
+      <Route path={PATH.ADMIN.HOST_LIST} element={<HostList />} />
+      <Route path={PATH.ADMIN.ROLE} element={<Role />} />
+
       <Route path={PATH.SETTINGS} element={<Settings />} />
     </Routes>
   )
@@ -76,7 +85,9 @@ function AuthorizedRoutes() {
 function UnAuthorizedRoutes() {
   return (
     <Routes>
+      <Route path={PATH.ABOUT} element={<About />} />
       <Route path={PATH.HOME} element={<Home />} />
+
       <Route path={PATH.LOGIN} element={<Login />} />
       <Route path={PATH.REGISTER} element={<Register />} />
     </Routes>
