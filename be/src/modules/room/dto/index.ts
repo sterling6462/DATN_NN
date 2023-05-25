@@ -12,7 +12,7 @@ import {
 } from 'class-validator';
 import { ORDER } from '../../../constants';
 import { PaginationDto } from '../../../dto/index';
-import { Date } from 'mongoose';
+import { Date, ObjectId } from 'mongoose';
 import { Transform } from 'class-transformer';
 export class RoomSearchDto extends PaginationDto {
   @IsString()
@@ -37,38 +37,22 @@ export class RoomRequestDto {
 
   @IsString()
   @IsNotEmpty()
-  name: string;
-
-  @IsString()
-  @IsNotEmpty()
   type: string;
 
   @IsNumber()
   @IsNotEmpty()
-  price: number;
+  floor: number;
+
+  @IsString()
+  @IsNotEmpty()
+  houseId: ObjectId;
 
   @IsNumber()
   @IsNotEmpty()
-  maxMember: number;
-
-  @IsNumber()
-  @IsNotEmpty()
-  member: number;
-
-  @IsNumber()
-  @IsNotEmpty()
-  dueDate: number;
+  amountRoom: number;
 
   // @IsNotEmpty()
   // @Transform( ({ value }) => new Date(value))
   // @IsDateString()
   // joinDate: Date;
-
-  @IsBoolean()
-  @IsNotEmpty()
-  status: boolean;
-
-  @IsBoolean()
-  @IsNotEmpty()
-  due: boolean;
 }

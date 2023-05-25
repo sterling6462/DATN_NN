@@ -11,22 +11,36 @@ export class HouseService extends BaseLogger {
   constructor(@InjectConnection() private connection: Connection) {
     super(HouseService.name);
     this.houseCollection = this.connection.collection('house');
-    this.roomCollection = this.connection.collection('room');
+    this.roomCollection = this.connection.collection('rooms');
 
   }
   async getAllHouse(query: any): Promise<any> {
     const { num, name, page = 1, size = 10, id } = query;
     const filter = {};
 
-    const [data, total,roomCount] = await Promise.all([this.houseCollection
-      .find()
-      .sort({ id: 1 })
-      .limit(size)
-      .skip(page - 1).toArray(),
-    this.houseCollection.count(),
-    this.roomCollection.count({ houseId: id })])
-      const house={...data,roomCount}
-    return { house, total };
+    const [data, total] = await Promise.all([this.houseCollection
+      .aggregate([{
+        $lookup:
+        {
+          from: "rooms",
+          localField: "_id",
+          foreignField: "houseId",
+          as: "branch"
+        }
+      }, {
+        $project: {
+          name: 1,
+          location: 1,
+          managerId: 1,
+          roomCount: { $size: "$branch" }
+        }
+      }, { $sort: { id: 1 } }, { $skip: page - 1 }, { $limit: size }]).toArray(),
+    // .sort({ id: 1 })
+    // .limit(size)
+    // .skip(page - 1).toArray(),
+    this.houseCollection.count()
+    ])
+    return { data, total };
   }
 
   async findHouseById(id: ObjectId): Promise<any> {
