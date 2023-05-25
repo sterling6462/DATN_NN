@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './modules/user/user.module';
-import { DataModule } from './modules/data/data.module';
+import { HouseModule } from './modules/house/house.module';
 import { ConfigService } from './config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './modules/auth/auth.module';
@@ -15,7 +15,7 @@ const config = ConfigService.getInstance();
       dbName: config.get('DATABASE_NAME'),
     }),
     UserModule,
-    DataModule,
+    HouseModule,
     AuthModule,
     RoomModule,
   ],

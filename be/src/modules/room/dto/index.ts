@@ -59,10 +59,10 @@ export class RoomRequestDto {
   @IsNotEmpty()
   dueDate: number;
 
-  @IsNotEmpty()
-  @Transform( ({ value }) => new Date(value))
-  @IsDate()
-  joinDate: Date;
+  // @IsNotEmpty()
+  // @Transform( ({ value }) => new Date(value))
+  // @IsDateString()
+  // joinDate: Date;
 
   @IsBoolean()
   @IsNotEmpty()
