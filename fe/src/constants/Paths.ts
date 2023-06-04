@@ -4,18 +4,18 @@ export const PATH = {
   LOGIN: '/login',
   REGISTER: '/register',
   DASHBOARD: '/dashboard',
-  HOST: {
-    ROOM_LIST: '/host/room-list',
-    ROOM_DETAIL: '/host/room-list/detail',
-    BILL: '/host/bill',
-    SERVICE: '/host/service',
-    TENANT: '/host/tenant'
+  MANAGER: {
+    MY_HOUSE: 'manager/my-house',
+    ROOM_LIST: '/manager/room-list',
+    BILL: '/manager/bill',
+    SERVICE: '/manager/service',
+    TENANT: '/manager/tenant',
+    REPORT: '/manager/report'
   },
   ADMIN: {
     HOUSE_LIST: '/admin/house-list',
-    HOST_LIST: '/admin/host-list',
-    ROLE: '/admin/role'
-  },
-  REPORT: '/reports',
-  SETTINGS: '/settings'
+    MANAGER_LIST: '/admin/manager-list',
+    BILL: '/admin/bill',
+    REPORT: '/admin/report'
+  }
 }

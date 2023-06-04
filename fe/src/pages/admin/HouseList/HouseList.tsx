@@ -3,10 +3,13 @@ import {
   Control,
   Entity,
   FormInputEnum,
+  Header,
   Layout,
   ListView,
+  PopupAdd,
   Rating,
   TableActionDelete,
+  TableActionDetail,
   TableActionEdit,
   currencyFormat
 } from 'components'
@@ -33,6 +36,7 @@ class HouseLists {
 
   @Column({
     title: 'Rate',
+    sort: true,
     align: 'center',
     width: '8%',
     render: ({ rate }) => <Rating value={rate} />
@@ -57,6 +61,7 @@ class HouseLists {
 
   @Column({
     title: 'Elect price',
+    sort: true,
     align: 'center',
     width: '10%',
     render: ({ electricityPrice }) => (
@@ -67,6 +72,7 @@ class HouseLists {
 
   @Column({
     title: 'Water price',
+    sort: true,
     align: 'center',
     width: '12%',
     render: ({ waterPrice }) => <span>{currencyFormat(waterPrice)}</span>
@@ -75,6 +81,7 @@ class HouseLists {
 
   @Column({
     title: 'Wifi price',
+    sort: true,
     align: 'center',
     width: '10%',
     render: ({ wifiPrice }) => <span>{currencyFormat(wifiPrice)}</span>
@@ -84,7 +91,7 @@ class HouseLists {
   @Column({
     title: 'Location',
     sort: true,
-    width: '16%'
+    width: '14%'
   })
   location?: string
 
@@ -97,8 +104,8 @@ class HouseLists {
         <TableActionEdit
           id="house_list"
           titlePopup="Edit house"
-          entity={{ label: entity.name }}
-          baseURL={`${LIST_HOUSE}/${entity._id}`}
+          entity={{ labelNoti: entity.name }}
+          baseURL={`${LIST_HOUSE}/${entity.id}`}
           inputPopupEdit={inputs}
         />
       )
@@ -114,13 +121,28 @@ class HouseLists {
       return (
         <TableActionDelete
           id="house_list"
-          entity={{ label: entity.name }}
-          baseURL={`${LIST_HOUSE}/${entity._id}`}
+          entity={{ labelNoti: entity.name }}
+          baseURL={`${LIST_HOUSE}/${entity.id}`}
         />
       )
     }
   })
   delete?: string
+
+  @Column({
+    width: '3%',
+    align: 'center',
+    padding: 'none',
+    render: (entity: Entity) => {
+      return (
+        <TableActionDetail
+          id={entity.id}
+          baseURL={`${LIST_HOUSE}/${entity.id}`}
+        />
+      )
+    }
+  })
+  detail?: string
 }
 
 const inputsPopup = [
@@ -149,9 +171,9 @@ const inputsPopup = [
   },
   {
     name: 'managerId',
-    type: FormInputEnum.INPUT,
-    label: 'Manager name *',
-    placeholder: 'Enter your Manager name'
+    type: FormInputEnum.SELECT,
+    label: 'Manager *',
+    placeholder: 'Select Manager you want'
   },
   {
     name: 'rate',
@@ -189,17 +211,23 @@ const inputsPopup = [
 export default function HouseList() {
   return (
     <Layout>
+      <Header />
       <ListView
-        baseURL={LIST_HOUSE}
         id="house_list"
+        pagination
+        search
+        baseURL={LIST_HOUSE}
         titleTable="Management house list"
         descTitle="All house managed"
-        addButtonTitle="Add house"
-        baseURLPopup={CREATE_HOUSE}
-        inputsPopup={inputsPopup}
-        titlePopup="Add new house"
         model={HouseLists}
-        // dataSample={dataSample}
+        popupButton={
+          <PopupAdd
+            inputsPopup={inputsPopup}
+            textButton="Add house"
+            titlePopup="Add new house"
+            baseURLPopup={CREATE_HOUSE}
+          />
+        }
       />
     </Layout>
   )

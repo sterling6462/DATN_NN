@@ -3,14 +3,15 @@ import {
   Control,
   Entity,
   FormInputEnum,
+  Header,
   Layout,
   ListView,
-  Rating,
+  PopupAdd,
   TableActionDelete,
-  TableActionEdit,
-  currencyFormat
+  TableActionDetail,
+  TableActionEdit
 } from 'components'
-import { CREATE_HOUSE, LIST_HOUSE } from 'constants/ApiConstant'
+import { CREATE_HOUSE, LIST_MANAGER } from 'constants/ApiConstant'
 import { FieldValues } from 'react-hook-form'
 
 // TODO: replace fields by api
@@ -25,71 +26,36 @@ const inputs: Array<Control<FieldValues>> = [
 
 class HostLists {
   @Column({
-    title: 'House name',
+    title: 'Name',
     sort: true,
     width: '15%'
   })
   name?: string
 
   @Column({
-    title: 'Room count',
+    title: 'Username',
+    sort: true,
+    width: '30%'
+  })
+  username?: string
+
+  @Column({
+    title: 'Phone',
     sort: true,
     align: 'center',
     width: '15%'
   })
-  roomCount?: number
-
-  @Column({
-    title: 'Room available',
-    sort: true,
-    align: 'center',
-    width: '10%'
-  })
-  roomAvailable?: number
-
-  @Column({
-    title: 'Elect price',
-    align: 'center',
-    width: '10%',
-    render: ({ electricityPrice }) => (
-      <span>{currencyFormat(electricityPrice)}</span>
-    )
-  })
-  electricityPrice?: number
-
-  @Column({
-    title: 'Water price',
-    align: 'center',
-    width: '12%',
-    render: ({ waterPrice }) => <span>{currencyFormat(waterPrice)}</span>
-  })
-  waterPrice?: number
-
-  @Column({
-    title: 'Wifi price',
-    align: 'center',
-    width: '8%',
-    render: ({ wifiPrice }) => <span>{currencyFormat(wifiPrice)}</span>
-  })
-  wifiPrice?: number
-
-  @Column({
-    title: 'Rate',
-    align: 'center',
-    width: '5%',
-    render: ({ rate }) => <Rating value={rate} />
-  })
-  rate?: number
+  phone?: number
 
   @Column({
     title: 'Location',
     sort: true,
-    width: '15%'
+    width: '20%'
   })
-  location?: string
+  location?: number
 
   @Column({
-    width: '5%',
+    width: '3%',
     align: 'center',
     padding: 'none',
     render: (entity: Entity) => {
@@ -97,8 +63,8 @@ class HostLists {
         <TableActionEdit
           id="house_list"
           titlePopup="Edit house"
-          entity={{ label: entity.name }}
-          baseURL={`${LIST_HOUSE}/${entity._id}`}
+          entity={{ labelNoti: entity.name }}
+          baseURL={`${LIST_MANAGER}/${entity.id}`}
           inputPopupEdit={inputs}
         />
       )
@@ -107,20 +73,35 @@ class HostLists {
   edit?: string
 
   @Column({
-    width: '5%',
+    width: '3%',
     align: 'center',
     padding: 'none',
     render: (entity: Entity) => {
       return (
         <TableActionDelete
           id="house_list"
-          entity={{ label: entity.name }}
-          baseURL={`${LIST_HOUSE}/${entity._id}`}
+          entity={{ labelNoti: entity.name }}
+          baseURL={`${LIST_MANAGER}/${entity.id}`}
         />
       )
     }
   })
   delete?: string
+
+  @Column({
+    width: '3%',
+    align: 'center',
+    padding: 'none',
+    render: (entity: Entity) => {
+      return (
+        <TableActionDetail
+          id={entity._id}
+          baseURL={`${LIST_MANAGER}/${entity._id}`}
+        />
+      )
+    }
+  })
+  detail?: string
 }
 
 const inputsPopup = [
@@ -186,20 +167,25 @@ const inputsPopup = [
   }
 ]
 
-export default function HostList() {
+export default function ManagerList() {
   return (
     <Layout>
+      <Header />
       <ListView
-        baseURL={LIST_HOUSE}
+        baseURL={LIST_MANAGER}
         id="house_list"
-        titleTable="Management house list"
-        descTitle="All house managed"
-        addButtonTitle="Add house"
-        baseURLPopup={CREATE_HOUSE}
-        inputsPopup={inputsPopup}
-        titlePopup="Add new house"
+        pagination
+        titleTable="House's managers list"
+        descTitle="All house's managers"
         model={HostLists}
-        // dataSample={dataSample}
+        popupButton={
+          <PopupAdd
+            inputsPopup={inputsPopup}
+            textButton="Add manager"
+            titlePopup="Add new manager"
+            baseURLPopup={CREATE_HOUSE}
+          />
+        }
       />
     </Layout>
   )
