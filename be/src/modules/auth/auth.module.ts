@@ -5,12 +5,14 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 @Module({
-  imports:[JwtModule.register({
-    global: true,
-    secret: ConfigService.getInstance().get("JWT_SECRET"),
-    signOptions: { expiresIn: '60s' },
-  }),],
+  imports: [
+    JwtModule.register({
+      global: true,
+      secret: ConfigService.getInstance().get('JWT_SECRET'),
+      signOptions: { expiresIn: '60m' },
+    }),
+  ],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService],
 })
 export class AuthModule {}

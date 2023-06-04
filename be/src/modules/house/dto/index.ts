@@ -1,7 +1,8 @@
 import { IsIn, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ORDER } from '../../../constants';
-import { PaginationDto } from '../../../dto/index';
-export class RoomSearchDto extends PaginationDto {
+import { PaginationDto } from '../../../dto';
+
+export class HouseSearchDto extends PaginationDto {
   @IsOptional()
   @IsString()
   sortKey: string;
@@ -15,25 +16,30 @@ export class RoomSearchDto extends PaginationDto {
   keyword: string;
 }
 
-export class RoomRequestDto {
+export class HouseCreateDto {
   @IsString()
   @IsNotEmpty()
-  type: string;
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  location: string;
+
+
 
   @IsNumber()
   @IsNotEmpty()
-  floor: number;
-
-  @IsMongoId()
-  @IsOptional()
-  houseId: string;
+  rate: number;
 
   @IsNumber()
   @IsNotEmpty()
-  amountRoom: number;
+  electricityPrice: number;
 
-  // @IsNotEmpty()
-  // @Transform( ({ value }) => new Date(value))
-  // @IsDateString()
-  // joinDate: Date;
+  @IsNumber()
+  @IsNotEmpty()
+  waterPrice: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  wifiPrice: number;
 }

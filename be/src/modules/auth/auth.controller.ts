@@ -1,12 +1,9 @@
 import {
   Body,
-  Controller,
-  Get,
-  HttpCode,
+  Controller, HttpCode,
   HttpStatus,
   Post,
-  UsePipes,
-  ValidationPipe,
+  UsePipes
 } from '@nestjs/common';
 import { MainValidationPipe } from '../../pipes';
 import { Public } from '../../core/decorator';
@@ -17,7 +14,7 @@ import { ClientRequestDto, LoginRequestDto } from './dto';
 @Controller('auth')
 @UsePipes(new MainValidationPipe())
 export class AuthController {
-  constructor(private readonly _service: AuthService) {}
+  constructor(private readonly _service: AuthService) { }
   // @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)

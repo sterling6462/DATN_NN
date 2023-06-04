@@ -1,4 +1,4 @@
-import { IsNotEmpty,  IsOptional,  MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 
 export class ClientRequestDto {
   @MaxLength(255)
@@ -22,11 +22,11 @@ export class ClientRequestDto {
 }
 
 export class LoginRequestDto {
-    @MaxLength(100)
-    @IsNotEmpty()
-    username: string;
-  
-    @MaxLength(250)
-    @IsNotEmpty()
-    password: string;
+  @MaxLength(100)
+  @IsNotEmpty()
+  username: string;
+
+  @MaxLength(250)
+  @IsNotEmpty()
+  password: string;
 }

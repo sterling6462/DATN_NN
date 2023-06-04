@@ -1,4 +1,8 @@
-import { createParamDecorator, ExecutionContext, SetMetadata } from '@nestjs/common';
+import {
+  createParamDecorator,
+  ExecutionContext,
+  SetMetadata,
+} from '@nestjs/common';
 import { Transform } from 'class-transformer';
 import { Request } from 'express';
 
@@ -9,10 +13,12 @@ export const DecoratorBoolean = () =>
     ({ value }) => {
       return value === 'true' || value === '1';
     },
-    { toClassOnly: true }
+    { toClassOnly: true },
   );
 
-export const ClientPlatform = createParamDecorator((data: unknown, ctx: ExecutionContext) => {
-  const request = ctx.switchToHttp().getRequest<Request>();
-  return request.get('platform');
-});
+export const ClientPlatform = createParamDecorator(
+  (data: unknown, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest<Request>();
+    return request.get('platform');
+  },
+);
