@@ -9,7 +9,7 @@ import {
 import styles from './style.module.scss'
 
 type CardHomeProps = {
-  id?: number
+  id?: string
   imgSrc?: any
   name?: string
   location?: string
@@ -19,6 +19,11 @@ type CardHomeProps = {
 
 export const CardHome = (record: CardHomeProps) => {
   const { id, imgSrc, name, location, roomAvailable, descriptions } = record
+  // const navigate = useNavigate()
+
+  // const handleClick = (id: string) => {
+  //   navigate(id)
+  // }
 
   return (
     <Card key={id} className={styles.singleDestination} data-aos="fade-up">
@@ -57,6 +62,7 @@ export const CardHome = (record: CardHomeProps) => {
           <PrimaryButton
             endIcon={<HiOutlineClipboardCheck />}
             className={styles.detailButton}
+            onClick={() => undefined}
           >
             Detail
           </PrimaryButton>
