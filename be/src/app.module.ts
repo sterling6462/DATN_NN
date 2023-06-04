@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './gaurd/auth.gaurd';
 import { RoomModule } from './modules/room/room.module';
+import { BillModule } from './modules/bill/bill.module';
 
 const config = ConfigService.getInstance();
 @Module({
@@ -18,6 +19,7 @@ const config = ConfigService.getInstance();
     HouseModule,
     AuthModule,
     RoomModule,
+    BillModule,
   ],
   providers: [
     {

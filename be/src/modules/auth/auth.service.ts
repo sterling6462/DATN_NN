@@ -9,10 +9,7 @@ import { ClientRequestDto } from './dto';
 @Injectable()
 export class AuthService extends BaseLogger {
   private readonly userCollection: Collection;
-  constructor(
-    @InjectConnection() private connection: Connection,
-    private jwtService: JwtService,
-  ) {
+  constructor(@InjectConnection() private connection: Connection, private jwtService: JwtService) {
     super(AuthService.name);
     this.userCollection = this.connection.collection('users');
   }
@@ -23,18 +20,24 @@ export class AuthService extends BaseLogger {
     if (!compareHash(pass, user?.password)) {
       throw new UnauthorizedException();
     }
-    const payload = { username: user.username, sub: user.userId };
+    const payload = {
+      username: user.username,
+      role: user.role,
+      houseId: user?.houseId,
+      roomId: user?.roomId,
+      sub: user.userId
+    };
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: await this.jwtService.signAsync(payload)
     };
   }
 
   async register(data: ClientRequestDto): Promise<any> {
     const user = await this.userCollection.findOne({ username: data.username });
-    if(user) throw new BadRequestException({message:"Username is invalid"})
+    if (user) throw new BadRequestException({ message: 'Username is invalid' });
     const newClient = await this.userCollection.insertOne({
       ...data,
-      password: hashValue(data.password, 10),
+      password: hashValue(data.password, 10)
     });
     return newClient;
   }

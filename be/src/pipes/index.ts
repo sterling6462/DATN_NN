@@ -1,19 +1,34 @@
-import { BadRequestException, Optional, ValidationPipe, ValidationPipeOptions } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Optional,
+  PipeTransform,
+  ValidationPipe,
+  ValidationPipeOptions,
+} from '@nestjs/common';
 import { ValidationError } from 'class-validator';
+import { ObjectId } from 'mongodb';
 
 export class MainValidationPipe extends ValidationPipe {
   constructor(@Optional() options: ValidationPipeOptions = {}) {
-    super({ whitelist: true, transformOptions: { enableImplicitConversion: true }, ...options });
+    super({
+      whitelist: true,
+      transformOptions: { enableImplicitConversion: true },
+      ...options,
+    });
   }
 
   exceptionFactory: any = (errors: ValidationError[]) => {
     const transformedErrors = errors
       .map((error) => this.mapChildren(error))
-      .reduce((previousErrors, currentError) => [...previousErrors, ...currentError], [])
+      .reduce(
+        (previousErrors, currentError) => [...previousErrors, ...currentError],
+        [],
+      )
       .filter((error) => !!Object.keys(error.constraints).length)
       .map((error) => ({
         field: error.property,
-        message: Object.values(error.constraints)[0]
+        message: Object.values(error.constraints)[0],
       }));
 
     throw new BadRequestException(transformedErrors);
@@ -41,3 +56,15 @@ export class MainValidationPipe extends ValidationPipe {
     return { ...error, constraints };
   }
 }
+@Injectable()
+export class ParseObjectIdPipe implements PipeTransform<any, ObjectId> {
+  public transform(value: any): ObjectId {
+    try {
+      const transformedObjectId: ObjectId = ObjectId.createFromHexString(value);
+      return transformedObjectId;
+    } catch (error) {
+      throw new BadRequestException([{ fields: 'Param', message: `Param is invalid` }]);
+    }
+  }
+}
+
