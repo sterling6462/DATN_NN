@@ -1,14 +1,27 @@
 @import '../styles/global.scss';
 
-.HostInfo {
+.ContainerHeader {
   display: flex;
-  align-items: center;
-  & .Icon {
-    width: 2rem;
-    height: 2rem;
-    color: $default_orange;
+  padding: 0 1rem;
+  flex-direction: column;
+  .BreadcrumbsNavigation {
+    margin-bottom: 1rem;
   }
-  & .Title {
-    color: $pale_dark_blue;
+  .InfoHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .HostInfo {
+      display: flex;
+      align-items: center;
+      & .Icon {
+        width: 2rem;
+        height: 2rem;
+        color: $default_orange;
+      }
+      & .Title {
+        color: $pale_dark_blue;
+      }
+    }
   }
 }

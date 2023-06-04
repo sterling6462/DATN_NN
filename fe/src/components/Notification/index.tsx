@@ -1,4 +1,5 @@
-import { AlertProps, AlertTitle } from '@mui/material'
+import { Close } from '@mui/icons-material'
+import { AlertProps, AlertTitle, IconButton } from '@mui/material'
 import clsx from 'clsx'
 import { useNotificationStore } from 'components'
 import { useSnackbar } from 'notistack'
@@ -18,12 +19,12 @@ const AlertBase = (props: AlertProps & { value?: string }) => {
     enqueueSnackbar(children, {
       key: value,
       variant: rest.severity,
-      className: className
-      // action: (
-      //   <IconButton size="small" onClick={() => closeSnackbar(value)}>
-      //     <Close />
-      //   </IconButton>
-      // )
+      className: className,
+      action: (
+        <IconButton size="small" onClick={() => closeSnackbar(value)}>
+          <Close />
+        </IconButton>
+      )
     })
   }, [props])
 

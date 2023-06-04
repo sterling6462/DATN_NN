@@ -51,6 +51,28 @@ export const currencyFormat = (number: number) => {
   }).format(number)
 }
 
-export const capitalizedStr = (str: string) => {
+export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+export const stringToColor = (string: string) => {
+  let hash = 0
+  let i
+  let color = '#'
+
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash)
+  }
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff
+    color += `00${value.toString(16)}`.slice(-2)
+  }
+  return color
+}
+
+export const dataDropdownRole = [
+  { _id: 'admin', name: 'Admin' },
+  { _id: 'manager', name: 'Manager' },
+  { _id: 'user', name: 'User' }
+]

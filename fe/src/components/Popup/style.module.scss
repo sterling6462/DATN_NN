@@ -59,6 +59,7 @@
 .ButtonAdd {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   & .Text {
     text-transform: none !important;
     background-color: $default_orange;

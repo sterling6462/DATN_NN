@@ -130,7 +130,7 @@
           font-size: 20px;
 
           &:hover {
-            color: $primary_orange;
+            color: $dark_orange;
           }
         }
       }
@@ -158,7 +158,7 @@
               color: $text_grey;
             }
             &:hover {
-              color: $primary_orange;
+              color: $dark_orange;
               transform: translateX(7px);
               cursor: pointer;
 
@@ -264,7 +264,7 @@
               color: $text_primary;
               font-size: 25px;
               &:hover {
-                color: $primary_orange;
+                color: $dark_orange;
               }
             }
           }

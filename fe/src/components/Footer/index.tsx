@@ -1,6 +1,6 @@
 import Aos from 'aos'
 import 'aos/dist/aos.css'
-import video2 from 'assets/mp4/video2.mp4'
+import videoApartment from 'assets/mp4/apartments.mp4'
 import { useEffect } from 'react'
 import { AiFillYoutube, AiOutlineTwitter } from 'react-icons/ai'
 import { BsFillHouseHeartFill } from 'react-icons/bs'
@@ -11,6 +11,40 @@ import clsx from 'clsx'
 import { PrimaryButton } from 'components'
 import styles from './style.module.scss'
 
+const DataFooterLink = [
+  {
+    title: 'Services'
+  },
+  {
+    title: 'Staff'
+  },
+  {
+    title: 'Report'
+  },
+  {
+    title: 'Accommodation'
+  },
+  {
+    title: 'Payments'
+  }
+]
+
+type FooterLinkProps = {
+  title?: string
+  classNameIcon?: string
+  classNameLi?: string
+}
+
+const FooterLink = (props: FooterLinkProps) => {
+  const { title, classNameIcon, classNameLi } = props
+  return (
+    <li className={clsx(classNameLi, styles.flex, styles.footerList)}>
+      <FiChevronRight className={clsx(classNameIcon, styles.icon)} />
+      {title}
+    </li>
+  )
+}
+
 export const Footer = () => {
   //react hook
   useEffect(() => {
@@ -20,7 +54,7 @@ export const Footer = () => {
   return (
     <section className={styles.footer}>
       <div className={styles.videoDiv}>
-        <video src={video2} loop autoPlay muted />
+        <video src={videoApartment} loop autoPlay muted />
       </div>
 
       <div className={clsx(styles.secContent, 'container')}>
@@ -76,35 +110,13 @@ export const Footer = () => {
             {/* Group 1 */}
             <div
               data-aos="fade-up"
-              data-aos-duration="3000"
+              data-aos-duration="2000"
               className={styles.linkGroup}
             >
               <span className={styles.groupTitle}>OUR AGENCY</span>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Services
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Staff
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Report
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Accommodation
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Payments
-              </li>
+              {DataFooterLink.map((item, index) => (
+                <FooterLink {...item} key={index} />
+              ))}
             </div>
 
             {/* Group 2 */}
@@ -114,31 +126,9 @@ export const Footer = () => {
               className={styles.linkGroup}
             >
               <span className={styles.groupTitle}>PARTNERS</span>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Services
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Staff
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Report
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Accommodation
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Payments
-              </li>
+              {DataFooterLink.map((item, index) => (
+                <FooterLink {...item} key={index} />
+              ))}
             </div>
 
             {/* Group 3 */}
@@ -148,31 +138,9 @@ export const Footer = () => {
               className={styles.linkGroup}
             >
               <span className={styles.groupTitle}>LAST MINUTE</span>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Services
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Staff
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Report
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Accommodation
-              </li>
-
-              <li className={clsx(styles.footerList, styles.flex)}>
-                <FiChevronRight className={styles.icon} />
-                Payments
-              </li>
+              {DataFooterLink.map((item, index) => (
+                <FooterLink {...item} key={index} />
+              ))}
             </div>
           </div>
 

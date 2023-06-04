@@ -1,4 +1,5 @@
 export * from './action-store'
 export * from './auth-store'
+export * from './houseInfo-store'
 export * from './list-store'
 export * from './notification-store'

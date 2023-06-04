@@ -1,123 +1,144 @@
 @import '../styles/global.scss';
 
-.navBarSection {
-  position: sticky;
+.Navbar {
   top: 0;
+  width: 100%;
+  position: sticky;
   z-index: 1000;
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: $background_pale_blue;
-    width: 100%;
-    padding: 1rem;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(2, 15, 29, 0.242);
+  padding: 1rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $background_pale_blue;
+  box-shadow: 0 2px 4px rgba(2, 15, 29, 0.242);
 
-    .LogoContainer {
-      .LogoTitle {
-        color: $light_green;
-        font-weight: 600;
-      }
-      .Icon {
-        font-size: 30px;
-        color: $primary_orange;
-        transform: translateY(5px);
-        margin-right: 10px;
-      }
+  & .LeftContainer {
+    & .LogoTitle {
+      color: $light_green;
+      font-weight: 600;
     }
+    & .Icon {
+      font-size: 30px;
+      color: $primary_orange;
+      transform: translateY(5px);
+      margin-right: 10px;
+    }
+  }
 
-    @media screen and (max-width: 768px) {
-      .navBar {
-        position: absolute;
-        background: $background_pale_blue;
-        height: max-content;
-        width: 80%;
-        border-radius: 1rem;
-        top: -500rem;
-        left: 50%;
-        padding: 1rem;
-        transform: translate(-50%);
-        z-index: 2000;
-        box-shadow: 0 2px 4px rgba(2, 15, 29, 0.904);
-        transition: 0.5s ease-in-out;
+  @media screen and (max-width: 768px) {
+    .RightContainer {
+      position: absolute;
+      background: $background_pale_blue;
+      height: max-content;
+      width: 80%;
+      border-radius: 1rem;
+      top: -500rem;
+      left: 50%;
+      padding: 1rem;
+      transform: translate(-50%);
+      z-index: 2000;
+      box-shadow: 0 2px 4px rgba(2, 15, 29, 0.904);
+      transition: 0.5s ease-in-out;
 
-        .navLists {
-          flex-direction: column;
-          justify-content: center;
-          width: 100%;
-          margin: auto;
+      .NavLists {
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        margin: auto;
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+
+        .ListItem {
           padding: 0.5rem 0;
-
-          .navItem {
-            padding: 0.5rem 0;
-
-            .navLink {
-              color: $light_green;
-              font-size: 1rem;
-              font-weight: 600;
-              &:hover {
-                color: $dark_orange;
-              }
+          justify-content: center;
+          .NavLink {
+            color: $light_green;
+            font-size: 1rem;
+            font-weight: 600;
+            &:hover {
+              color: $dark_orange;
             }
           }
-        }
-        .closeNavbar {
-          position: absolute;
-          top: 1rem;
-          right: 1.5rem;
-          color: $light_green;
-          &:hover {
-            color: $default_orange;
+          .NavLinkActive {
+            color: $dark_orange !important;
           }
         }
       }
-
-      .activeNavbar {
-        top: 7rem;
+      .CloseNavbar {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        color: $light_green;
+        &:hover {
+          color: $default_orange;
+        }
       }
     }
 
-    .toggleNavbar {
-      .icon {
-        font-size: 25px;
-        color: $primary_orange;
-      }
-      &:hover.icon {
-        color: $dark_orange;
-      }
+    .activeNavbar {
+      top: 7rem;
+    }
+    .ContainerInfo {
+      margin: 0.5rem 0;
+    }
+    .loginLogoutButton {
+      margin: 1rem 0;
+    }
+  }
+
+  .ToggleNavbar {
+    .Icon {
+      font-size: 25px;
+      color: $primary_orange;
+    }
+    &:hover.Icon {
+      color: $dark_orange;
     }
   }
 }
 
-.loginButton {
-  width: 7rem;
-  margin: 0 2rem;
+.loginLogoutButton {
+  min-width: 7rem;
+  margin: 0 1rem;
   text-transform: none;
 }
 
-.TextUsername {
-  color: $primary_orange;
+.ContainerInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+  margin: 0 1rem;
+  flex-wrap: nowrap;
+  .Avatar {
+    width: 32px;
+    height: 32px;
+    margin: 0 0.5rem;
+  }
+  .TextUsername {
+    color: $pale_dark_blue;
+  }
 }
 
 // MEDIA QUERIES
 
 @media screen and (min-width: 769px) {
-  .toggleNavbar,
-  .closeNavbar {
+  .ToggleNavbar,
+  .CloseNavbar {
     display: none;
   }
-  .header {
+  .Navbar {
     padding: 1.5rem 2rem;
 
-    .navBar {
-      .navLists {
+    .RightContainer {
+      .NavLists {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: row;
-        .navItem {
-          .navLink {
+        .ListItem {
+          .NavLink {
             color: $light_green;
             padding: 0 0.45rem;
             font-size: 1rem;
@@ -127,6 +148,9 @@
               color: $dark_orange;
             }
           }
+          .NavLinkActive {
+            color: $dark_orange !important;
+          }
         }
       }
     }
@@ -134,11 +158,12 @@
 }
 
 @media screen and (min-width: 960px) {
-  .header {
-    .navBar {
-      .navLists {
-        .navItem {
+  .Navbar {
+    .RightContainer {
+      .NavLists {
+        .ListItem {
           padding: 0 0.7rem;
+          min-width: max-content;
         }
       }
     }
@@ -146,7 +171,7 @@
 }
 
 @media screen and (min-width: 1240px) {
-  .header {
+  .Navbar {
     padding: 1rem 8.5rem;
   }
 }

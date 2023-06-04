@@ -1,21 +1,22 @@
+import { OutlinedInputClasses } from '@mui/material'
 import {
   ForwardedRef,
-  forwardRef,
   MutableRefObject,
   ReactNode,
+  forwardRef,
   useEffect
 } from 'react'
 import {
   FieldValues,
   Path,
-  useForm,
   UseFormReturn,
-  ValidationMode
+  ValidationMode,
+  useForm
 } from 'react-hook-form'
 import { isObjectEmpty } from '../util'
-import { FormInputEnum } from './constants'
 import { FormCheckbox, FormTextInput } from './FormControl'
 import { DataDropdown, FormSelect } from './FormSelect'
+import { FormInputEnum } from './constants'
 
 export type BaseFormInputs = Record<string, any>
 
@@ -29,6 +30,7 @@ export type Control<T> = {
   label?: string
   placeholder?: string
   className?: string
+  textFieldClasses?: Partial<OutlinedInputClasses>
   pattern?: { value: RegExp; message: string }
   minLength?: { value: number; message: string }
   maxLength?: { value: number; message: string }
@@ -63,6 +65,8 @@ const FormWrapper = <T extends FieldValues>(
   useEffect(() => {
     if (ref) (ref as MutableRefObject<UseFormReturn<T>>).current = form
   }, [])
+
+  console.log(inputs)
 
   return (
     <form>

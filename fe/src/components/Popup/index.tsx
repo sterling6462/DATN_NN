@@ -18,6 +18,7 @@ import {
   TextButton,
   UseFormProvider,
   invokeRequest,
+  useAuthStore,
   useListViewStore,
   useNotificationStore
 } from 'components'
@@ -31,7 +32,9 @@ export type Entity = Record<string, any>
 type PopupBaseProps = DialogProps & {
   id?: string
   baseURLPopup?: string
+  baseURLReload?: string
   titlePopup?: string
+  extraTitlePopup?: string
   required?: boolean
   isDelete?: boolean
   open: boolean
@@ -39,6 +42,7 @@ type PopupBaseProps = DialogProps & {
   onClick?: MouseEventHandler<HTMLButtonElement>
   baseClasses?: { title?: string; content?: string; actions?: string }
   popupClasses?: { icon?: string; popup?: string }
+  managerRole?: boolean
 }
 
 export type PopupAlertProps = Partial<DialogProps> &
@@ -71,6 +75,7 @@ export const PopupBase = (props: PopupBaseProps) => {
   const {
     children,
     titlePopup,
+    extraTitlePopup,
     PaperProps,
     isDelete,
     open,
@@ -106,6 +111,7 @@ export const PopupBase = (props: PopupBaseProps) => {
             )}
           >
             {titlePopup}
+            {extraTitlePopup}
           </DialogTitle>
         </Grid>
         <Grid item xs={12}>
@@ -147,6 +153,8 @@ export function PopupAdd(props: PopupAddProps) {
     textAlertError,
     id = '',
     baseURLPopup = '',
+    baseURLReload,
+    managerRole,
     ...rest
   } = props
   const [open, setOpen] = useState(false)
@@ -155,12 +163,20 @@ export function PopupAdd(props: PopupAddProps) {
   const onData = useListViewStore((store) => store.onData)
   const onQuery = useListViewStore((store) => store.onQuery)
   const { dispatchNotification } = useNotificationStore()
-
+  const { auth } = useAuthStore()
+  const houseId = { houseId: auth?.houseId }
   const handleClickOpen = () => {
     setOpen(true)
   }
 
-  const onSubmit = (params: Record<string, unknown>) => {
+  const onSubmit = (param: Record<string, unknown>) => {
+    let params
+    if (managerRole) {
+      params = { ...param, ...houseId }
+    } else {
+      params = param
+    }
+    console.log(params)
     invokeRequest({
       baseURL: baseURLPopup,
       method: HttpMethod.POST,
@@ -168,7 +184,7 @@ export function PopupAdd(props: PopupAddProps) {
       onSuccess(data) {
         onData(id, data, baseURLPopup)
         setOpen(false)
-        onQuery(id, { page: 1, size: 10 })
+        onQuery(id, { page: 1, size: 10 }, baseURLReload)
         textAlertSuccess && dispatchNotification('success', textAlertSuccess)
       },
       onHandleError(e) {
@@ -223,6 +239,7 @@ export function PopupAlert(props: PopupAlertProps) {
     popupClasses,
     icon,
     baseURLPopup = '',
+    baseURLReload,
     id = '',
     entity,
     children,
@@ -244,18 +261,19 @@ export function PopupAlert(props: PopupAlertProps) {
           onQuery(id, { page, size })
           dispatchNotification(
             'success',
-            <>
-              Delete successfully <strong>{entity.label}</strong>
-            </>
+            <Typography>
+              Delete successfully{' '}
+              <b className={styles.Subhead1}>{entity.labelNoti}</b>
+            </Typography>
           )
         },
         onError() {
           setOpen(false)
           dispatchNotification(
             'error',
-            <>
-              Cann't delete <strong>{entity.label}</strong>
-            </>
+            <Typography>
+              Can't delete <b className={styles.Subhead1}>{entity.labelNoti}</b>
+            </Typography>
           )
         }
       })
@@ -283,7 +301,7 @@ export function PopupAlert(props: PopupAlertProps) {
         >
           <Typography className={clsx(styles.Body2, styles.DialogContentText)}>
             Do you want to delete{' '}
-            <b className={styles.Subhead2}>{entity.label}</b> ?
+            <b className={styles.Subhead2}>{entity.labelNoti}</b> ?
           </Typography>
         </PopupBase>
       </>
@@ -297,15 +315,19 @@ export function PopupEdit(props: PopupEditProps) {
     popupClasses,
     icon,
     baseURLPopup = '',
+    baseURLReload,
     id = '',
     entity,
     inputPopupEdit,
     children,
+    managerRole,
     ...rest
   } = props
   const onQuery = useListViewStore((store) => store.onQuery)
   const { dispatchNotification } = useNotificationStore()
   const formRef = useRef<UseFormProvider>(null)
+  const { auth } = useAuthStore()
+  const houseId = { houseId: auth?.houseId }
 
   const [open, setOpen] = useState(false)
   const [isError, setError] = useState(false)
@@ -314,7 +336,13 @@ export function PopupEdit(props: PopupEditProps) {
     !isError && formRef.current?.handleSubmit(onSubmit)()
   }
 
-  const onSubmit = (params: Record<string, unknown>) => {
+  const onSubmit = (param: Record<string, unknown>) => {
+    let params
+    if (managerRole) {
+      params = { ...param, ...houseId }
+    } else {
+      params = param
+    }
     invokeRequest({
       baseURL: baseURLPopup,
       method: HttpMethod.PATCH,
@@ -324,9 +352,9 @@ export function PopupEdit(props: PopupEditProps) {
         onQuery(id, { page: 1, size: 10 })
         dispatchNotification(
           'success',
-          <>
-            Edit successfully <strong>{entity?.label}</strong>
-          </>
+          <Typography>
+            Edit successfully <b>{entity?.labelNoti}</b>
+          </Typography>
         )
       },
 
@@ -335,9 +363,9 @@ export function PopupEdit(props: PopupEditProps) {
           setOpen(false)
           dispatchNotification(
             'error',
-            <>
-              Cann't edit <strong>{entity?.label}</strong>
-            </>
+            <Typography>
+              Can't edit <b>{entity?.labelNoti}</b>
+            </Typography>
           )
         } else
           e.message?.map((m: { field: string; message: string }) => {
