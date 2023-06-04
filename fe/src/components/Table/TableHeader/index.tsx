@@ -1,19 +1,21 @@
 import { Grid, Typography } from '@mui/material'
 import clsx from 'clsx'
-import { PopupAdd, PopupAddProps } from 'components'
+import { TableViewDropdown } from '../TableViewDropdown'
+import { TableViewSearch } from '../TableViewSearch'
 import { TableHeaderProps } from '../decorator'
 import styles from './style.module.scss'
 
-export const TableHeader = (props: TableHeaderProps & PopupAddProps) => {
+export const TableHeader = (props: TableHeaderProps) => {
   const {
+    id = '',
     className,
     titleTable,
     descTitle,
     extraHeader,
-    addButtonTitle,
-    inputsPopup,
-    titlePopup,
-    baseURLPopup
+    popupButton,
+    search,
+    labelDropdown,
+    dropdown
   } = props
 
   return (
@@ -26,17 +28,18 @@ export const TableHeader = (props: TableHeaderProps & PopupAddProps) => {
           {descTitle}
         </Typography>
       </Grid>
-      <Grid item>{extraHeader}</Grid>
-      {inputsPopup && (
-        <Grid item>
-          <PopupAdd
-            inputsPopup={inputsPopup}
-            textButton={addButtonTitle}
-            titlePopup={titlePopup}
-            baseURLPopup={baseURLPopup}
+      <Grid item className={styles.ExtraHeader}>
+        {dropdown && (
+          <TableViewDropdown
+            dropdownItem={dropdown}
+            id={id}
+            labelDropdown={labelDropdown}
           />
-        </Grid>
-      )}
+        )}
+        {search && <TableViewSearch id={id} />}
+        {extraHeader}
+        {popupButton}
+      </Grid>
     </Grid>
   )
 }
