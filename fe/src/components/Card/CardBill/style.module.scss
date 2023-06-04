@@ -32,10 +32,10 @@
   }
 }
 
-.CardBill {
-  padding: 0 1rem 1rem 1rem;
+.CardServiceBill {
+  // padding: 0 1rem 1rem 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   .LeftCard {
     .CardContainer {
       min-width: 10rem;
@@ -93,5 +93,49 @@
       @include text-color($dark_green);
       background-color: $default_orange;
     }
+  }
+}
+
+.CardBillDetail {
+  position: relative;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: $background_orange;
+  overflow-x: auto;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  min-height: 100vh;
+  .TitleBill {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    @include text-color($light_green);
+  }
+  .ContainerInfo {
+    padding: 1rem;
+    .InfoItem {
+      display: flex;
+      flex-direction: row;
+      .Title {
+        @include text-color($light_green);
+      }
+      .Value {
+        @include text-color($light_green);
+      }
+    }
+  }
+  .TableBill {
+    width: 100%;
+  }
+  .Skeleton {
+    width: 100%;
+    height: 100vh;
+    border-radius: 1rem;
   }
 }

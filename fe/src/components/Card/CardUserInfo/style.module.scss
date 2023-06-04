@@ -1,0 +1,53 @@
+@import '../../styles/global.scss';
+
+@mixin set-color($setColor) {
+  color: $setColor;
+}
+
+@mixin cardContainer($bgColor) {
+  padding: 1rem;
+  margin: 1rem;
+  background-color: $bgColor;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.CardUserInfo {
+  flex-wrap: nowrap;
+  padding: 0 2rem;
+  & .LeftContainer {
+    @include cardContainer($white);
+    padding-top: 8%;
+    align-items: center;
+    .Avatar {
+      width: 160px;
+      height: 160px;
+      font-size: 4rem;
+      font-weight: 500;
+      padding: 1rem 0;
+    }
+    .Name {
+      padding: 2rem 0;
+      color: $pale_dark_blue;
+      font-weight: 600;
+    }
+  }
+  & .RightContainer {
+    @include cardContainer($light_green);
+    .Title {
+      padding-bottom: 0.5rem;
+      // border-bottom: 1px solid $black_20;
+      .Text {
+        color: $white;
+        font-weight: 500;
+      }
+    }
+    .FormProvider {
+      padding: 1rem 0;
+    }
+    .Button {
+      min-width: 6rem;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@import '../../styles/global.scss';
+
+@mixin set-color($setColor) {
+  color: $setColor;
+}
+
+@mixin cardContainer($bgColor) {
+  padding: 2rem;
+  margin: 1rem;
+  background-color: $bgColor;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.CardUserInfo {
+  flex-wrap: nowrap;
+  padding: 0 2rem;
+  & .LeftContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & .HouseName {
+      padding: 1rem 0;
+      color: $pale_dark_blue;
+      font-weight: 600;
+    }
+  }
+  & .RightContainer {
+    @include cardContainer($background_orange);
+    .Title {
+      padding-bottom: 0.5rem;
+      .Text {
+        color: $pale_dark_blue;
+        font-weight: 600;
+      }
+    }
+    .HouseInfo {
+      padding: 2rem 0;
+      .InfoItem {
+        padding-top: 1rem;
+        .Label {
+          @include set-color($light_green);
+        }
+        .Value {
+          @include set-color($dark_orange);
+        }
+
+        .RatingRoot {
+          justify-content: flex-start;
+          align-items: flex-start;
+        }
+        .RatingValue {
+          padding-right: 0.5rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
