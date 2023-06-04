@@ -19,18 +19,16 @@ export const FormTextInput = <T extends FieldValues>(props: Props<T>) => {
 
   const renderPasswordIcon = (isShowPassword: boolean, type: string) => {
     if (isShowPassword && type === FormInputEnum.PASSWORD) {
-      return {
-        endAdornment: (
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={() => setIsShow(!isShow)}
-            >
-              {isShow ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
-          </InputAdornment>
-        )
-      }
+      return (
+        <InputAdornment position="end">
+          <IconButton
+            aria-label="toggle password visibility"
+            onClick={() => setIsShow(!isShow)}
+          >
+            {isShow ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
+        </InputAdornment>
+      )
     }
   }
 
@@ -63,13 +61,15 @@ export const FormTextInput = <T extends FieldValues>(props: Props<T>) => {
           helperText={error?.message as ReactNode}
           error={Boolean(error)}
           className={clsx(control.className, styles.TextField)}
+          textFieldClasses={control.textFieldClasses}
           placeholder={control.placeholder}
-          InputProps={
-            (renderPasswordIcon(!!control.isShowPassword, control.type),
-            {
-              startAdornment: control.startAdornment
-            })
-          }
+          InputProps={{
+            startAdornment: control.startAdornment,
+            endAdornment: renderPasswordIcon(
+              !!control.isShowPassword,
+              control.type
+            )
+          }}
           inputProps={{ min: control.min?.value, max: control.max?.value }}
         />
       )}

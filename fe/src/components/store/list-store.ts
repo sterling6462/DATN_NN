@@ -18,15 +18,21 @@ interface IListViewStore {
   onEdit: (id: string, key: string) => void
   onLoading: (id: string) => void
   onData: (id: string, data: Data, url?: string) => void
-  onQuery: (id: string, queryString: {}) => void
+  onQuery: (id: string, queryString: {}, baseURLReload?: string) => void
 }
 
 export const useListViewStore = create<IListViewStore>((set, get) => {
   return {
-    async onQuery(id, queryString) {
+    async onQuery(id, queryString, baseURLReload) {
       const listViewMap = onLoading(id, get, set)
       handleFetch(
-        onUpdateQuery(listViewMap.get(id)?.url, queryString),
+        // onUpdateQuery(listViewMap.get(id)?.url, queryString),
+        //TODO: handle fetch reload data when add new
+        onUpdateQuery(
+          baseURLReload ? baseURLReload : listViewMap.get(id)?.url,
+          queryString
+        ),
+
         (data) => {
           onData(id, data, listViewMap, set)
         }

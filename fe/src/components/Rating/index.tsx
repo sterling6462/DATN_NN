@@ -5,14 +5,17 @@ import styles from './style.module.scss'
 
 type RatingProps = {
   value: number
-  className?: string
+  ratingClasses?: { root?: string; value?: string; icon?: string }
 }
 
 export const Rating = (props: RatingProps) => {
+  const { value, ratingClasses } = props
   return (
-    <Grid className={clsx(props.className, styles.Rating)}>
-      <Typography>{props.value}</Typography>
-      <Star className={styles.Icon} />
+    <Grid className={clsx(styles.Rating, ratingClasses?.root)}>
+      <Typography className={clsx(styles.Body1, ratingClasses?.value)}>
+        {value}
+      </Typography>
+      <Star className={clsx(styles.Icon, ratingClasses?.icon)} />
     </Grid>
   )
 }

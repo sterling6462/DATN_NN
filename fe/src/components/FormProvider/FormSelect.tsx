@@ -1,5 +1,5 @@
 import { KeyboardArrowDownRounded } from '@mui/icons-material'
-import { Autocomplete } from '@mui/material'
+import { Autocomplete, createFilterOptions } from '@mui/material'
 import clsx from 'clsx'
 import { useAPI } from 'hook'
 import { useState } from 'react'
@@ -9,8 +9,8 @@ import { ContainerInputField } from '..'
 import styles from './style.module.scss'
 
 export type DataDropdown = {
-  code: string
-  label: string
+  _id: string | boolean | number
+  name: string
   sortOrder?: string
 }
 
@@ -34,6 +34,10 @@ export const FormSelect = <T extends FieldValues>(props: Props<T>) => {
         setData(data)
       }
     })
+  const filterOptions = createFilterOptions({
+    matchFrom: 'start',
+    stringify: (option: DataDropdown) => option.name
+  })
 
   return (
     <Controller
@@ -44,10 +48,10 @@ export const FormSelect = <T extends FieldValues>(props: Props<T>) => {
         required: control.required
       }}
       render={({ field: { onChange, value } }) => {
-        const defaultValue = data.find((d) => d.code === value)
+        const defaultValue = data.find((d) => d._id === value)
         return (
           <Autocomplete
-            defaultValue={data.find((d) => d.code === control.defaultValue)}
+            defaultValue={data.find((d) => d._id === control.defaultValue)}
             key={control.name}
             placeholder={control.placeholder}
             options={data}
@@ -55,18 +59,19 @@ export const FormSelect = <T extends FieldValues>(props: Props<T>) => {
             classes={{ input: styles.Input, listbox: styles.ListBoxDropdown }}
             popupIcon={<KeyboardArrowDownRounded />}
             noOptionsText="Not found"
-            onChange={(_, newValue) => onChange(newValue?.code)}
-            isOptionEqualToValue={(option, value) =>
-              option.label === value.label
-            }
+            onChange={(_, newValue) => onChange(newValue?._id)}
+            filterOptions={filterOptions}
+            getOptionLabel={(option) => option.name}
+            isOptionEqualToValue={(option, value) => option.name === value.name}
             renderInput={(params) => (
               <ContainerInputField
                 {...params}
-                value={defaultValue?.label}
+                value={defaultValue?.name}
                 label={control.label}
                 placeholder={control.placeholder}
                 error={Boolean(error)}
                 helperText={error?.message as React.ReactNode}
+                textFieldClasses={control.textFieldClasses}
               />
             )}
           />

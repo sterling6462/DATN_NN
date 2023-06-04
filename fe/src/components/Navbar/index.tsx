@@ -1,11 +1,12 @@
-import { Grid, Link, Typography } from '@mui/material'
+import { Avatar, Grid, Link, Typography } from '@mui/material'
 import clsx from 'clsx'
 import {
-  NavbarItemProps,
+  ListItemMenu,
   NavbarProps,
   PrimaryButton,
-  capitalizedStr,
+  capitalizeFirstLetter,
   removeCookie,
+  stringToColor,
   useAuthStore
 } from 'components'
 import { PATH } from 'constants/Paths'
@@ -13,50 +14,29 @@ import { useState } from 'react'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { BsFillHouseHeartFill } from 'react-icons/bs'
 import { TbGridDots } from 'react-icons/tb'
+import { useLocation } from 'react-router-dom'
 import styles from './style.module.scss'
 
-const dataHeader = [
-  {
-    title: 'Management',
-    href: PATH.HOST.ROOM_LIST,
-    classNameLi: styles.navItem,
-    classNameLink: styles.navLink
-  },
-  {
-    title: 'Report',
-    href: '/#',
-    classNameLi: styles.navItem,
-    classNameLink: styles.navLink
-  }
-]
-
-const NavbarItem = (props: NavbarItemProps) => {
-  const { classNameLi, classNameLink, href, title } = props
-
-  return (
-    <li className={classNameLi}>
-      <a href={href} className={classNameLink}>
-        {title}
-      </a>
-    </li>
-  )
-}
-
 export const Navbar = (props: NavbarProps) => {
-  const [active, setActive] = useState(styles.navBar)
+  const [active, setActive] = useState(styles.RightContainer)
   const { auth } = useAuthStore()
+  const router = useLocation()
+  const path = router.pathname
+  const subPath = path.split('/')
+  const username = auth?.username
+  const role = auth?.role
 
   //TODO: replace role after login
-  const { role = 'host', post } = props
+  const { post } = props
 
   //Functions to toggle navbar
   const showNav = () => {
-    setActive(clsx(styles.navBar, styles.activeNavbar))
+    setActive(clsx(styles.RightContainer, styles.activeNavbar))
   }
 
   //Functions to remove navbar
   const removeNavbar = () => {
-    setActive(styles.navBar)
+    setActive(styles.RightContainer)
   }
 
   const logOut = () => {
@@ -65,73 +45,108 @@ export const Navbar = (props: NavbarProps) => {
   }
 
   return (
-    <div className={styles.navBarSection}>
-      <header className={clsx(styles.header, styles.flex)}>
-        <div className={styles.LogoContainer}>
-          <BsFillHouseHeartFill className={styles.Icon} />
-          <Link
-            href="/#"
-            underline="none"
-            className={clsx(styles.Headline5, styles.LogoTitle)}
-          >
-            Accommodation
-          </Link>
-        </div>
-        <div className={active}>
-          <ul className={clsx(styles.navLists, styles.flex)}>
-            <NavbarItem
-              title="Home"
-              href="/"
-              classNameLi={styles.navItem}
-              classNameLink={styles.navLink}
+    <Grid container className={styles.Navbar}>
+      <Grid item className={styles.LeftContainer}>
+        <BsFillHouseHeartFill className={styles.Icon} />
+        <Link
+          href="/#"
+          underline="none"
+          className={clsx(styles.Headline5, styles.LogoTitle)}
+        >
+          Accommodation
+        </Link>
+      </Grid>
+      <Grid item className={active}>
+        <Grid className={styles.NavLists}>
+          <ListItemMenu
+            key={'home'}
+            toNavLink={PATH.HOME}
+            primary="Home"
+            classListItem={{
+              listItem: styles.ListItem,
+              navLink: clsx(
+                styles.NavLink,
+                path === '/' && styles.NavLinkActive
+              ),
+              primaryListItemText: styles.Subhead1
+            }}
+          />
+          {(role === 'manager' || role === 'admin') && (
+            <ListItemMenu
+              key={'management'}
+              toNavLink="/manager/my-house"
+              primary="Management"
+              classListItem={{
+                listItem: styles.ListItem,
+                navLink: clsx(
+                  styles.NavLink,
+                  (subPath[1].includes('admin') ||
+                    subPath[1].includes('manager')) &&
+                    styles.NavLinkActive
+                ),
+                primaryListItemText: styles.Subhead1
+              }}
             />
-            {role === 'host' &&
-              dataHeader.map((item) => {
-                return <NavbarItem {...item} />
-              })}
-            <NavbarItem
-              title="About us"
-              href={PATH.ABOUT}
-              classNameLi={styles.navItem}
-              classNameLink={styles.navLink}
-            />
-            {auth?.username ? (
-              <>
-                <Grid
-                  display={'flex'}
-                  flexDirection={'column'}
-                  alignItems={'center'}
-                >
+          )}
+
+          <ListItemMenu
+            key={'about'}
+            toNavLink={PATH.ABOUT}
+            primary="About us"
+            classListItem={{
+              listItem: styles.ListItem,
+              navLink: clsx(
+                styles.NavLink,
+                path === PATH.ABOUT && styles.NavLinkActive
+              ),
+              primaryListItemText: styles.Subhead1
+            }}
+          />
+          {username ? (
+            <>
+              <Grid container className={styles.ContainerInfo}>
+                <Grid item>
+                  <Avatar
+                    sx={{ backgroundColor: stringToColor(username) }}
+                    className={styles.Avatar}
+                  >
+                    {username.charAt(0)}
+                  </Avatar>
+                </Grid>
+                <Grid item>
                   <Typography
                     className={clsx(styles.Subhead1, styles.TextUsername)}
                   >
-                    {auth.username}
+                    {username}
                   </Typography>
-                  {/* TODO: add role name */}
                   <Typography className={styles.Button}>
-                    {capitalizedStr(role)}
+                    {capitalizeFirstLetter(role || '')}
                   </Typography>
                 </Grid>
-                <PrimaryButton className={styles.loginButton} onClick={logOut}>
-                  Log out
-                </PrimaryButton>
-              </>
-            ) : (
-              <PrimaryButton className={styles.loginButton} href={PATH.LOGIN}>
-                Log in
+              </Grid>
+              <PrimaryButton
+                className={styles.loginLogoutButton}
+                onClick={logOut}
+              >
+                Log out
               </PrimaryButton>
-            )}
-          </ul>
-
-          <div className={styles.closeNavbar} onClick={removeNavbar}>
-            <AiFillCloseCircle className={styles.icon} />
-          </div>
+            </>
+          ) : (
+            <PrimaryButton
+              className={styles.loginLogoutButton}
+              href={PATH.LOGIN}
+            >
+              Log in
+            </PrimaryButton>
+          )}
+        </Grid>
+        <div className={styles.CloseNavbar} onClick={removeNavbar}>
+          <AiFillCloseCircle className={styles.Icon} />
         </div>
-
-        <div className={styles.toggleNavbar} onClick={showNav}>
-          <TbGridDots className={styles.icon} />
-        </div>
-      </header>
-    </div>
+      </Grid>
+      <div className={styles.ToggleNavbar} onClick={showNav}>
+        <TbGridDots className={styles.Icon} />
+      </div>
+    </Grid>
   )
 }

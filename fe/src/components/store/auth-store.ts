@@ -8,7 +8,9 @@ interface IAuth {
   // refresh_token: string
   // token_type: string
   exp: string
-  // role: string
+  role: string
+  houseId?: string
+  roomId?: string
 }
 
 interface IStore extends IBaseSubmit {

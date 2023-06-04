@@ -1,0 +1,24 @@
+@import '../styles/global.scss';
+
+.Breadcrumbs {
+  font-family: $FontFamily;
+  & .BreadcrumbsLi {
+    &:hover a {
+      color: $dark_orange;
+    }
+    &:last-child a {
+      color: $dark_orange;
+    }
+    & .Link {
+      text-decoration: none;
+      color: $dark_green;
+    }
+  }
+}
+.Link {
+  text-decoration: none;
+  color: $dark_green;
+  &:hover {
+    color: $dark_orange;
+  }
+}

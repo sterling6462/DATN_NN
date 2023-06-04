@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { DispatchNotification } from 'components'
+import { DispatchNotification, getCookie } from 'components'
 import { default as queryString } from 'query-string'
 
 export enum HttpMethod {
@@ -10,7 +10,10 @@ export enum HttpMethod {
 }
 
 axios.interceptors.request.use(function (config) {
+  const access_token = getCookie('access')
+
   config.baseURL = (process.env.REACT_APP_BASE_URL || '') + '/api'
+  config.headers.Authorization = `Bearer ${access_token}`
   return config
 })
 

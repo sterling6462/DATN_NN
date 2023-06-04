@@ -1,0 +1,25 @@
+@import '../styles/global.scss';
+
+.Pagination {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  justify-content: flex-end;
+  .Select {
+    border-radius: 8px;
+    background-color: $background_green;
+    box-sizing: border-box;
+    font-weight: $Medium;
+    font-family: $FontFamily;
+    color: $dark_green;
+  }
+  .SelectIcon {
+    color: $dark_green;
+  }
+  .Action {
+    color: $dark_green;
+    :hover {
+      background-color: #e6ece4;
+    }
+  }
+}
