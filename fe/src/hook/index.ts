@@ -12,7 +12,7 @@ export const useWindowSize = () => {
   useEffect(() => {
     window.addEventListener('resize', updateSize)
     return () => window.removeEventListener('resize', updateSize)
-  }, [updateSize])
+  }, [])
 
   return size
 }
@@ -40,5 +40,5 @@ export const useAPI = (
       }
     }
     return () => clearInterval(intervalId)
-  }, [dispatchNotification, onShowLoading, rest, rest.baseURL, timeReload])
+  }, [rest.baseURL, timeReload])
 }

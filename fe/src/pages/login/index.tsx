@@ -78,11 +78,12 @@ export default function Login() {
       setCookie('access', auth.access_token, '3000')
       window.location.replace(searchLocation || '/')
     }
-  }, [isError, auth, dispatchNotification])
+  }, [isError, auth])
 
   useEffect(() => {
     const keyDown = (e: any) => {
       if (e.key === 'Enter') {
+        // not reload page when pressing enter
         e.preventDefault()
         onLoginClick()
       }
