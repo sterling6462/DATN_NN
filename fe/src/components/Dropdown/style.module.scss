@@ -1,0 +1,189 @@
+@import '../styles/global.scss';
+
+$outline_disabled: #f5f7fa;
+
+@mixin setColor($color) {
+  color: $color;
+}
+
+@mixin setSvgColor($color) {
+  svg {
+    @include setColor($color);
+  }
+}
+
+@mixin setFieldset($color) {
+  & fieldset {
+    border: 1px solid $color !important;
+  }
+}
+
+@mixin setHoverColor($color) {
+  &:hover {
+    @include setColor($color);
+  }
+}
+
+@mixin borderBottomColor($color) {
+  border-bottom: 1px solid $color;
+}
+
+.Text {
+  font-weight: 300;
+  padding-right: 0.5rem;
+  @include setColor($black_60);
+}
+
+.BaseDropdown {
+  font-size: 14px;
+  @include setColor($black_100);
+  @include setSvgColor($black_60);
+
+  & .InputDisabled {
+    @include setColor($black_20);
+  }
+  & svg {
+    margin-top: 0.1rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  div[aria-expanded='true'] {
+    color: $primary_dark !important;
+    ~ fieldset {
+      border: 1px solid $primary_dark !important;
+    }
+  }
+
+  &:focus-within {
+    @include setColor($primary_dark);
+    @include setFieldset($primary_dark);
+    @include setSvgColor($primary_dark);
+
+    &:before {
+      border-bottom: 1px solid $primary_light !important;
+    }
+    & .Outlined {
+      @include setColor($primary_dark);
+      @include setHoverColor($primary_light);
+    }
+  }
+  & .IconOpen {
+    @include setColor($primary_dark);
+  }
+}
+
+.DropdownContained {
+  @include setFieldset($black_40);
+
+  & .InputDisabled {
+    background-color: $outline_disabled !important;
+    ~ fieldset {
+      border: 1px solid $black_10 !important;
+    }
+  }
+  & .Outlined {
+    background-color: $white;
+    padding: 0.5rem 1rem;
+    padding-right: 2rem !important;
+    @include setColor($black_100);
+    @include setHoverColor($dark_orange);
+  }
+  &:hover {
+    @include setFieldset($dark_orange);
+    & svg {
+      color: $dark_orange !important;
+    }
+  }
+}
+
+.DropdownLine {
+  &:before {
+    @include borderBottomColor($black_40);
+    border-bottom-style: solid !important;
+  }
+  &:after {
+    @include borderBottomColor($primary_dark);
+  }
+  &.BaseDropdown {
+    @include setHoverColor($primary_light);
+    &:hover {
+      @include setSvgColor($dark_orange);
+      &:before {
+        @include borderBottomColor($dark_orange);
+      }
+      &:after {
+        @include borderBottomColor($dark_orange);
+      }
+    }
+  }
+}
+
+.DropdownFilter {
+  .LabelDropdown {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: $black_40;
+    opacity: 1;
+    padding-right: 0.5rem;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+  }
+  .Autocomplete {
+    min-width: 6rem;
+    width: 13rem;
+    & .Text {
+      padding: 0 !important;
+      color: $black_100;
+    }
+  }
+}
+
+.ListBoxDropdown {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 1440px) {
+  .LabelDropdown {
+    font-size: 0.9rem !important;
+    width: 4rem;
+  }
+  .Autocomplete {
+    width: 11rem !important;
+    & .Text {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 1366px) {
+  .LabelDropdown {
+    font-size: 0.85rem !important;
+  }
+  .Autocomplete {
+    width: 9rem !important;
+  }
+}
+
+@media only screen and (max-width: 1152px) {
+  .LabelDropdown {
+    font-size: 0.75rem !important;
+  }
+  .Autocomplete {
+    width: 6.2rem !important;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .LabelDropdown {
+    width: 6rem !important;
+  }
+  .Autocomplete {
+    width: 10rem !important;
+  }
+}

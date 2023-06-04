@@ -1,0 +1,65 @@
+@import '../../styles/global.scss';
+
+@mixin setColor($color) {
+  color: $color;
+}
+@mixin setBorderBottom($color) {
+  border-bottom: 1px solid $color;
+}
+
+.TableBill {
+  padding: 1rem;
+  .TableHeadBill {
+    padding: 0;
+    border-bottom: none;
+    & .TableRowHead {
+      padding: 0 0.5rem;
+      border-bottom: none;
+      & .TableCellHead {
+        background-color: $light_orange;
+        @include setColor($white);
+        letter-spacing: 0.12px;
+        padding: 12px 1rem;
+        border-bottom: none;
+      }
+    }
+  }
+  .TableBillRow {
+    padding: 0 0.5rem;
+    & .TableCell {
+      @include setColor($light_green);
+    }
+    & .TableCellPrice {
+      font-weight: 600;
+      @include setColor($light_green);
+    }
+    & .TableCell {
+      @include setBorderBottom($default_background_orange);
+    }
+  }
+  .TableRowTotal {
+    font-weight: 600;
+    border-bottom: none;
+    @include setColor($primary_orange);
+  }
+}
+
+.TableBillLoading {
+  display: none;
+  &.Active {
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: block !important;
+    width: 100%;
+    height: 100%;
+    background: $background_orange;
+    opacity: 0.5;
+    & .Item {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      @include setColor($primary_orange);
+    }
+  }
+}

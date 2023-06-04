@@ -1,0 +1,23 @@
+@import '../../styles/global.scss';
+
+.TableViewSearch {
+  width: 14rem;
+  min-width: 10rem;
+}
+
+div:has(> .TableViewSearch) {
+  padding: 0;
+  min-height: 0;
+}
+
+@media only screen and (max-width: 1440px) {
+  .TableViewSearch {
+    width: 12rem;
+  }
+}
+
+@media only screen and (max-width: 1366px) {
+  .TableViewSearch {
+    width: 10rem;
+  }
+}

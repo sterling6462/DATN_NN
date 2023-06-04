@@ -1,3 +1,4 @@
+import { DataDropdownFilter, DataDropdownSort } from 'components'
 import { ReactNode } from 'react'
 
 type ColumnDecorator = (object: Object, propertyName: string) => void
@@ -34,6 +35,7 @@ export interface BaseOptions {
   align?: 'left' | 'center' | 'right'
   padding?: 'checkbox' | 'none' | 'normal'
   render?: (record: any, data?: unknown, index?: number) => JSX.Element
+  colSpan?: number
 }
 
 const _metaColumns = new Map<string, unknown>()
@@ -70,7 +72,11 @@ export type TableHeaderProps = {
   id?: string
   titleTable?: string
   descTitle?: string
-  addButtonTitle?: string
-  extraHeader?: ReactNode
   className?: string
+  // extra header
+  extraHeader?: ReactNode
+  search?: boolean
+  labelDropdown?: string
+  dropdown?: Array<DataDropdownSort> | Array<DataDropdownFilter>
+  popupButton?: ReactNode
 }

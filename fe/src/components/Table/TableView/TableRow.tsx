@@ -33,6 +33,9 @@ export const TableRow = (props: Props) => {
 }
 
 const TableCell = (columns: BaseOptions[], record: Record<string, unknown>) => {
+  const clickRow = (id?: string) => {
+    console.log(id)
+  }
   return columns.map(({ key = '' }, idx) => (
     <MUITableCell
       key={`${key}-${idx}`}
