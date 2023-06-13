@@ -3,12 +3,12 @@ import { ORDER } from '../../../constants';
 import { PaginationDto } from '../../../dto';
 
 export class BillSearchDto extends PaginationDto {
+  @IsOptional()
   @IsMongoId()
-  @IsNotEmpty()
   roomId: string;
 
+  @IsOptional()
   @IsMongoId()
-  @IsNotEmpty()
   houseId: string;
 
   @IsOptional()
@@ -18,10 +18,6 @@ export class BillSearchDto extends PaginationDto {
   @IsOptional()
   @IsIn([ORDER.ASC, ORDER.DESC])
   sortOrder: string;
-
-  @IsOptional()
-  @IsString()
-  keyword: string;
 }
 
 export class BillCreateDto {
