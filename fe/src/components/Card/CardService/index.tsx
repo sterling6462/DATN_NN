@@ -1,12 +1,38 @@
 import { Card, Grid, Typography } from '@mui/material'
 import clsx from 'clsx'
-import { CardRoomInfoProps, CardRoomItem } from '../CardRoomInfo'
+import { dateFormat } from 'components'
+import { CardRoomItem } from '../CardRoomInfo'
 import styles from './style.module.scss'
 
-export const CardService = (props: CardRoomInfoProps) => {
-  const { data } = props
+export type DataService = {
+  page: number
+  total: number
+  data: RoomServiceProps[]
+}
 
-  if (data) {
+export type RoomServiceProps = {
+  id: string
+  electricityBill: number
+  waterBill: number
+  wifiBill: number
+  total: number
+  createBy: string
+  createdAt: string
+  roomBill: number
+  otherBill: number
+  status: boolean
+  roomName: string
+}
+
+export type CardRoomServiceProps = {
+  data?: DataService
+}
+
+export const CardService = (props: CardRoomServiceProps) => {
+  const { data } = props
+  const dataService = data?.data
+  if (dataService) {
+    console.log(data.data)
     return (
       <Grid className={styles.Container} xs={12}>
         <Typography className={clsx(styles.RoomInfo, styles.Headline6)}>
@@ -14,8 +40,8 @@ export const CardService = (props: CardRoomInfoProps) => {
         </Typography>
         <Card className={styles.CardContainer}>
           <CardRoomItem
-            label="Room name"
-            value={data.name}
+            label="electricityBill"
+            value={dataService[0].electricityBill}
             cardRoomClasses={{
               cardInfo: styles.CardInfo,
               label: styles.Label,
@@ -23,8 +49,8 @@ export const CardService = (props: CardRoomInfoProps) => {
             }}
           />
           <CardRoomItem
-            label="Type"
-            value={data.type}
+            label="waterBill"
+            value={dataService[0].waterBill}
             cardRoomClasses={{
               cardInfo: styles.CardInfo,
               label: styles.Label,
@@ -32,8 +58,71 @@ export const CardService = (props: CardRoomInfoProps) => {
             }}
           />
           <CardRoomItem
-            label="Price"
-            value={data.price}
+            label="wifiBill"
+            value={dataService[0].wifiBill}
+            cardRoomClasses={{
+              cardInfo: styles.CardInfo,
+              label: styles.Label,
+              value: styles.Value
+            }}
+          />
+          <CardRoomItem
+            label="total"
+            value={dataService[0].total}
+            cardRoomClasses={{
+              cardInfo: styles.CardInfo,
+              label: styles.Label,
+              value: styles.Value
+            }}
+          />
+          <CardRoomItem
+            label="createBy"
+            value={dataService[0].createBy}
+            cardRoomClasses={{
+              cardInfo: styles.CardInfo,
+              label: styles.Label,
+              value: styles.Value
+            }}
+          />
+          <CardRoomItem
+            label="createdAt"
+            value={dateFormat(dataService[0].createdAt)}
+            cardRoomClasses={{
+              cardInfo: styles.CardInfo,
+              label: styles.Label,
+              value: styles.Value
+            }}
+          />
+          <CardRoomItem
+            label="roomBill"
+            value={dataService[0].roomBill}
+            cardRoomClasses={{
+              cardInfo: styles.CardInfo,
+              label: styles.Label,
+              value: styles.Value
+            }}
+          />
+          <CardRoomItem
+            label="otherBill"
+            value={dataService[0].otherBill}
+            cardRoomClasses={{
+              cardInfo: styles.CardInfo,
+              label: styles.Label,
+              value: styles.Value
+            }}
+          />
+          <CardRoomItem
+            label="status"
+            value={dataService[0].status}
+            cardRoomClasses={{
+              cardInfo: styles.CardInfo,
+              label: styles.Label,
+              value: styles.Value
+            }}
+          />
+          <CardRoomItem
+            label="roomName"
+            value={dataService[0].roomName}
             cardRoomClasses={{
               cardInfo: styles.CardInfo,
               label: styles.Label,

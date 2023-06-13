@@ -28,14 +28,19 @@ export const CardBillItem = (props: ServiceBillItemProps) => {
             {icon}
           </Grid>
           <Grid item className={styles.CardInfo}>
-            <Typography className={styles.TextBill}>{textBill}</Typography>
-            <Typography className={styles.PriceInfo}>
-              <Typography className={clsx(styles.Price, styles.Subhead1)}>
+            <Typography component={'span'} className={styles.TextBill}>
+              {textBill}
+            </Typography>
+            <Typography component={'span'} className={styles.PriceInfo}>
+              <Typography
+                component={'span'}
+                className={clsx(styles.Price, styles.Subhead1)}
+              >
                 {currencyFormat(price)}
               </Typography>
               / {measure}
             </Typography>
-            <Typography>{descBill}</Typography>
+            {descBill && <Typography component={'span'}>{descBill}</Typography>}
           </Grid>
         </Grid>
       </Card>
@@ -52,7 +57,7 @@ export const CardServiceBill = () => {
   }, [auth?.houseId])
 
   return (
-    <Grid container className={styles.CardServiceBill} item xs={9}>
+    <Grid container className={styles.CardServiceBill} item columnSpacing={1}>
       <CardBillItem
         textBill="Electricity price"
         price={houseInfo?.electricityPrice || 0}

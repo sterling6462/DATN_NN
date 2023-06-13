@@ -36,6 +36,7 @@
 
 .singleDestination {
   height: 100%;
+  width: 100% !important;
   display: grid;
   row-gap: 10px;
   padding: 1rem;
@@ -50,9 +51,10 @@
     transition: 0.3 ease;
   }
 
-  .imageDiv {
+  .Image {
     height: 100%;
     width: 100%;
+    border-radius: 0.5rem;
     overflow: hidden;
 
     img {
@@ -69,27 +71,21 @@
     }
   }
 
-  .cardInfo {
+  .CardInfo {
     padding: 1rem;
+    padding-bottom: 0;
     .Name {
       @include text-color($dark_green);
       font-weight: $Bold;
-      padding-bottom: 0.5rem;
     }
-    .ContainerLocation {
-      display: flex;
-      align-items: flex-end;
-      gap: 0.5rem;
-      margin: 0.3rem 0;
-
-      .icon {
-        @include text-color($light_orange);
-        font-size: 1.2rem;
-      }
-      .Location {
-        @include text-color($text_primary);
-        font-weight: 400;
-        font-size: 14px;
+    & .Location {
+      & .LocationText {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: justify;
       }
     }
 
@@ -103,27 +99,58 @@
 
       .RoomAvailable {
         max-width: 200px;
-        line-height: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
       .RoomNumber {
-        // font-size: 1rem;
         @include text-color($primary_orange);
       }
     }
 
-    .desc {
-      @include text-color($text_primary);
-      font-size: 13.5px;
-      font-weight: 500;
+    .Detail {
+      @include text-color($black_80);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: justify;
     }
 
-    .detailButton {
+    .DetailButton {
       margin-top: 1rem;
+      margin-bottom: 0.5rem;
       width: 7rem;
       background-color: $light_green;
     }
+  }
+}
+
+.SkeletonContainer {
+  display: grid;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+@media screen and (min-width: 300px) {
+  .SkeletonContainer {
+    grid-template-columns: repeat(1, 1fr);
+    .singleDestination {
+      max-width: 120vh;
+    }
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .SkeletonContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 840px) {
+  .SkeletonContainer {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

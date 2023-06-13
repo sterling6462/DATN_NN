@@ -37,20 +37,23 @@ interface BillTitleItemProps {
 export const BillTitleItem = (props: BillTitleItemProps) => {
   const { title, value, xs, classItems, columnGap } = props
   return (
-    <Grid item xs={xs || 6} className={styles.InfoItem} columnGap={columnGap}>
+    <Grid item xs={xs} className={styles.InfoItem} columnGap={columnGap}>
       <Typography
-        className={clsx(styles.Body1, styles.Title, classItems?.titleClass)}
+        component={'span'}
+        className={clsx(styles.Body2, styles.Title, classItems?.titleClass)}
       >
         {title}
       </Typography>
       <Typography
-        className={clsx(styles.Subhead1, styles.Value, classItems?.valueClass)}
+        component={'span'}
+        className={clsx(styles.Subhead2, styles.Value, classItems?.valueClass)}
       >
         {value}
       </Typography>
     </Grid>
   )
 }
+
 export const CardBillDetail = (props: CardBillDetailProps) => {
   const { data } = props
   const { houseInfo } = useHouseStore()
@@ -60,35 +63,41 @@ export const CardBillDetail = (props: CardBillDetailProps) => {
       <>
         <Grid display={'flex'} justifyContent={'center'}>
           <Card className={styles.CardBillDetail}>
-            <Typography className={clsx(styles.TitleBill, styles.Headline5)}>
+            <Typography
+              component={'span'}
+              className={clsx(styles.TitleBill, styles.Headline5)}
+            >
               Room rent Receipt
             </Typography>
             <Grid container columnSpacing={2} className={styles.ContainerInfo}>
               <BillTitleItem
                 title="House"
+                xs={12}
+                columnGap={5}
                 value={houseInfo?.name}
-                columnGap={8}
               />
               <BillTitleItem
-                title="Location"
-                value={houseInfo?.location}
-                columnGap={3}
-              />
-              <BillTitleItem
+                xs={12}
+                columnGap={5}
                 title="Room"
                 value={data?.roomName}
+              />
+              <BillTitleItem
                 xs={12}
-                columnGap={10}
+                columnGap={3}
+                title="Location"
+                value={houseInfo?.location}
               />
               <BillTitleItem
                 title="Create by"
                 value={data?.createBy}
-                columnGap={6}
+                columnGap={3}
               />
               <BillTitleItem
+                xs={12}
                 title="Create at"
                 value={dateTimeFormat(data?.createdAt || '')}
-                columnGap={2}
+                columnGap={3}
               />
             </Grid>
             <TableBill data={data} className={styles.TableBill} />
@@ -97,10 +106,14 @@ export const CardBillDetail = (props: CardBillDetailProps) => {
       </>
     )
   }
+
   return (
     <Grid display={'flex'} justifyContent={'center'}>
       <Card className={styles.CardBillDetail}>
-        <Typography className={clsx(styles.TitleBill, styles.Headline5)}>
+        <Typography
+          component={'span'}
+          className={clsx(styles.TitleBill, styles.Headline5)}
+        >
           Room rent Receipt
         </Typography>
 

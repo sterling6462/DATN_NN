@@ -46,7 +46,10 @@ export const CardItemHeader = (props: CardItemHeaderProps) => {
   return (
     <Card className={styles.CardContainer}>
       {icon}
-      <Typography className={clsx(styles.Subhead2, styles.CardTitle)}>
+      <Typography
+        component={'span'}
+        className={clsx(styles.Subhead2, styles.CardTitle)}
+      >
         {title}
       </Typography>
     </Card>
@@ -69,10 +72,16 @@ export const CardHeader = (props: CardHeaderProps) => {
               <HiHome className={styles.CardIcon} />
             </Grid>
             <Grid item className={styles.HostInfo}>
-              <Typography className={clsx(styles.Subhead2, styles.CardTitle)}>
+              <Typography
+                component={'span'}
+                className={clsx(styles.Subhead2, styles.CardTitle)}
+              >
                 On supervising
               </Typography>
-              <Typography className={clsx(styles.Subhead1, styles.CardTitle)}>
+              <Typography
+                component={'span'}
+                className={clsx(styles.Subhead1, styles.CardTitle)}
+              >
                 {homeName} house
               </Typography>
             </Grid>
