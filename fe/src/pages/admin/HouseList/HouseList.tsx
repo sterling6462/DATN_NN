@@ -7,24 +7,15 @@ import {
   Layout,
   ListView,
   PopupAdd,
-  Rating,
+  RatingNumber,
   TableActionDelete,
   TableActionDetail,
   TableActionEdit,
-  currencyFormat
+  currencyFormat,
+  dataDropdownRating
 } from 'components'
 import { CREATE_HOUSE, LIST_HOUSE } from 'constants/ApiConstant'
 import { FieldValues } from 'react-hook-form'
-
-// TODO: replace fields by api
-const inputs: Array<Control<FieldValues>> = [
-  {
-    name: 'member',
-    type: FormInputEnum.INPUT,
-    required: { value: true, message: 'Member is required' },
-    placeholder: 'Enter your member *'
-  }
-]
 
 class HouseLists {
   @Column({
@@ -39,7 +30,7 @@ class HouseLists {
     sort: true,
     align: 'center',
     width: '8%',
-    render: ({ rate }) => <Rating value={rate} />
+    render: ({ rate }) => <RatingNumber value={rate} />
   })
   rate?: number
 
@@ -100,6 +91,54 @@ class HouseLists {
     align: 'center',
     padding: 'none',
     render: (entity: Entity) => {
+      // TODO: replace fields by api
+      const inputs: Array<Control<FieldValues>> = [
+        {
+          name: 'rate',
+          label: 'Rate',
+          type: FormInputEnum.SELECT,
+          required: { value: true, message: 'Rating house is required' },
+          placeholder: 'Select your rating house *',
+          data: dataDropdownRating,
+          defaultValue: entity.rate
+        },
+        {
+          name: 'electricityPrice',
+          label: 'Electricity price',
+          type: FormInputEnum.NUMBER,
+          min: {
+            value: 0,
+            message: 'Enter member must be greater than 0'
+          },
+          required: { value: true, message: 'Electricity Price is required' },
+          placeholder: 'Enter your Electricity price *',
+          defaultValue: entity.electricityPrice
+        },
+        {
+          name: 'waterPrice',
+          label: 'Water price',
+          type: FormInputEnum.NUMBER,
+          min: {
+            value: 0,
+            message: 'Enter member must be greater than 0'
+          },
+          required: { value: true, message: 'Water price is required' },
+          placeholder: 'Enter your Water price *',
+          defaultValue: entity.waterPrice
+        },
+        {
+          name: 'wifiPrice',
+          label: 'Wifi price',
+          type: FormInputEnum.NUMBER,
+          min: {
+            value: 0,
+            message: 'Enter member must be greater than 0'
+          },
+          required: { value: true, message: 'Wifi price is required' },
+          placeholder: 'Enter your Wifi price *',
+          defaultValue: entity.wifiPrice
+        }
+      ]
       return (
         <TableActionEdit
           id="house_list"
@@ -162,48 +201,86 @@ const inputsPopup = [
     placeholder: 'Enter your House name'
   },
   {
+    name: 'floorCount',
+    type: FormInputEnum.NUMBER,
+    label: 'Floor count *',
+    required: { value: true, message: 'Floor count is required' },
+    min: {
+      value: 1,
+      message: 'Floor count must be at least than 1'
+    },
+    max: {
+      value: 50,
+      message: "Floor count can't be higher than 50"
+    },
+    placeholder: 'Enter your Floor count'
+  },
+  {
     name: 'location',
-    type: FormInputEnum.INPUT,
+    description: 'location',
+    type: FormInputEnum.MAP,
     label: 'Location *',
     placeholder: 'Enter your location',
     required: { value: true, message: 'Location is required' },
     maxLength: { value: 500, message: "Location can't be longer than 500" }
   },
   {
-    name: 'managerId',
-    type: FormInputEnum.SELECT,
-    label: 'Manager *',
-    placeholder: 'Select Manager you want'
-  },
-  {
     name: 'rate',
-    type: FormInputEnum.NUMBER,
+    type: FormInputEnum.SELECT,
     label: 'Rate *',
-    required: { value: true, message: 'Room number is required' },
-    placeholder: 'Enter your Room rating'
+    required: { value: true, message: 'Rating is required' },
+    placeholder: 'Enter your Room rating',
+    data: dataDropdownRating
   },
   {
     name: 'electricityPrice',
     type: FormInputEnum.NUMBER,
     label: 'Electricity price *',
-    placeholder: 'Enter your electricity price',
+    placeholder: 'Enter your Electricity price',
     required: { value: true, message: 'Electricity price is required' },
-    maxLength: {
-      value: 500,
-      message: "Electricity price can't be longer than 500"
+    min: {
+      value: 1,
+      message: 'Floor must be at least than 1'
+    },
+    max: {
+      value: 100000,
+      message: "Floor can't be higher than 100000"
     }
   },
   {
     name: 'waterPrice',
     type: FormInputEnum.NUMBER,
     label: 'Water price *',
-    placeholder: 'Enter your Water price'
+    placeholder: 'Enter your Water price',
+    min: {
+      value: 1,
+      message: 'Floor must be at least than 1'
+    },
+    max: {
+      value: 100000,
+      message: "Floor can't be higher than 100000"
+    }
   },
   {
     name: 'wifiPrice',
     type: FormInputEnum.NUMBER,
     label: 'Wifi Price *',
     required: { value: true, message: 'Wifi price is required' },
+    placeholder: 'Enter your Wifi price',
+    min: {
+      value: 1,
+      message: 'Floor must be at least than 1'
+    },
+    max: {
+      value: 100000,
+      message: "Floor can't be higher than 100000"
+    }
+  },
+  {
+    name: 'detail',
+    type: FormInputEnum.INPUT,
+    label: 'Detail *',
+    required: { value: true, message: 'Detail is required' },
     placeholder: 'Enter your Wifi price'
   }
 ]
@@ -226,6 +303,7 @@ export default function HouseList() {
             textButton="Add house"
             titlePopup="Add new house"
             baseURLPopup={CREATE_HOUSE}
+            baseURLReload={LIST_HOUSE}
           />
         }
       />
