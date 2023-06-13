@@ -6,7 +6,7 @@ import styles from './style.module.scss'
 
 export default function About() {
   return (
-    <Layout>
+    <Layout post>
       <Grid container className={styles.About}>
         <Grid item xs={5}>
           <LottieAnimation

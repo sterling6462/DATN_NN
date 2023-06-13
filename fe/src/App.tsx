@@ -1,4 +1,5 @@
 import { SnackbarProvider } from 'notistack'
+import Profile from 'pages/Profile'
 import About from 'pages/about'
 import BillDetailAdmin from 'pages/admin/Bill/BillDetail'
 import BillListAdmin from 'pages/admin/Bill/BillList'
@@ -6,14 +7,12 @@ import { HouseDetail } from 'pages/admin/HouseList/HouseDetail'
 import HouseList from 'pages/admin/HouseList/HouseList'
 import ManagerDetail from 'pages/admin/Manager/ManagerDetail'
 import ManagerList from 'pages/admin/Manager/ManagerList'
-import AdminReport from 'pages/admin/Report'
 import Dashboard from 'pages/dashboard'
 import Home from 'pages/home'
 import Login from 'pages/login'
 import BillDetailManager from 'pages/manager/Bill/BillDetail'
 import BillListManager from 'pages/manager/Bill/BillList'
 import MyHouse from 'pages/manager/MyHouse'
-import ManagerReport from 'pages/manager/Report'
 import { RoomDetail } from 'pages/manager/Room/RoomDetail'
 import RoomList from 'pages/manager/Room/RoomList'
 import Service from 'pages/manager/Service'
@@ -34,7 +33,6 @@ import { PATH } from './constants/Paths'
 function App() {
   const [isLogged, setIsLogged] = useState<boolean | undefined>(undefined)
   const setAuth = useAuthStore((store) => store.setAuth)
-  const { auth } = useAuthStore()
   const { setHouseInfo } = useHouseStore()
 
   useEffect(() => {
@@ -76,6 +74,7 @@ function AuthorizedRoutes() {
       <Route path={PATH.REGISTER} element={<Register />} />
 
       <Route path={PATH.DASHBOARD} element={<Dashboard />} />
+      <Route path={PATH.PROFILE} element={<Profile />} />
 
       {/* Manager */}
       <Route path={PATH.MANAGER.MY_HOUSE} element={<MyHouse />} />
@@ -88,7 +87,6 @@ function AuthorizedRoutes() {
         element={<BillDetailManager />}
       />
       <Route path={PATH.MANAGER.TENANT} element={<Tenant />} />
-      <Route path={PATH.MANAGER.REPORT} element={<ManagerReport />} />
 
       {/* Admin */}
       <Route path={PATH.ADMIN.HOUSE_LIST} element={<HouseList />} />
@@ -100,7 +98,6 @@ function AuthorizedRoutes() {
       />
       <Route path={PATH.ADMIN.BILL} element={<BillListAdmin />} />
       <Route path={PATH.ADMIN.BILL + '/:id'} element={<BillDetailAdmin />} />
-      <Route path={PATH.ADMIN.REPORT} element={<AdminReport />} />
     </Routes>
   )
 }

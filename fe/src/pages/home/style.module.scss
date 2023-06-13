@@ -1,9 +1,9 @@
 @import '../../components/Styles/global.scss';
 
-.main {
+.Home {
   width: 100%;
-
-  .title {
+  // padding: 1.5rem;
+  .Title {
     position: relative;
     width: max-content;
     color: $light_green;
@@ -31,8 +31,19 @@
 
 // MEDIA QUERIES
 
+@media screen and (min-width: 1240px) {
+  .Home {
+    width: 80% !important;
+    margin: auto !important;
+    padding: 3rem 0 4rem;
+  }
+  .ListContent {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media screen and (min-width: 500px) {
-  .title {
+  .Title {
     font-size: 1.5rem;
     &::after {
       width: 155px !important;

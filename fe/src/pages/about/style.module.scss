@@ -1,7 +1,8 @@
-@import 'components/styles/global.scss';
+@import '../../components/styles/global.scss';
 
 .About {
   align-items: center;
+  min-height: 90vh;
   height: 70vh;
   & .Content {
     .Title {
