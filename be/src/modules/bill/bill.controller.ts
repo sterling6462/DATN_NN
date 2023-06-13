@@ -5,6 +5,7 @@ import { MainValidationPipe, ParseObjectIdPipe } from '../../pipes';
 import { BillCreateDto, BillEditDto, BillSearchDto } from './dto';
 
 @Controller('bill')
+@UsePipes(new MainValidationPipe())
 export class BillController {
   constructor(private readonly _service: BillService) {}
   // @HttpCode(HttpStatus.OK)

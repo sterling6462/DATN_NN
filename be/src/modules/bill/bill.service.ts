@@ -5,7 +5,6 @@ import { BaseLogger } from '../../core/logger';
 import { ObjectId } from 'mongodb';
 import { BillCreateDto, BillEditDto, BillSearchDto } from './dto';
 import { getPagination, sortData } from '../../pagination';
-import { searchKeyword } from '../../search';
 
 @Injectable()
 export class BillService extends BaseLogger {
@@ -20,17 +19,17 @@ export class BillService extends BaseLogger {
     this.roomCollection = this.connection.collection('rooms');
   }
   async getAllBill(query: BillSearchDto): Promise<any> {
-    const { page: queryPage, size = 20, sortKey = '_id', sortOrder = 'desc', roomId, houseId, keyword } = query;
+    const { page: queryPage, size = 20, sortKey = '_id', sortOrder = 'desc', roomId, houseId } = query;
     const { skip, take } = getPagination(queryPage, size);
-    let where: any;
 
-    if (keyword) where.name = searchKeyword(keyword);
-    if (roomId) where.roomId = new ObjectId(roomId);
-    if (houseId) where.houseId = new ObjectId(houseId);
+    const filter: any = {};
+    
+    if (roomId) filter.roomId = new ObjectId(roomId);
+    if (houseId) filter.houseId = new ObjectId(houseId);
 
     const [data, total] = await Promise.all([
-      this.billCollection.find(where).sort(sortData(sortKey, sortOrder)).skip(skip).limit(take).toArray(),
-      this.billCollection.count()
+      this.billCollection.find(filter).sort(sortData(sortKey, sortOrder)).skip(skip).limit(take).toArray(),
+      this.billCollection.count(filter)
     ]);
     const bill = await Promise.all(
       data.map(async (a) => {
@@ -45,6 +44,7 @@ export class BillService extends BaseLogger {
           createBy: a.createBy,
           createdAt: a.createdAt,
           roomBill: a.roomBill,
+          otherBill: a.otherBill,
           status: a.status,
           roomName: room.name
         };
@@ -56,15 +56,19 @@ export class BillService extends BaseLogger {
   async findBillById(id: ObjectId): Promise<any> {
     const bill = await this.billCollection.findOne({ _id: id });
     if (!bill) throw new BadRequestException([{ field: 'Id', message: 'Bill is invalid' }]);
-    return bill;
+    const room = await this.roomCollection.findOne({ _id: bill.roomId });
+
+    return { ...bill, roomName: room.name };
   }
 
   async createBill(data: BillCreateDto, user: any): Promise<any> {
     const { roomId, numberElectricity, other } = data;
+    console.log(numberElectricity);
+    
     const room = await this.roomCollection.findOne({ _id: new ObjectId(roomId) });
     if (!room) throw new BadRequestException({ field: 'Id', message: 'Room is invalid' });
     const { member, price, houseId } = room;
-    if (houseId !== user['houseId']) throw new BadRequestException([{ field: 'HouseId', message: 'Dont Permission' }]);
+    if (houseId.toString() !== user['houseId']) throw new BadRequestException([{ field: 'HouseId', message: 'Dont Permission' }]);
     if (!member) throw new BadRequestException([{ field: 'RoomId', message: 'This is empty room ' }]);
     const house = await this.houseCollection.findOne({ _id: new ObjectId(houseId) });
     const { electricityPrice, waterPrice, wifiPrice } = house;
@@ -112,7 +116,7 @@ export class BillService extends BaseLogger {
     const room = await this.roomCollection.findOne({ _id: new ObjectId(bill.roomId) });
 
     const { member, price, houseId } = room;
-    if (houseId !== user['houseId']) throw new BadRequestException([{ field: 'HouseId', message: 'Dont Permission' }]);
+    if (houseId.toString() !== user['houseId']) throw new BadRequestException([{ field: 'HouseId', message: 'Dont Permission' }]);
     const house = await this.houseCollection.findOne({ _id: new ObjectId(houseId) });
     const { electricityPrice, waterPrice, wifiPrice } = house;
     const electricityBill = electricityPrice * numberElectricity;
