@@ -6,9 +6,10 @@ export const PAGINATION = {
 
 export const REGEX_FILTER = /[-\/\\^$*+?.()|[\]{}]/g;
 
-export const ROLE = {
-  SUB_ADMIN: 'SubAdmin',
-  ADMIN: 'Admin',
+export enum Role  {
+  MANAGER= 'manager',
+  ADMIN= 'admin',
+  MEMBER= 'member'
 };
 
 export enum ORDER {
