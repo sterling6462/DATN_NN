@@ -1,11 +1,8 @@
-import { Card, Grid, Typography } from '@mui/material'
+import { Button, Card, Grid, Skeleton, Typography } from '@mui/material'
 import houseForRent from 'assets/img/houseForRent.jpg'
 import clsx from 'clsx'
-import { PrimaryButton } from 'components'
-import {
-  HiOutlineClipboardCheck,
-  HiOutlineLocationMarker
-} from 'react-icons/hi'
+import { LocationItem, PrimaryButton } from 'components'
+import { HiOutlineClipboardCheck } from 'react-icons/hi'
 import styles from './style.module.scss'
 
 type CardHomeProps = {
@@ -14,54 +11,43 @@ type CardHomeProps = {
   name?: string
   location?: string
   roomAvailable?: number
-  descriptions?: string
+  detail?: string
 }
 
 export const CardHome = (record: CardHomeProps) => {
-  const { id, imgSrc, name, location, roomAvailable, descriptions } = record
-  // const navigate = useNavigate()
-
-  // const handleClick = (id: string) => {
-  //   navigate(id)
-  // }
+  const { id, imgSrc, name, location, roomAvailable, detail } = record
 
   return (
     <Card key={id} className={styles.singleDestination} data-aos="fade-up">
-      <div className={styles.imageDiv}>
+      <div className={styles.Image}>
         <img src={houseForRent} alt={houseForRent} />
       </div>
-      <div className={styles.cardInfo}>
+      <div className={styles.CardInfo}>
         <Typography className={clsx(styles.Name, styles.Headline6)}>
           {name}
         </Typography>
-        <span className={clsx(styles.ContainerLocation, styles.flex)}>
-          <HiOutlineLocationMarker className={styles.icon} />
-          <span className={styles.Location}>{location}</span>
-        </span>
+        <LocationItem
+          location={location}
+          locationClasses={{
+            root: styles.Location,
+            text: styles.LocationText
+          }}
+        />
 
         <div className={clsx(styles.RoomInfo, styles.flex)}>
-          <div className={styles.RoomAvailable}>Room available</div>
+          <div className={clsx(styles.RoomAvailable, styles.Body1)}>
+            Room available
+          </div>
           <div className={clsx(styles.RoomNumber, styles.Headline4)}>
             <h5>{roomAvailable}</h5>
           </div>
         </div>
 
-        <div className={styles.desc}>
-          {descriptions ? (
-            <p>{descriptions}</p>
-          ) : (
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Veritatis, sed perspiciatis repellendus rerum esse doloribus sequi
-              optio eligendi cumque quasi voluptate corrupti amet modi nostrum
-              necessitatibus mollitia magnam aliquid culpa?
-            </p>
-          )}
-        </div>
+        <div className={clsx(styles.Detail, styles.Body2)}>{detail}</div>
         <Grid display={'flex'} justifyContent={'flex-start'}>
           <PrimaryButton
             endIcon={<HiOutlineClipboardCheck />}
-            className={styles.detailButton}
+            className={styles.DetailButton}
             onClick={() => undefined}
           >
             Detail
@@ -69,5 +55,43 @@ export const CardHome = (record: CardHomeProps) => {
         </Grid>
       </div>
     </Card>
+  )
+}
+
+export const SkeletonItem = () => {
+  return (
+    <Card key={'skeleton'} className={styles.singleDestination}>
+      <Grid display={'flex'} flexDirection={'column'}>
+        <Skeleton variant="rounded" width={'100%'}>
+          <div style={{ paddingBottom: '90%' }} />
+        </Skeleton>
+        <Skeleton width={'40%'} sx={{ marginTop: '5%' }}>
+          <Typography variant="button">.</Typography>
+        </Skeleton>
+        <Skeleton width={'60%'}>
+          <Typography variant="button">.</Typography>
+        </Skeleton>
+        <Skeleton
+          width={'20%'}
+          variant="rounded"
+          sx={{ borderRadius: '50px', marginTop: '5%' }}
+        >
+          <Button sx={{ paddingTop: '10%' }}>.</Button>
+        </Skeleton>
+      </Grid>
+    </Card>
+  )
+}
+
+export const SkeletonCardHome = () => {
+  return (
+    <Grid className={styles.SkeletonContainer}>
+      <SkeletonItem />
+      <SkeletonItem />
+      <SkeletonItem />
+      <SkeletonItem />
+      <SkeletonItem />
+      <SkeletonItem />
+    </Grid>
   )
 }

@@ -33,9 +33,8 @@
 }
 
 .CardServiceBill {
-  // padding: 0 1rem 1rem 1rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
   .LeftCard {
     .CardContainer {
       min-width: 10rem;
