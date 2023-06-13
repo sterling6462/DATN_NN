@@ -1,12 +1,12 @@
+import { Typography } from '@mui/material'
+import clsx from 'clsx'
 import {
   Column,
   Control,
   Entity,
   FormInputEnum,
-  Header,
   Layout,
   ListView,
-  PopupAdd,
   Status,
   TableActionDelete,
   TableActionDetail,
@@ -14,14 +14,20 @@ import {
   currencyFormat,
   dateFormat
 } from 'components'
-import { CREATE_BILL, DROPDOWN_ROOM, LIST_BILL } from 'constants/ApiConstant'
+import { DROPDOWN_ROOM, LIST_BILL } from 'constants/ApiConstant'
 import { FieldValues } from 'react-hook-form'
+import styles from './style.module.scss'
 
 class BillLists {
   @Column({
     title: 'Name',
     sort: true,
-    width: '5%'
+    width: '5%',
+    render: ({ roomName }) => (
+      <Typography className={clsx(styles.Subhead2, styles.NameTableCell)}>
+        {roomName}
+      </Typography>
+    )
   })
   roomName?: string
 
@@ -76,7 +82,11 @@ class BillLists {
     sort: true,
     align: 'center',
     width: '10%',
-    render: ({ total }) => <span>{currencyFormat(total)}</span>
+    render: ({ total }) => (
+      <Typography className={clsx(styles.Subhead2, styles.PriceTableCell)}>
+        {currencyFormat(total)}
+      </Typography>
+    )
   })
   total?: string
 
@@ -127,6 +137,10 @@ class BillLists {
           name: 'numberElectricity',
           label: 'Electricity index',
           type: FormInputEnum.NUMBER,
+          min: {
+            value: 1,
+            message: 'Enter member must be greater than 1'
+          },
           required: { value: true, message: 'Electricity index is required' },
           placeholder: 'Enter your Electricity index '
           // defaultValue: entity.member
@@ -135,7 +149,7 @@ class BillLists {
           name: 'status',
           label: 'Status',
           type: FormInputEnum.SELECT,
-          // required: { value: true, message: 'Status is required' },
+          required: { value: true, message: 'Status is required' },
           data: dataSelectStatus
         }
       ]
@@ -198,6 +212,10 @@ const inputsPopup = [
     name: 'numberElectricity',
     type: FormInputEnum.NUMBER,
     label: 'Electricity index *',
+    min: {
+      value: 1,
+      message: 'Enter member must be greater than 1'
+    },
     required: {
       value: true,
       message: 'Electricity index is required'
@@ -207,6 +225,10 @@ const inputsPopup = [
   {
     name: 'other',
     type: FormInputEnum.NUMBER,
+    min: {
+      value: 1,
+      message: 'Enter member must be greater than 0'
+    },
     label: 'Costs incurred',
     placeholder: 'Enter Costs incurred'
   }
@@ -215,7 +237,6 @@ const inputsPopup = [
 export default function BillListAdmin() {
   return (
     <Layout>
-      <Header houseDetail />
       <ListView
         baseURL={LIST_BILL}
         id="bill_list"
@@ -224,16 +245,6 @@ export default function BillListAdmin() {
         titleTable="All house bills"
         descTitle="You will see monthly invoices generated or create a monthly invoice if not already created"
         model={BillLists}
-        popupButton={
-          <PopupAdd
-            managerRole
-            inputsPopup={inputsPopup}
-            textButton="Add bill"
-            titlePopup="Add new bill"
-            baseURLPopup={CREATE_BILL}
-            baseURLReload={LIST_BILL}
-          />
-        }
       />
     </Layout>
   )

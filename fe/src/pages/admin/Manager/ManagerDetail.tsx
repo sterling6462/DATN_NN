@@ -5,18 +5,11 @@ import {
   Layout,
   dataDropdownRole
 } from 'components'
-import { DETAIL_MANAGER } from 'constants/ApiConstant'
+import { DETAIL_MANAGER, DROPDOWN_HOUSE } from 'constants/ApiConstant'
 import { useAPI } from 'hook'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styles from './style.module.scss'
-
-//TODO: replace by API house management
-export const dataManageHouseSample = [
-  { _id: '6478d36c16a480e3e3050f19', name: 'Nhu Ngoc' },
-  { _id: '646f7cae51c802a70742751b', name: 'Hoa Cam Bac' },
-  { _id: '646f7bbdb78602df88a8261b', name: 'Cam Le' }
-]
 
 export const textFieldClasses = {
   inputBaseRoot: styles.InputBaseRoot,
@@ -105,7 +98,7 @@ export default function ManagerDetail() {
       type: FormInputEnum.SELECT,
       label: 'Management house',
       placeholder: 'Select a Management House',
-      data: dataManageHouseSample,
+      dropdownURL: DROPDOWN_HOUSE,
       defaultValue: data?.houseId,
       textFieldClasses: textFieldClasses
     }
