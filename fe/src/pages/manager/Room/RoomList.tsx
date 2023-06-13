@@ -1,3 +1,5 @@
+import { Typography } from '@mui/material'
+import clsx from 'clsx'
 import {
   Column,
   Control,
@@ -12,17 +14,24 @@ import {
   TableActionDetail,
   TableActionEdit,
   currencyFormat,
+  dataDropdownTypeRoom,
   dateFormat,
   useHouseStore
 } from 'components'
 import { CREATE_ROOM, LIST_ROOM } from 'constants/ApiConstant'
 import { FieldValues } from 'react-hook-form'
+import styles from './style.module.scss'
 
 class RoomLists {
   @Column({
     title: 'Room name',
     sort: true,
-    width: '12%'
+    width: '12%',
+    render: ({ name }) => (
+      <Typography className={clsx(styles.Subhead2, styles.NameTableCell)}>
+        {name}
+      </Typography>
+    )
   })
   name?: string
 
@@ -39,7 +48,11 @@ class RoomLists {
     sort: true,
     align: 'center',
     width: '12%',
-    render: ({ price }) => <span>{currencyFormat(price)}</span>
+    render: ({ price }) => (
+      <Typography className={clsx(styles.Subhead2, styles.PriceTableCell)}>
+        {currencyFormat(price)}
+      </Typography>
+    )
   })
   price?: number
 
@@ -120,20 +133,15 @@ class RoomLists {
       // TODO: replace fields by api
       const inputs: Array<Control<FieldValues>> = [
         {
-          name: 'member',
-          label: 'Member',
-          type: FormInputEnum.NUMBER,
-          required: { value: true, message: 'Member is required' },
-          max: {
-            value: entity.maxMember,
-            message: 'Enter member must be less than Max member'
+          name: 'type',
+          type: FormInputEnum.SELECT,
+          label: 'Type room *',
+          required: {
+            value: true,
+            message: 'Type room is required'
           },
-          min: {
-            value: 0,
-            message: 'Enter member must be greater than 0'
-          },
-          placeholder: 'Enter your member ',
-          defaultValue: entity.member
+          placeholder: 'Select your Type room ',
+          data: dataDropdownTypeRoom
         }
       ]
       return (
@@ -180,24 +188,7 @@ class RoomLists {
   })
   detail?: string
 }
-const dropdownTypeRoom = [
-  {
-    _id: 'normal',
-    name: 'Normal'
-  },
-  {
-    _id: 'VIP',
-    name: 'VIP'
-  },
-  {
-    _id: 'apartment',
-    name: 'Apartment'
-  },
-  {
-    _id: 'VIP apartment',
-    name: 'VIP apartment'
-  }
-]
+
 const inputsPopup = [
   {
     name: 'type',
@@ -208,7 +199,7 @@ const inputsPopup = [
       message: 'Type room is required'
     },
     placeholder: 'Select your Type room ',
-    data: dropdownTypeRoom
+    data: dataDropdownTypeRoom
   },
   {
     name: 'floor',

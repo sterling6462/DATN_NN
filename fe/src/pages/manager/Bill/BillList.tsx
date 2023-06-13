@@ -12,9 +12,15 @@ import {
   TableActionDetail,
   TableActionEdit,
   currencyFormat,
-  dateFormat
+  dateFormat,
+  useHouseStore
 } from 'components'
-import { CREATE_BILL, DROPDOWN_ROOM, LIST_BILL } from 'constants/ApiConstant'
+import {
+  CREATE_BILL,
+  DROPDOWN_ROOM,
+  LIST_BILL,
+  LIST_BILL_BY_HOUSE
+} from 'constants/ApiConstant'
 import { FieldValues } from 'react-hook-form'
 
 class BillLists {
@@ -127,6 +133,22 @@ class BillLists {
           name: 'numberElectricity',
           label: 'Electricity index',
           type: FormInputEnum.NUMBER,
+          min: {
+            value: 1,
+            message: 'Enter member must be greater than 1'
+          },
+          required: { value: true, message: 'Electricity index is required' },
+          placeholder: 'Enter your Electricity index '
+          // defaultValue: entity.member
+        },
+        {
+          name: 'other',
+          label: 'Costs incurred',
+          type: FormInputEnum.NUMBER,
+          min: {
+            value: 1,
+            message: 'Enter member must be greater than 1'
+          },
           required: { value: true, message: 'Electricity index is required' },
           placeholder: 'Enter your Electricity index '
           // defaultValue: entity.member
@@ -198,6 +220,10 @@ const inputsPopup = [
     name: 'numberElectricity',
     type: FormInputEnum.NUMBER,
     label: 'Electricity index *',
+    min: {
+      value: 1,
+      message: 'Enter member must be greater than 1'
+    },
     required: {
       value: true,
       message: 'Electricity index is required'
@@ -213,28 +239,34 @@ const inputsPopup = [
 ]
 
 export default function BillListManager() {
-  return (
-    <Layout>
-      <Header houseDetail />
-      <ListView
-        baseURL={LIST_BILL}
-        id="bill_list"
-        search
-        pagination
-        titleTable="All house bills"
-        descTitle="You will see monthly invoices generated or create a monthly invoice if not already created"
-        model={BillLists}
-        popupButton={
-          <PopupAdd
-            managerRole
-            inputsPopup={inputsPopup}
-            textButton="Add bill"
-            titlePopup="Add new bill"
-            baseURLPopup={CREATE_BILL}
-            baseURLReload={LIST_BILL}
-          />
-        }
-      />
-    </Layout>
-  )
+  const { houseInfo } = useHouseStore()
+  const houseId = houseInfo?._id
+
+  if (houseId) {
+    return (
+      <Layout>
+        <Header houseDetail />
+        <ListView
+          id="bill_list"
+          baseURL={LIST_BILL_BY_HOUSE.replace('=id', `=${houseId}`)}
+          search
+          pagination
+          titleTable="All house bills"
+          descTitle="You will see monthly invoices generated or create a monthly invoice if not already created"
+          model={BillLists}
+          popupButton={
+            <PopupAdd
+              managerRole
+              inputsPopup={inputsPopup}
+              textButton="Add bill"
+              titlePopup="Add new bill"
+              baseURLPopup={CREATE_BILL}
+              baseURLReload={LIST_BILL}
+            />
+          }
+        />
+      </Layout>
+    )
+  }
+  return <></>
 }

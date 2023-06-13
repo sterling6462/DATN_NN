@@ -1,231 +1,214 @@
 import {
   Column,
+  Control,
+  Entity,
   FormInputEnum,
   Header,
   Layout,
   ListView,
   PopupAdd,
-  Status,
-  dateFormat
+  TableActionDelete,
+  TableActionDetail,
+  TableActionEdit
 } from 'components'
+import {
+  CREATE_MEMBER,
+  DROPDOWN_ROOM,
+  LIST_MANAGER
+} from 'constants/ApiConstant'
+import { FieldValues } from 'react-hook-form'
+
+// TODO: replace fields by api
+const inputs: Array<Control<FieldValues>> = [
+  {
+    name: 'member',
+    type: FormInputEnum.INPUT,
+    required: { value: true, message: 'Member is required' },
+    placeholder: 'Enter your member *'
+  }
+]
 
 class TenantLists {
   @Column({
-    title: 'Tenant name',
-    width: '15%'
+    title: 'Username',
+    sort: true,
+    width: '25%'
   })
-  tenantName?: string
+  username?: string
 
   @Column({
-    title: 'Room number',
-    align: 'center',
-    width: '12%'
+    title: 'First name',
+    sort: true,
+    width: '10%'
   })
-  roomName?: number
+  firstName?: string
+
+  @Column({
+    title: 'Last name',
+    sort: true,
+    width: '10%'
+  })
+  lastName?: string
 
   @Column({
     title: 'Phone',
+    sort: true,
     align: 'center',
-    width: '10%'
+    width: '15%'
   })
   phone?: number
 
   @Column({
-    title: 'Birthday',
-    align: 'center',
-    width: '15%',
-    render: ({ birthday }) => <span>{dateFormat(birthday)}</span>
-  })
-  birthday?: string
-
-  @Column({
     title: 'Location',
-    width: '25%'
+    sort: true,
+    width: '20%'
   })
-  location?: string
+  location?: number
 
   @Column({
-    title: 'CI number',
+    width: '3%',
     align: 'center',
-    width: '10%'
+    padding: 'none',
+    render: (entity: Entity) => {
+      return (
+        <TableActionEdit
+          id="house_list"
+          titlePopup="Edit house"
+          entity={{ labelNoti: entity.name }}
+          baseURL={`${LIST_MANAGER}/${entity._id}`}
+          inputPopupEdit={inputs}
+        />
+      )
+    }
   })
-  ciNumber?: string
+  edit?: string
 
   @Column({
-    title: 'Temporary status',
+    width: '3%',
     align: 'center',
-    width: '13%',
-    render: ({ temporaryStatus }) => {
-      if (temporaryStatus) {
-        return <Status label="Had" chipKey="Active" />
-      } else {
-        return <Status label="Not yet" chipKey="Off" />
-      }
+    padding: 'none',
+    render: (entity: Entity) => {
+      return (
+        <TableActionDelete
+          id="house_list"
+          entity={{ labelNoti: entity.name }}
+          baseURL={`${LIST_MANAGER}/${entity._id}`}
+        />
+      )
     }
   })
-  temporaryStatus?: boolean
-}
+  delete?: string
 
-const dataSample = {
-  page: 1,
-  total: 101,
-  data: [
-    {
-      tenantName: 'Nhu Ngoc',
-      roomName: 'A.101',
-      phone: 123456789,
-      birthday: '2022-09-19T19:17:55.159Z',
-      location: 'Thach Gian, Thanh Khe, Da Nang',
-      ciNumber: '123456789',
-      idStatus: true,
-      temporaryStatus: true
-    },
-    {
-      tenantName: 'Thanh Nga',
-      roomName: 'A.101',
-      phone: 123456789,
-      birthday: '2022-09-19T19:17:55.159Z',
-      location: 'Thach Gian, Thanh Khe, Da Nang',
-      ciNumber: '123456789',
-      idStatus: true,
-      temporaryStatus: false
-    },
-    {
-      tenantName: 'Phuong Tram',
-      roomName: 'A.101',
-      phone: 123456789,
-      birthday: '2022-09-19T19:17:55.159Z',
-      location: 'Thach Gian, Thanh Khe, Da Nang',
-      ciNumber: '123456789',
-      idStatus: true,
-      temporaryStatus: true
-    },
-    {
-      tenantName: 'Hoai Linh',
-      roomName: 'A.101',
-      phone: 123456789,
-      birthday: '2022-09-19T19:17:55.159Z',
-      location: 'Thach Gian, Thanh Khe, Da Nang',
-      ciNumber: '123456789',
-      idStatus: false,
-      temporaryStatus: true
-    },
-    {
-      tenantName: 'Quoc viet',
-      roomName: 'A.101',
-      phone: 123456789,
-      birthday: '2022-09-19T19:17:55.159Z',
-      location: 'Thach Gian, Thanh Khe, Da Nang',
-      ciNumber: '123456789',
-      idStatus: false,
-      temporaryStatus: false
-    },
-    {
-      tenantName: 'Duc Nam',
-      roomName: 'A.101',
-      phone: 123456789,
-      birthday: '2022-09-19T19:17:55.159Z',
-      location: 'Thach Gian, Thanh Khe, Da Nang',
-      ciNumber: '123456789',
-      idStatus: true,
-      temporaryStatus: false
-    },
-    {
-      tenantName: 'Anh Tuan',
-      roomName: 'A.101',
-      phone: 123456789,
-      birthday: '2022-09-19T19:17:55.159Z',
-      location: 'Thach Gian, Thanh Khe, Da Nang',
-      ciNumber: '123456789',
-      idStatus: false,
-      temporaryStatus: true
-    },
-    {
-      tenantName: 'Xuan Nhat',
-      roomName: 'A.101',
-      phone: 123456789,
-      birthday: '2022-09-19T19:17:55.159Z',
-      location: 'Thach Gian, Thanh Khe, Da Nang',
-      ciNumber: '123456789',
-      idStatus: true,
-      temporaryStatus: false
+  @Column({
+    width: '3%',
+    align: 'center',
+    padding: 'none',
+    render: (entity: Entity) => {
+      return (
+        <TableActionDetail
+          id={entity._id}
+          baseURL={`${LIST_MANAGER}/${entity._id}`}
+        />
+      )
     }
-  ]
+  })
+  detail?: string
 }
 
 const inputsPopup = [
   {
-    name: 'tenantName',
+    name: 'roomId',
+    label: 'Room',
+    type: FormInputEnum.SELECT,
+    required: { value: true, message: 'Room is required' },
+    placeholder: 'Select room *',
+    dropdownURL: DROPDOWN_ROOM
+  },
+  {
+    name: 'firstName',
     type: FormInputEnum.INPUT,
-    label: 'Tenant name *',
-    required: { value: true, message: 'Tenant name is required' },
+    label: "Member's fist name *",
+    required: { value: true, message: "Member's fist name is required" },
     minLength: {
-      value: 5,
-      message: 'Tenant name must be at least 5 characters'
+      value: 1,
+      message: "Member's fist name must be at least 5 characters"
     },
     maxLength: {
       value: 200,
-      message: "Tenant name can't be longer than 200 characters"
+      message: "Member's fist name can't be longer than 200 characters"
     },
-    placeholder: 'Enter your Tenant name'
+    placeholder: "Enter your Member's fist name"
+  },
+  {
+    name: 'lastName',
+    type: FormInputEnum.INPUT,
+    label: "Member's last name *",
+    required: { value: true, message: "Member's last name is required" },
+    minLength: {
+      value: 1,
+      message: "Member's last name must be at least 5 characters"
+    },
+    maxLength: {
+      value: 200,
+      message: "Member's last name can't be longer than 200 characters"
+    },
+    placeholder: "Enter your Member's last name"
   },
   {
     name: 'phone',
     type: FormInputEnum.NUMBER,
-    required: { value: true, message: 'Phone is required' },
     label: 'Phone *',
-    placeholder: 'Enter your phone'
+    required: {
+      value: true,
+      message: 'Phone is required'
+    },
+    minLength: {
+      value: 10,
+      message: 'Phone must be at least 10 characters'
+    },
+    maxLength: {
+      value: 11,
+      message: "Phone can't be longer than 11 characters"
+    },
+    placeholder: 'Enter phone number'
   },
   {
     name: 'birthday',
-    type: FormInputEnum.INPUT,
-    label: 'Birthday',
-    placeholder: 'Enter your Birthday'
-  },
-  {
-    name: 'location',
-    type: FormInputEnum.INPUT,
-    label: 'Location *',
-    placeholder: 'Enter your location',
-    required: { value: true, message: 'Location is required' },
-    maxLength: { value: 500, message: "Location can't be longer than 500" }
-  },
-  {
-    name: 'career',
-    type: FormInputEnum.INPUT,
-    label: 'Career',
-    placeholder: 'Enter your career'
-  },
-  {
-    name: 'ciNumber',
-    type: FormInputEnum.INPUT,
-    required: {
-      value: true,
-      message: 'Citizen Identification number is required'
+    type: FormInputEnum.DATE,
+    label: 'Birthday *',
+    required: { value: true, message: 'Birthday is required' },
+    minLength: {
+      value: 5,
+      message: 'Birthday must be at least 5 characters'
     },
-    label: 'Citizen Identification number (CCCD/CMND) *',
-    placeholder: 'Enter your Citizen Identification number'
+    maxLength: {
+      value: 200,
+      message: "Birthday can't be longer than 200 characters"
+    },
+    placeholder: 'Enter Birthday'
   }
 ]
 
-export default function Tenant() {
+export default function TenantList() {
   return (
     <Layout>
-      <Header houseDetail />
+      <Header />
       <ListView
-        baseURL=""
+        baseURL={LIST_MANAGER}
         id="tenant_list"
         pagination
-        titleTable="Manage tenant list"
-        descTitle="All tenant lists in your Hotel"
+        titleTable="Tenant list"
+        descTitle="All tenant"
         model={TenantLists}
-        dataSample={dataSample}
         popupButton={
           <PopupAdd
             inputsPopup={inputsPopup}
-            textButton="Add tenant"
-            titlePopup="Add new tenant"
-            baseURLPopup=""
+            textButton="Add user"
+            titlePopup="Add new user"
+            baseURLPopup={CREATE_MEMBER}
+            baseURLReload={LIST_MANAGER}
+            textAlertError="Can't create user"
+            textAlertSuccess="Create user account successfully"
           />
         }
       />
