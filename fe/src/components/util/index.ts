@@ -76,3 +76,30 @@ export const dataDropdownRole = [
   { _id: 'manager', name: 'Manager' },
   { _id: 'user', name: 'User' }
 ]
+
+export const dataDropdownRating = [
+  { _id: 1, name: '1' },
+  { _id: 2, name: '2' },
+  { _id: 3, name: '3' },
+  { _id: 4, name: '4' },
+  { _id: 5, name: '5' }
+]
+
+export const dataDropdownTypeRoom = [
+  {
+    _id: 'normal',
+    name: 'Normal'
+  },
+  {
+    _id: 'VIP',
+    name: 'VIP'
+  },
+  {
+    _id: 'apartment',
+    name: 'Apartment'
+  },
+  {
+    _id: 'VIP apartment',
+    name: 'VIP apartment'
+  }
+]

@@ -21,6 +21,7 @@ export const TableViewSearch = (props: { id: string }) => {
       InputProps={{
         startAdornment: <IconSearch />
       }}
+      boxClasses={{ containerBox: styles.ContainerBox }}
     />
   )
 }

@@ -1,6 +1,6 @@
 @import '../styles/global.scss';
 
-.footer {
+.Footer {
   width: 100%;
   position: relative;
   padding: 2rem 0;
@@ -31,10 +31,10 @@
     }
   }
 
-  .secContent {
+  .Content {
     width: 100%;
     height: max-content;
-    padding: 2rem initial;
+    padding: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,7 +43,9 @@
     row-gap: 2rem;
     z-index: 100;
 
-    .contactDiv {
+    .Contact {
+      display: flex;
+      align-items: center;
       justify-content: space-between;
       flex-direction: column;
       gap: 1rem;
@@ -61,7 +63,9 @@
         }
       }
 
-      .inputDiv {
+      .Input {
+        display: flex;
+        align-items: center;
         width: 100%;
         gap: 1rem;
         flex-direction: column;
@@ -87,7 +91,7 @@
       }
     }
 
-    .footerCard {
+    .FooterCard {
       position: relative;
       padding: 1rem 1rem 4rem;
       gap: 2rem;
@@ -98,7 +102,7 @@
       flex-direction: column;
       align-items: flex-start;
       overflow: hidden;
-
+      opacity: 0.9;
       .footerIntro {
         flex-basis: 50%;
         justify-content: center;
@@ -189,9 +193,9 @@
 }
 
 @media screen and (min-width: 500px) {
-  .footer {
-    .secContent {
-      .footerCard {
+  .Footer {
+    .Content {
+      .FooterCard {
         .footerLinks {
           grid-template-columns: repeat(3, 1fr);
           padding-bottom: 1rem;
@@ -211,14 +215,14 @@
 }
 
 @media screen and (min-width: 660px) {
-  .footer {
-    .secContent {
-      .contactDiv {
+  .Footer {
+    .Content {
+      .Contact {
         flex-direction: row;
         justify-content: space-between;
         width: 70%;
 
-        .inputDiv {
+        .Input {
           width: max-content;
           flex-direction: row;
           justify-content: flex-start;
@@ -233,10 +237,10 @@
 }
 
 @media screen and (min-width: 840px) {
-  .footer {
+  .Footer {
     padding: 5rem 0;
-    .secContent {
-      .footerCard {
+    .Content {
+      .FooterCard {
         flex-direction: row;
         .footerLinks {
           grid-template-columns: repeat(3, 1fr);
@@ -248,9 +252,9 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .footer {
-    .secContent {
-      .footerCard {
+  .Footer {
+    .Content {
+      .FooterCard {
         padding: 3rem 1rem;
         .footerIntro {
           .footerParagraph {

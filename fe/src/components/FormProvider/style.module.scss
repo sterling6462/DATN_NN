@@ -1,5 +1,17 @@
 @import '../styles/global.scss';
 
+@mixin border-color($color, $height) {
+  &:hover {
+    & .NotchedOutline {
+      border: $height solid $color;
+    }
+  }
+
+  & .NotchedOutline {
+    border: $height solid $color;
+  }
+}
+
 .TextField {
   width: 100%;
 }
@@ -10,10 +22,152 @@
     padding-bottom: 3px !important;
   }
 }
+
 .ListBoxDropdown {
   max-height: 12rem;
 }
 
 .CheckBox {
   color: $black_80;
+}
+
+//Form Date
+.ContainerBox {
+  padding: 1rem 0;
+  display: flex;
+  min-height: 4rem;
+}
+
+.InputField {
+  color: $black_100 !important;
+  font-size: 14px !important;
+  caret-color: $primary_orange;
+  width: 100%;
+
+  &:hover {
+    & .LabelRoot {
+      color: $dark_blue_text;
+    }
+    & .LabelFocused {
+      color: $primary_orange;
+    }
+    & .LabelDisabled {
+      color: $black_40;
+    }
+    & .LabelError {
+      color: $dark_red;
+    }
+  }
+
+  & .LabelRoot {
+    font-weight: 300;
+    color: $black_60;
+    transform: translate(0, -22px);
+  }
+  & .LabelFocused {
+    color: $primary_orange;
+  }
+  & .LabelError {
+    color: $dark_red;
+    &.LabelFocused {
+      color: $dark_red !important;
+    }
+  }
+
+  & .LabelDisabled {
+    color: $black_40;
+  }
+
+  & svg {
+    width: 22px;
+    height: 22px;
+    color: $black_40;
+    & + input {
+      margin-left: 9px;
+    }
+  }
+
+  & input {
+    &::placeholder {
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 20px;
+      letter-spacing: 0.25px;
+      color: $black_40;
+      opacity: 1;
+    }
+  }
+
+  & p.HelperTextRoot {
+    color: $black_60;
+    margin-top: 4px;
+  }
+
+  & p.HelperTextError {
+    color: $dark_red;
+    margin-top: 4px;
+  }
+
+  & .InputBaseDisabled {
+    svg {
+      color: $black_20;
+    }
+  }
+}
+
+.ContainerInputField {
+  & input {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  & svg + input {
+    padding: 0.5rem 1rem 0.5rem 0;
+  }
+
+  & .LabelRoot {
+    transform: translate(0, -22px);
+  }
+
+  & .NotchedOutline {
+    top: 0;
+    border-color: $black_40;
+    border-radius: 3rem;
+
+    legend {
+      display: none;
+    }
+  }
+
+  & p.HelperTextRoot {
+    margin: 0.25rem 0 0 0;
+  }
+
+  & .InputBaseRoot {
+    &:hover {
+      & .NotchedOutline {
+        border-color: $dark_blue_text;
+      }
+    }
+
+    &.InputBaseError {
+      @include border-color($dark_red, 1px);
+    }
+
+    &.InputBaseFocused {
+      @include border-color($primary_orange, 1.5px);
+
+      &.InputBaseError {
+        @include border-color($dark_red, 1.5px);
+      }
+    }
+
+    &.InputBaseDisabled {
+      background-color: $black_10;
+      @include border-color($black_10, 1px);
+
+      & input {
+        -webkit-text-fill-color: $black_40;
+      }
+    }
+  }
 }

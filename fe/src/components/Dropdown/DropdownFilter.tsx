@@ -62,7 +62,7 @@ export const DropdownFilter = (props: Props) => {
         isOptionEqualToValue={(option, value) => option?.code == value?.code}
         classes={{ input: styles.Text }}
         popupIcon={<KeyboardArrowDownRounded />}
-        noOptionsText="Không tìm thấy"
+        noOptionsText="Not found"
         onChange={(_, value) => handleChange(value)}
         value={value || null}
         renderOption={(props, option) => {

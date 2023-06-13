@@ -10,15 +10,6 @@ li {
   list-style: none;
 }
 
-.section {
-  padding: 4rem 0 2rem;
-}
-
-.container {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
 .icon {
   font-size: 1rem;
   cursor: pointer;
@@ -46,4 +37,17 @@ input {
 
 body {
   background: $background_pale_blue;
+}
+
+@mixin setColor($fontWeight, $color) {
+  font-weight: $fontWeight;
+  color: $color;
+}
+
+.NameTableCell {
+  @include setColor($Bold, $pale_dark_blue);
+}
+
+.PriceTableCell {
+  @include setColor($Bold, $dark_orange);
 }

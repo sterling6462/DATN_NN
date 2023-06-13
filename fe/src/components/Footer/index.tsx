@@ -52,19 +52,19 @@ export const Footer = () => {
   }, [])
 
   return (
-    <section className={styles.footer}>
+    <section className={styles.Footer}>
       <div className={styles.videoDiv}>
         <video src={videoApartment} loop autoPlay muted />
       </div>
 
-      <div className={clsx(styles.secContent, 'container')}>
-        <div className={clsx(styles.contactDiv, styles.flex)}>
+      <div className={styles.Content}>
+        <div className={styles.Contact}>
           <div data-aos="fade-up" className={styles.text}>
             <small>ACCOMMODATION</small>
             <h2>Find accommodation easier</h2>
           </div>
 
-          <div className={clsx(styles.inputDiv, styles.flex)}>
+          <div className={styles.Input}>
             <input
               data-aos="fade-up"
               type="text"
@@ -81,7 +81,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className={clsx(styles.footerCard, styles.flex)}>
+        <div className={clsx(styles.FooterCard, styles.flex)}>
           <div className={clsx(styles.footerIntro, styles.flex)}>
             <div className={styles.logoDiv}>
               <a href="/#" className={clsx(styles.logo, styles.flex)}>

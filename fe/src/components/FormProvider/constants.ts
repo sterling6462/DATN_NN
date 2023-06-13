@@ -5,5 +5,6 @@ export enum FormInputEnum {
   RADIO = 'radio',
   CHECKBOX = 'checkbox',
   PASSWORD = 'password',
-  DATE = 'date'
+  DATE = 'date',
+  MAP = 'map'
 }

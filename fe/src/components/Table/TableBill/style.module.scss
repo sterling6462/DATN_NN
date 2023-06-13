@@ -18,7 +18,7 @@
       & .TableCellHead {
         background-color: $light_orange;
         @include setColor($white);
-        letter-spacing: 0.12px;
+        letter-spacing: 0.3px;
         padding: 12px 1rem;
         border-bottom: none;
       }

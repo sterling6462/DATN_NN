@@ -15,6 +15,8 @@ import {
 } from 'react-hook-form'
 import { isObjectEmpty } from '../util'
 import { FormCheckbox, FormTextInput } from './FormControl'
+import { FormDate } from './FormDate'
+import { FormMap } from './FormMap'
 import { DataDropdown, FormSelect } from './FormSelect'
 import { FormInputEnum } from './constants'
 
@@ -66,8 +68,6 @@ const FormWrapper = <T extends FieldValues>(
     if (ref) (ref as MutableRefObject<UseFormReturn<T>>).current = form
   }, [])
 
-  console.log(inputs)
-
   return (
     <form>
       {inputs.map((i) => {
@@ -78,8 +78,12 @@ const FormWrapper = <T extends FieldValues>(
             return <FormTextInput key={i.name} control={i} form={form} />
           case FormInputEnum.SELECT:
             return <FormSelect key={i.name} control={i} form={form} />
+          case FormInputEnum.DATE:
+            return <FormDate key={i.name} control={i} form={form} />
           case FormInputEnum.CHECKBOX:
             return <FormCheckbox key={i.name} control={i} form={form} />
+          case FormInputEnum.MAP:
+            return <FormMap key={i.name} control={i} form={form} />
           default:
             break
         }
@@ -91,5 +95,7 @@ const FormWrapper = <T extends FieldValues>(
 export const FormProvider = forwardRef<any, Props>(FormWrapper)
 
 export * from './FormControl'
+export * from './FormDate'
+export * from './FormMap'
 export * from './FormSelect'
 export { FormInputEnum }

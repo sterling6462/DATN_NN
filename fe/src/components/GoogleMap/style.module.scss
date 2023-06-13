@@ -1,0 +1,15 @@
+@import '../styles/global.scss';
+
+.PlacesContainer {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 300px;
+}
+
+.MapContainer {
+  width: 100%;
+  height: 100%;
+}

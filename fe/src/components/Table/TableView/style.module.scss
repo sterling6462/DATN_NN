@@ -26,7 +26,7 @@
   }
 }
 
-.TableHeader {
+.TableHead {
   padding: 0;
   @include setBorderBottom($black_20);
   & .TableRow {
@@ -35,7 +35,7 @@
     & .TableCell {
       background-color: $light_green;
       @include setColor($white);
-      letter-spacing: 0.12px;
+      letter-spacing: 0.3px;
       padding: 12px 0.5rem 12px 1rem;
       border-bottom: none;
     }

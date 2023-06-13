@@ -9,6 +9,7 @@ interface IAuth {
   // token_type: string
   exp: string
   role: string
+  roles: string[]
   houseId?: string
   roomId?: string
 }

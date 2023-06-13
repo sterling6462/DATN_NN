@@ -43,7 +43,7 @@ export const TableHead = (props: Props) => {
   }
 
   return (
-    <MUITableHead className={styles.TableHeader}>
+    <MUITableHead className={styles.TableHead}>
       <TableRow className={styles.TableRow}>
         {columns.map((col, idx) => (
           <TableCell
