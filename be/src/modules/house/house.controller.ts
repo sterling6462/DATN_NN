@@ -3,7 +3,7 @@ import { Public } from '../../core/decorator';
 import { MainValidationPipe, ParseObjectIdPipe } from '../../pipes';
 import { HouseService } from './house.service';
 import { ObjectId } from 'mongodb';
-import { HouseCreateDto, HouseSearchDto } from './dto';
+import { HouseCreateDto, HouseSearchDto, HouseUpdateDto } from './dto';
 
 @Public()
 @UsePipes(new MainValidationPipe())
@@ -14,6 +14,11 @@ export class HouseController {
   @Get('')
   getAllHouse(@Query() query: HouseSearchDto) {
     return this._service.getAllHouse(query);
+  }
+
+  @Get('/dropdown')
+  houseDropdown() {
+    return this._service.houseDropdown();
   }
 
   @Get('/:id')
@@ -27,7 +32,7 @@ export class HouseController {
   }
 
   @Patch(':id')
-  updateHouse(@Param('id', ParseObjectIdPipe) id: ObjectId, @Body() body: any) {
+  updateHouse(@Param('id', ParseObjectIdPipe) id: ObjectId, @Body() body: HouseUpdateDto) {
     return this._service.editHouseById(id, body);
   }
 

@@ -3,7 +3,7 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { Collection, Connection } from 'mongoose';
 import { BaseLogger } from '../../core/logger';
 import { ObjectId } from 'mongodb';
-import { HouseCreateDto } from './dto';
+import { HouseCreateDto, HouseUpdateDto } from './dto';
 import { getPagination, sortData } from '../../pagination';
 import { searchKeyword } from '../../search';
 
@@ -41,7 +41,9 @@ export class HouseService extends BaseLogger {
           name: a.name,
           roomAvailable: roomAvailable,
           roomCount: roomCount,
+          floorCount: a.floorCount,
           location: a.location,
+          detail: a.detail,
           rate: a.rate,
           electricityPrice: a.electricityPrice,
           waterPrice: a.waterPrice,
@@ -71,15 +73,19 @@ export class HouseService extends BaseLogger {
     return { status };
   }
 
-  async editHouseById(id: ObjectId, body: any): Promise<any> {
-    const { electricityPrice, waterPrice, wifiPrice, rate } = body;
+  async editHouseById(id: ObjectId, body: HouseUpdateDto): Promise<any> {
+    const { detail, electricityPrice, waterPrice, wifiPrice } = body;
     const house = await this.houseCollection.findOne({ _id: id });
     if (!house) throw new BadRequestException([{ field: 'Id', message: 'House is invalid' }]);
-    const result = await this.roomCollection.updateOne(
+    const result = await this.houseCollection.updateOne(
       { _id: id },
-      { $set: { wifiPrice, electricityPrice, waterPrice, rate } },
+      { $set: { detail, wifiPrice, electricityPrice, waterPrice } },
       { upsert: true }
     );
-    return result.modifiedCount;
+    return { modifiedCount: result.modifiedCount };
+  }
+
+  async houseDropdown(): Promise<any> {
+    return await this.houseCollection.find({}, { projection: { _id: 1, name: 1 } }).toArray();
   }
 }
