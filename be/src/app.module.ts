@@ -8,6 +8,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './gaurd/auth.gaurd';
 import { RoomModule } from './modules/room/room.module';
 import { BillModule } from './modules/bill/bill.module';
+import { RolesGuard } from './gaurd/roles.gaurd';
 
 const config = ConfigService.getInstance();
 @Module({
@@ -25,6 +26,10 @@ const config = ConfigService.getInstance();
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })

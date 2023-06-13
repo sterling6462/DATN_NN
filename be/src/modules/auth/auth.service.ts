@@ -16,12 +16,18 @@ export class AuthService extends BaseLogger {
 
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.userCollection.findOne({ username: username });
-
+    if (!user) {
+      throw new UnauthorizedException();
+    }
     if (!compareHash(pass, user?.password)) {
       throw new UnauthorizedException();
     }
     const payload = {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
       username: user.username,
+      roles: user.roles,
       role: user.role,
       houseId: user?.houseId,
       roomId: user?.roomId,
