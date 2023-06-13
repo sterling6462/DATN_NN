@@ -5,17 +5,16 @@ export const PATH = {
   REGISTER: '/register',
   DASHBOARD: '/dashboard',
   MANAGER: {
-    MY_HOUSE: 'manager/my-house',
+    MY_HOUSE: '/manager/my-house',
     ROOM_LIST: '/manager/room-list',
     BILL: '/manager/bill',
     SERVICE: '/manager/service',
-    TENANT: '/manager/tenant',
-    REPORT: '/manager/report'
+    TENANT: '/manager/tenant'
   },
   ADMIN: {
     HOUSE_LIST: '/admin/house-list',
     MANAGER_LIST: '/admin/manager-list',
-    BILL: '/admin/bill',
-    REPORT: '/admin/report'
-  }
+    BILL: '/admin/bill'
+  },
+  PROFILE: '/profile'
 }

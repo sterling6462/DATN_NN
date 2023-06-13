@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <Layout post>
       {/* <SearchOptionsHome /> */}
-      <div className={clsx(styles.main, 'container', 'section')}>
-        <h3 data-aos="fade-right" className={styles.title}>
+      <div className={clsx(styles.Home)}>
+        <h3 data-aos="fade-right" className={styles.Title}>
           Recently viewed Houses
         </h3>
 
