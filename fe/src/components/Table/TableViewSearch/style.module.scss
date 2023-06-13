@@ -5,6 +5,10 @@
   min-width: 10rem;
 }
 
+.ContainerBox {
+  padding: 0 !important;
+}
+
 div:has(> .TableViewSearch) {
   padding: 0;
   min-height: 0;

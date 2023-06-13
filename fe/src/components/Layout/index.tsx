@@ -31,7 +31,7 @@ export type NavbarProps = {
   role?: string
 }
 
-const theme = createTheme({ typography: { fontFamily: 'Poppins' } })
+const theme = createTheme({ typography: { fontFamily: 'Roboto' } })
 interface Props extends BoxProps {}
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{

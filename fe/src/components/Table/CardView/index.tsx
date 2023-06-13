@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material'
-import { useListViewStore } from 'components/store'
+import { SkeletonCardHome, useListViewStore } from 'components'
 import { ReactNode } from 'react'
-import { NoDataView } from '../NoDataView'
 
 export interface CardViewProps<T extends object = any> {
   id: string
@@ -15,7 +14,7 @@ export const CardView = (props: CardViewProps) => {
   const { cardTemplate, id, className, pagination } = props
   const data = useListViewStore((store) => store.listViewMap?.get(id)?.data)
 
-  if (!data || data?.data?.length === 0) return <NoDataView />
+  if (!data || data?.data?.length === 0) return <SkeletonCardHome />
   console.log(data)
 
   if (cardTemplate)

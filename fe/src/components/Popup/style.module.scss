@@ -20,6 +20,9 @@
     height: max-content;
     width: 35rem;
   }
+  .PaperRoot::-webkit-scrollbar {
+    display: none;
+  }
 
   & .DialogTitleContent {
     color: $black_100;

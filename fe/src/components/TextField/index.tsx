@@ -25,6 +25,10 @@ export type ExtraTextFieldProps = {
     labelFocused?: string
     notchedOutline?: string
   }
+  boxClasses?: {
+    containerBox?: string
+    lineBox?: string
+  }
 }
 
 const BaseInputField = (props: TextFieldProps & ExtraTextFieldProps) => {
@@ -34,12 +38,17 @@ const BaseInputField = (props: TextFieldProps & ExtraTextFieldProps) => {
     className,
     variant,
     textFieldClasses,
+    boxClasses,
     ...rest
   } = props
 
   return (
     <Box
-      className={variant === 'outlined' ? styles.ContainerBox : styles.LineBox}
+      className={
+        variant === 'outlined'
+          ? clsx(styles.ContainerBox, boxClasses?.containerBox)
+          : clsx(styles.LineBox, boxClasses?.lineBox)
+      }
     >
       <TextField
         {...rest}

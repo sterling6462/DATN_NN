@@ -24,6 +24,7 @@ export const Navbar = (props: NavbarProps) => {
   const path = router.pathname
   const subPath = path.split('/')
   const username = auth?.username
+  const roles = auth?.roles
   const role = auth?.role
 
   //TODO: replace role after login
@@ -74,7 +75,7 @@ export const Navbar = (props: NavbarProps) => {
           {(role === 'manager' || role === 'admin') && (
             <ListItemMenu
               key={'management'}
-              toNavLink="/manager/my-house"
+              toNavLink={PATH.DASHBOARD}
               primary="Management"
               classListItem={{
                 listItem: styles.ListItem,
@@ -113,13 +114,14 @@ export const Navbar = (props: NavbarProps) => {
                     {username.charAt(0)}
                   </Avatar>
                 </Grid>
-                <Grid item>
+                <Grid item className={styles.User}>
                   <Typography
+                    component={'span'}
                     className={clsx(styles.Subhead1, styles.TextUsername)}
                   >
                     {username}
                   </Typography>
-                  <Typography className={styles.Button}>
+                  <Typography component={'span'} className={styles.Button}>
                     {capitalizeFirstLetter(role || '')}
                   </Typography>
                 </Grid>

@@ -38,7 +38,7 @@
     display: flex;
   }
   & .AlertMessage {
-    @include text-style(500, 0.12px);
+    @include text-style(500, 0.2px);
   }
 
   & .AlertIcon,
@@ -55,7 +55,7 @@
 
   &.AlertBaseLabel {
     & .AlertLabel {
-      @include text-style(500, 0.12px);
+      @include text-style(500, 0.2px);
     }
 
     & .AlertMessage {

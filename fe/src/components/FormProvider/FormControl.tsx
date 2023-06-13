@@ -1,17 +1,22 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { FormControlLabel, IconButton, InputAdornment } from '@mui/material'
 import clsx from 'clsx'
-import { CheckBox, ContainerInputField } from 'components'
+import {
+  CheckBox,
+  ContainerInputField,
+  Control,
+  FormInputEnum
+} from 'components'
 import { ReactNode, useState } from 'react'
 import { Controller, FieldValues, UseFormReturn } from 'react-hook-form'
-import { Control, FormInputEnum } from '.'
+import {} from '.'
 import styles from './style.module.scss'
 
-interface Props<T extends FieldValues> {
+export interface FormProps<T extends FieldValues> {
   form: UseFormReturn<T>
   control: Control<T>
 }
-export const FormTextInput = <T extends FieldValues>(props: Props<T>) => {
+export const FormTextInput = <T extends FieldValues>(props: FormProps<T>) => {
   const { form, control } = props
   const [isShow, setIsShow] = useState(false)
 
@@ -77,7 +82,7 @@ export const FormTextInput = <T extends FieldValues>(props: Props<T>) => {
   )
 }
 
-export const FormCheckbox = <T extends FieldValues>(props: Props<T>) => {
+export const FormCheckbox = <T extends FieldValues>(props: FormProps<T>) => {
   const { form, control } = props
   return (
     <Controller

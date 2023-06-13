@@ -20,6 +20,7 @@ const AlertBase = (props: AlertProps & { value?: string }) => {
       key: value,
       variant: rest.severity,
       className: className,
+      autoHideDuration: 6000,
       action: (
         <IconButton size="small" onClick={() => closeSnackbar(value)}>
           <Close />

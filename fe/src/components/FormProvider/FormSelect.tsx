@@ -1,11 +1,10 @@
 import { KeyboardArrowDownRounded } from '@mui/icons-material'
 import { Autocomplete, createFilterOptions } from '@mui/material'
 import clsx from 'clsx'
+import { ContainerInputField, FormProps } from 'components'
 import { useAPI } from 'hook'
 import { useState } from 'react'
-import { Controller, FieldValues, UseFormReturn } from 'react-hook-form'
-import { Control } from '.'
-import { ContainerInputField } from '..'
+import { Controller, FieldValues } from 'react-hook-form'
 import styles from './style.module.scss'
 
 export type DataDropdown = {
@@ -14,12 +13,7 @@ export type DataDropdown = {
   sortOrder?: string
 }
 
-interface Props<T extends FieldValues> {
-  form: UseFormReturn<T>
-  control: Control<T>
-}
-
-export const FormSelect = <T extends FieldValues>(props: Props<T>) => {
+export const FormSelect = <T extends FieldValues>(props: FormProps<T>) => {
   const { form, control } = props
   const error = form.formState.errors[control.name]
   const [data, setData] = useState<Array<DataDropdown>>(

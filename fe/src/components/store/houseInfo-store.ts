@@ -2,15 +2,17 @@ import { ApiCore } from 'components/ApiCore'
 import { DETAIL_HOUSE } from 'constants/ApiConstant'
 import { create } from 'zustand'
 
-interface IHouseInfo {
+export interface IHouseInfo {
   _id: string
   name: string
+  detail: string
   location: string
-  managerId: string
+  // managerId: string
   rate: number
   electricityPrice: number
   waterPrice: number
   wifiPrice: number
+  createDate: string
 }
 
 interface IHouseInfoStore {

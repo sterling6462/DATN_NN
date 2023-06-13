@@ -27,15 +27,21 @@ export const Header = (props: HeaderProps) => {
       </Grid>
       {houseDetail && (
         <Grid container className={styles.InfoHeader}>
-          <Grid container className={styles.HostInfo} item xs={3} spacing={1}>
+          <Grid container className={styles.HostInfo} item columnSpacing={1}>
             <Grid item>
               <HiHome className={styles.Icon} />
             </Grid>
-            <Grid item>
-              <Typography className={clsx(styles.Subhead2, styles.Title)}>
+            <Grid item display={'flex'} flexDirection={'column'}>
+              <Typography
+                component={'span'}
+                className={clsx(styles.Subhead2, styles.Title)}
+              >
                 On supervising
               </Typography>
-              <Typography className={clsx(styles.Subhead1, styles.Title)}>
+              <Typography
+                component={'span'}
+                className={clsx(styles.Subhead1, styles.Title)}
+              >
                 {houseInfo?.name} house
               </Typography>
             </Grid>
