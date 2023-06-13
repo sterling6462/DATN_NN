@@ -15,7 +15,7 @@ export class RoomSearchDto extends PaginationDto {
   keyword: string;
 }
 
-export class RoomRequestDto {
+export class RoomCreateDto {
   @IsString()
   @IsNotEmpty()
   type: string;
@@ -37,3 +37,10 @@ export class RoomRequestDto {
   // @IsDateString()
   // joinDate: Date;
 }
+
+export class RoomEditDto {
+  @IsString()
+  @IsNotEmpty()
+  type:string;
+}
+

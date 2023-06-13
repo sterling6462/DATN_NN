@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Collection, Connection } from 'mongoose';
-import { RoomRequestDto, RoomSearchDto } from './dto';
+import { RoomCreateDto, RoomEditDto,  RoomSearchDto } from './dto';
 import { BaseLogger } from '../../core/logger';
 import { ObjectId } from 'mongodb';
 import { getPagination, sortData } from '../../pagination';
@@ -38,11 +38,9 @@ export class RoomService extends BaseLogger {
     return room;
   }
 
-  async createRoom(request: RoomRequestDto): Promise<any> {
-    const { houseId, amountRoom, type, floor } = request;
-    const houseItem = await this.houseCollection.findOne({ _id: new ObjectId(houseId) });
-    if (!houseItem) throw new BadRequestException(this.houseCollection.findOne({ _id: new ObjectId(houseId) }));
-    let price: number, maxMember: number;
+  calculatePrice(type: string) {
+    let price: number, maxMember: number
+
     switch (type) {
       case 'normal':
         price = 2500000;
@@ -63,8 +61,17 @@ export class RoomService extends BaseLogger {
       default:
         break;
     }
+    return { price, maxMember }
+  }
 
-    const [totalRoombyFloor, house] = await Promise.all([
+  async createRoom(request: RoomCreateDto): Promise<any> {
+    const { houseId, amountRoom, type, floor } = request;
+    const houseItem = await this.houseCollection.findOne({ _id: new ObjectId(houseId) });
+    if (!houseItem) throw new BadRequestException([{ field: 'clientId', message: 'House is invalid' }]);
+    if (floor > houseItem.floorCount) throw new BadRequestException([{ field: 'floor', message: 'Floor is invalid' }]);
+    const {price,maxMember}= this.calculatePrice(type)
+
+    const [totalRoomByFloor, house] = await Promise.all([
       this.roomCollection.count({
         $and: [{ houseId: { $eq: new ObjectId(houseId) } }, { floor: { $eq: floor } }]
       }),
@@ -75,7 +82,7 @@ export class RoomService extends BaseLogger {
       const name = `${String(house.name)
         .split(' ')
         .map((a) => a[0])
-        .join('')}.${floor}${String(totalRoombyFloor + i).padStart(2, '0')}`;
+        .join('')}.${floor}${String(totalRoomByFloor + i).padStart(2, '0')}`;
       const room = {
         name,
         type,
@@ -92,26 +99,28 @@ export class RoomService extends BaseLogger {
       rooms.push(room);
     }
 
-    return { id: (await this.roomCollection.insertMany(rooms)).insertedCount };
+    return { total: (await this.roomCollection.insertMany(rooms)).insertedCount };
   }
 
   async deleteRoomById(id: ObjectId): Promise<any> {
     const room = await this.roomCollection.findOne({ _id: id });
-    if (!room) throw new BadRequestException([{ field: 'clientId', message: 'Room is invalid' }]);
+    if (!room) throw new BadRequestException([{ field: 'roomId', message: 'Room is invalid' }]);
+    if (!room.member) throw new BadRequestException([{ field: 'roomId', message: 'Room have member' }]);
+
     return (await this.roomCollection.deleteOne({ _id: id })).acknowledged;
   }
 
-  async editRoom(id: ObjectId, body: any): Promise<any> {
-    const { member } = body;
+  async editRoom(id: ObjectId, body: RoomEditDto): Promise<any> {
+    const { type } = body;
     const room = await this.roomCollection.findOne({ _id: id });
     if (!room) throw new BadRequestException([{ field: 'Id', message: 'Room is invalid' }]);
-    if (member > room.maxMember) throw new BadRequestException([{ field: 'Member', message: 'Member is invalid' }]);
+    const { price, maxMember } = this.calculatePrice(type)
     const result = await this.roomCollection.updateOne(
       { _id: id },
-      { $set: { member, status: Boolean(member), joinDate: Boolean(member) ? new Date() : null } },
+      { $set: { type, price, maxMember } },
       { upsert: true }
     );
-    return result.modifiedCount;
+    return {modifiedCount: result.modifiedCount};
   }
 
   async roomDropdownForBill(houseId: any): Promise<any> {
