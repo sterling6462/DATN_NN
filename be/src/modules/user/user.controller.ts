@@ -10,6 +10,7 @@ import {
   UnauthorizedException, UsePipes
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { Request } from 'express';
 import { MainValidationPipe, ParseObjectIdPipe } from '../../pipes';
 import { ObjectId } from 'mongodb';
 import { ManagerCreateDto, MemberCreateDto, UserEditDto, UserEditPasswordDto, UserSearchDto } from './dto';
@@ -21,16 +22,16 @@ import { Role } from '../../constants';
 export class UserController {
   constructor(private readonly _service: UserService) { }
   // @HttpCode(HttpStatus.OK)
-
+  
+  @Roles(Role.MANAGER)
   @Get('')
   getAllUser(@Query() query: UserSearchDto) {
     return this._service.getAllUser(query);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.MEMBER)
   @Get(':id')
-  findUserById(@Param('id', ParseObjectIdPipe) id: ObjectId, @Req() req: Request) {
-    if (req['user']['role'] != 'admin') throw new UnauthorizedException([{ field: 'Role', message: 'Unauthorized' }]);
+  findUserById(@Param('id', ParseObjectIdPipe) id: ObjectId) {
     return this._service.findUserById(id);
   }
 

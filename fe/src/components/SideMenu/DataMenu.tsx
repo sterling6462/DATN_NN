@@ -6,6 +6,7 @@ import {
   GroupsRounded,
   HouseRounded,
   MonetizationOnRounded,
+  People,
   Person
 } from '@mui/icons-material'
 import { PATH } from 'constants/Paths'
@@ -29,8 +30,13 @@ export const AdminMenus = [
       },
       {
         icon: <GroupsRounded />,
-        title: 'Manager list',
-        path: PATH.ADMIN.MANAGER_LIST
+        title: 'User',
+        path: PATH.ADMIN.USER_LIST
+      },
+      {
+        icon: <BsFillDoorOpenFill />,
+        title: 'Room',
+        path: PATH.ADMIN.ROOM_LIST
       },
       {
         icon: <MonetizationOnRounded />,
@@ -42,7 +48,7 @@ export const AdminMenus = [
   {
     icon: <Person />,
     title: 'Profile',
-    path: PATH.PROFILE
+    path: PATH.ADMIN.PROFILE
   }
 ]
 
@@ -68,6 +74,11 @@ export const ManagerMenus = [
         path: PATH.MANAGER.ROOM_LIST
       },
       {
+        icon: <GroupsRounded />,
+        title: 'Tenant',
+        path: PATH.MANAGER.TENANT
+      },
+      {
         icon: <CellWifiRounded />,
         title: 'Service',
         path: PATH.MANAGER.SERVICE
@@ -76,11 +87,42 @@ export const ManagerMenus = [
         icon: <MonetizationOnRounded />,
         title: 'Bill',
         path: PATH.MANAGER.BILL
+      }
+    ]
+  },
+  {
+    icon: <Person />,
+    title: 'Profile',
+    path: PATH.PROFILE
+  }
+]
+
+export const MemberMenus = [
+  {
+    icon: <People />,
+    title: 'Member ',
+    path: '/member',
+    children: [
+      {
+        icon: <HouseRounded />,
+        title: 'My house',
+        path: PATH.MEMBER.MY_HOUSE
       },
       {
-        icon: <GroupsRounded />,
-        title: 'Tenant',
-        path: PATH.MANAGER.TENANT
+        icon: <BsFillDoorOpenFill />,
+        title: 'Room rent',
+        path: PATH.MEMBER.ROOM_DETAIL
+      },
+
+      {
+        icon: <CellWifiRounded />,
+        title: 'Service',
+        path: PATH.MEMBER.SERVICE
+      },
+      {
+        icon: <MonetizationOnRounded />,
+        title: 'Bill',
+        path: PATH.MEMBER.BILL
       }
     ]
   },

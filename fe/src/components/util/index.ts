@@ -74,7 +74,7 @@ export const stringToColor = (string: string) => {
 export const dataDropdownRole = [
   { _id: 'admin', name: 'Admin' },
   { _id: 'manager', name: 'Manager' },
-  { _id: 'user', name: 'User' }
+  { _id: 'member', name: 'Member' }
 ]
 
 export const dataDropdownRating = [
@@ -102,4 +102,9 @@ export const dataDropdownTypeRoom = [
     _id: 'VIP apartment',
     name: 'VIP apartment'
   }
+]
+
+export const dataDropdownPaid = [
+  { _id: true, name: 'Paid' },
+  { _id: false, name: 'Unpaid' }
 ]

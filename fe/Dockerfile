@@ -1,49 +1,27 @@
-# 1. Install dependencies only when needed 
+# Fetching the latest node image on apline linux
 FROM node:18-alpine AS builder
 
+# Declaring env
+ENV NODE_ENV production
+
+# Setting up the work directory
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* ./
-RUN \
-    if [ -f yarn.lock ]; then yarn; \
-    elif [ -f package-lock.json ]; then npm ci; \
-    else echo "Lockfile not found." && exit 1; \
-    fi
+# Installing dependencies
+COPY ./package.json ./
+RUN npm install --legacy-peer-deps
 
+# Copying all the files in our project
 COPY . .
-# This will do the trick, use the corresponding env file for each environment.
-# COPY .env.production.sample .env.production
-RUN yarn build
 
-# 3. Install dependencies production only
-FROM node:18-alpine AS prod_deps
+# Building our application
+RUN npm run build
 
-WORKDIR /app
+# Fetching the latest nginx image
+FROM nginx
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* ./
-RUN \
-    if [ -f yarn.lock ]; then yarn --prod; \
-    elif [ -f package-lock.json ]; then npm install -omit=dev; \
-    else echo "Lockfile not found." && exit 1; \
-    fi
+# Copying built assets from builder
+COPY --from=builder /app/build /usr/share/nginx/html
 
-# 3. Production image, copy all the files and run next
-FROM node:18-alpine
-
-USER 1001
-
-WORKDIR /app
-
-ENV NODE_ENV=production
-ENV HOST=0.0.0.0
-ENV PORT=3000
-
-COPY --chown=1001:1001 --from=builder /app/src/index.tsx .src/index.tsx
-COPY --chown=1001:1001 --from=builder /app/package.json ./package.json
-COPY --chown=1001:1001 --from=prod_deps /app/node_modules ./node_modules
-
-EXPOSE 3000
-
-CMD ["node", "server.js"]
+# Copying our nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf

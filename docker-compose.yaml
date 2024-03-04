@@ -1,0 +1,170 @@
+version: "3"
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: "rabbitmq"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: master123
+    networks:
+      - backend
+
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    env_file:
+      - ./auth/.env
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - mongodb
+    volumes:
+      - ./auth:/app/auth # any change to base folder should be reflected
+      - /app/auth/node_modules
+    command: npm run start:prod # overrides CMD from dockerfile
+    ports:
+      - 5631:5631
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async: "true"
+        fluentd-address: localhost:24224
+        tag: auth-service
+
+  # chat:
+  #   build:
+  #     context: ./chat
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - '7000:7000'
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - backend
+  #   depends_on:
+  #     - rabbitmq
+  #     - mongodb
+  #     - presence
+  #   volumes:
+  #     - ./chat:/app/chat # any change to base folder should be reflected
+  #     - /app/chat/node_modules
+  #   command: npm run start:dev chat # overrides CMD from dockerfile
+
+  be:
+    build:
+      context: ./be
+      dockerfile: Dockerfile
+    ports:
+      - "5630:5630"
+    env_file:
+      - ./be/.env
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - auth
+      - mongodb
+    volumes:
+      - ./be:/app/be # any change to base folder should be reflected
+      - /app/be/node_modules
+    command: npm run start:prod
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async: "true"
+        fluentd-address: localhost:24224
+        tag: be-service
+
+  #fe service
+  fe:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+    ports:
+      - "4000:5000"
+    env_file:
+      - ./fe/.env
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - be
+      - auth
+    volumes:
+      - ./fe:/app/fe # any change to base folder should be reflected
+      - /app/fe/node_modules
+    command: npm run dev api
+    logging:
+      driver: fluentd
+      options:
+        fluentd-async: "true"
+        fluentd-address: localhost:24224
+        tag: fe-service
+
+  fluent-bit:
+    environment:
+      LOG_LEVEL: debug
+      LOKI_URL: http://localhost:3100/loki/api/v1/push
+    build:
+      context: ./fluent-bit
+      dockerfile: Dockerfile
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    networks:
+      - backend
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      GF_RENDERING_SERVER_URL: http://localhost:8081/render
+      GF_RENDERING_CALLBACK_URL: http://localhost:3000/
+      GF_LOG_FILTERS: rendering:debug
+    networks:
+      - backend
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - backend
+  renderer:
+    image: grafana/grafana-image-renderer:latest
+    expose:
+      - "8081"
+    environment:
+      ENABLE_METRICS: "true"
+    networks:
+      - backend
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: master123
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true
+volumes:
+  rabbit_data:
+    driver: local
+  mongo_data:
+    driver: local

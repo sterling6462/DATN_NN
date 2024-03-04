@@ -12,7 +12,7 @@ export enum HttpMethod {
 axios.interceptors.request.use(function (config) {
   const access_token = getCookie('access')
 
-  config.baseURL = (process.env.REACT_APP_BASE_URL || '') + '/api'
+  config.baseURL = (`${process.env.REACT_APP_BASE_URL}` || '') + '/api'
   config.headers.Authorization = `Bearer ${access_token}`
   return config
 })
@@ -34,7 +34,7 @@ export const handleError = (
     //TODO replace location by window.location
     window.location.replace('/login')
   } else if (statusErr === 403) {
-    window.location.replace('/not-found')
+    // window.location.replace('/not-found')
   } else {
     dispatchNotification &&
       dispatchNotification('error', 'This page is not available')
@@ -50,9 +50,12 @@ export type RequestProps = {
   params?: unknown
 }
 
-export const onUpdateQuery = (url = '', query = {}) => {
+export const onUpdateQuery = (url = '', query = {}, manager = false) => {
   //TODO replace location by window.location
   const currentQuery = queryString.parse(window.location.search)
+  if (manager) {
+    return url + '&' + queryString.stringify(Object.assign(currentQuery, query))
+  }
   return url + '?' + queryString.stringify(Object.assign(currentQuery, query))
 }
 

@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material'
 import clsx from 'clsx'
-import { RatingStar } from 'components'
+import { RatingStar, currencyFormat } from 'components'
 import { LocationItem } from './LocationItem'
 import styles from './style.module.scss'
 
@@ -8,11 +8,12 @@ interface HouseItemProps {
   houseName?: string
   rate?: number
   location?: string
+  priceDefault?: number
   className?: string
 }
 
 export const HouseItem = (props: HouseItemProps) => {
-  const { houseName, rate, location, className } = props
+  const { houseName, rate, location, className, priceDefault = 0 } = props
 
   return (
     <Grid
@@ -28,10 +29,22 @@ export const HouseItem = (props: HouseItemProps) => {
           {houseName}
         </Typography>
       </Grid>
-      <Grid item>
-        <RatingStar value={rate || 0} readOnly />
+      <Grid container item className={styles.HouseDetail}>
+        <Grid item className={styles.LeftContainer}>
+          <RatingStar value={rate || 0} readOnly />
+          <LocationItem
+            item={false}
+            location={location}
+            locationClasses={{ root: styles.Location }}
+          />
+        </Grid>
+        <Grid item className={styles.RightContainer}>
+          <Typography className={clsx(styles.Headline4, styles.PriceDefault)}>
+            {currencyFormat(priceDefault)}
+          </Typography>
+          {/* <PrimaryButton>{capitalizeFirstLetter('Select room')}</PrimaryButton> */}
+        </Grid>
       </Grid>
-      <LocationItem item location={location} />
     </Grid>
   )
 }

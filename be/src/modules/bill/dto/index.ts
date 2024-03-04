@@ -27,7 +27,7 @@ export class BillCreateDto {
 
   @IsNumber()
   @IsNotEmpty()
-  numberElectricity: number;
+  currentElectricity: number;
 
   @IsNumber()
   @IsOptional()
@@ -35,8 +35,8 @@ export class BillCreateDto {
 }
 export class BillEditDto {
   @IsNumber()
-  @IsOptional()
-  numberElectricity: number;
+  @IsNotEmpty()
+  currentElectricity: number;
 
   @IsNumber()
   @IsOptional()

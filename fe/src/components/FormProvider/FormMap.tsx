@@ -103,7 +103,7 @@ export const FormMap = <T extends FieldValues>(props: FormProps<T>) => {
           required: control.required
         }}
         render={({ field: { value, onChange } }) => {
-          // const defaultValue = options.find((d) => d.description === value)
+          const defaultValue = options.find((d) => d.description === value)
           return (
             <Autocomplete
               autoComplete
@@ -124,7 +124,7 @@ export const FormMap = <T extends FieldValues>(props: FormProps<T>) => {
               popupIcon={<KeyboardArrowDownRounded />}
               noOptionsText="Not found"
               onChange={(_, newValue) => {
-                onChange(newValue?.description)
+                onChange(newValue?.description as any)
                 setOptions(newValue ? [newValue, ...options] : options)
               }}
               isOptionEqualToValue={(option, value) =>
@@ -136,7 +136,8 @@ export const FormMap = <T extends FieldValues>(props: FormProps<T>) => {
               renderInput={(params) => (
                 <ContainerInputField
                   {...params}
-                  // value={defaultValue?.description}
+                  disabled={control.disabled}
+                  value={defaultValue?.description}
                   label={control.label}
                   placeholder={control.placeholder}
                   error={Boolean(error)}

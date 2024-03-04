@@ -8,6 +8,7 @@ export interface IHouseInfo {
   detail: string
   location: string
   // managerId: string
+  priceDefault: number
   rate: number
   electricityPrice: number
   waterPrice: number

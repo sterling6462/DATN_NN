@@ -37,10 +37,10 @@ export const TableViewDropdown = (props: TableViewDropdownProps) => {
   const { key } = dropdownItem[0] as DataDropdownFilter
   if (key) isFilter = true
   const valueIndex = dropdownItem.findIndex((d: any) => {
-    if (d.value) return d?.value == searchParams[d?.key]
+    if (d.value) return d?.value === searchParams[d?.key]
     return (
-      d?.sortKey == searchParams['sortKey'] &&
-      d?.sortOrder == searchParams['sortOrder']
+      d?.sortKey === searchParams['sortKey'] &&
+      d?.sortOrder === searchParams['sortOrder']
     )
   })
   return (
@@ -61,7 +61,7 @@ export const TableViewDropdown = (props: TableViewDropdownProps) => {
           }
           className={styles.ItemDropdown}
         >
-          <div className={styles.DefaultSelected}>{label || 'Chọn'}</div>
+          <div className={styles.DefaultSelected}>{label || 'Select'}</div>
         </MUIMenuItem>
       )}
       {dropdownItem.map((item, index) => (

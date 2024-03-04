@@ -90,6 +90,22 @@ export const Navbar = (props: NavbarProps) => {
             />
           )}
 
+          {role === 'member' && (
+            <ListItemMenu
+              key={'rentedHouse'}
+              toNavLink={PATH.MEMBER.MY_HOUSE}
+              primary="Rented house"
+              classListItem={{
+                listItem: styles.ListItem,
+                navLink: clsx(
+                  styles.NavLink,
+                  subPath[1].includes('member') && styles.NavLinkActive
+                ),
+                primaryListItemText: styles.Subhead1
+              }}
+            />
+          )}
+
           <ListItemMenu
             key={'about'}
             toNavLink={PATH.ABOUT}

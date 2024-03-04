@@ -73,11 +73,7 @@ export const TableBill = (props: TableBillProps) => {
           />
           <TableBillRow label="Water bill" price={data?.waterBill || 0} />
           <TableBillRow label="Wifi bill" price={data?.wifiBill || 0} />
-          <TableBillRow
-            label="Other bill"
-            price={data?.otherBill || 0}
-            detail="fee fix house"
-          />
+          <TableBillRow label="Other bill" price={data?.otherBill || 0} />
 
           <TableRow>
             <TableCell

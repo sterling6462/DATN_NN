@@ -15,10 +15,11 @@ import styles from './style.module.scss'
 type Props = {
   id: string
   columns: BaseOptions[]
+  manager?: boolean
 }
 
 export const TableHead = (props: Props) => {
-  const { columns, id } = props
+  const { columns, id, manager } = props
   const onQuery = useListViewStore((store) => store.onQuery)
   let [columnSort, setColumnSort] = useState<ColumnSort>()
   const [sortOrder, setSortOrder] = useState<string | undefined>()
@@ -38,7 +39,9 @@ export const TableHead = (props: Props) => {
       id,
       columnSort
         ? { sortKey, sortOrder: columnSort?.get(sortKey), page: 1 }
-        : { sortKey: undefined, sortOrder: undefined }
+        : { sortKey: undefined, sortOrder: undefined },
+      '',
+      manager
     )
   }
 

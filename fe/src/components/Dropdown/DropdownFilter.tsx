@@ -36,7 +36,7 @@ export const DropdownFilter = (props: Props) => {
 
   useEffect(() => {
     const defaultIndex = options.findIndex((d: any, index) => {
-      if (d.code) return d?.code == searchParams[keyFilter]
+      if (d.code) return d?.code === searchParams[keyFilter]
     })
     setValue(options[defaultIndex])
   }, [options])
@@ -59,7 +59,7 @@ export const DropdownFilter = (props: Props) => {
         options={options}
         className={clsx(styles.Autocomplete, styles.DropdownContained)}
         getOptionLabel={(option) => option.label ?? option.code}
-        isOptionEqualToValue={(option, value) => option?.code == value?.code}
+        isOptionEqualToValue={(option, value) => option?.code === value?.code}
         classes={{ input: styles.Text }}
         popupIcon={<KeyboardArrowDownRounded />}
         noOptionsText="Not found"
@@ -74,7 +74,9 @@ export const DropdownFilter = (props: Props) => {
             </li>
           )
         }}
-        renderInput={(params) => <TextField {...params} placeholder={'Chọn'} />}
+        renderInput={(params) => (
+          <TextField {...params} placeholder={'Select'} />
+        )}
       />
     </Grid>
   )

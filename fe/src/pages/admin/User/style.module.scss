@@ -1,0 +1,26 @@
+@import '../../../components/styles/global.scss';
+
+.NotchedOutline {
+  :hover {
+    border-color: $primary_orange !important;
+  }
+}
+.InputBaseRoot {
+  color: $black_100;
+}
+.InputBaseFocused {
+  & .NotchedOutline {
+    border-color: $primary_orange !important;
+  }
+  :hover {
+    & .NotchedOutline {
+      border-color: $primary_orange !important;
+    }
+  }
+}
+.LabelRoot {
+  color: $black_100 !important;
+}
+.LabelFocused {
+  color: $primary_orange !important;
+}

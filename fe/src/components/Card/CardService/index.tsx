@@ -31,8 +31,8 @@ export type CardRoomServiceProps = {
 export const CardService = (props: CardRoomServiceProps) => {
   const { data } = props
   const dataService = data?.data
+
   if (dataService) {
-    console.log(data.data)
     return (
       <Grid className={styles.Container} xs={12}>
         <Typography className={clsx(styles.RoomInfo, styles.Headline6)}>

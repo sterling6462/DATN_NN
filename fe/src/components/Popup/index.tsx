@@ -91,9 +91,11 @@ export const PopupBase = (props: PopupBaseProps) => {
             >
               Cancel
             </TextButton>
-            <PrimaryButton className={styles.TextButton} onClick={onClick}>
-              {isDelete ? 'Delete' : titlePopup}
-            </PrimaryButton>
+            {(isDelete || titlePopup) && (
+              <PrimaryButton className={styles.TextButton} onClick={onClick}>
+                {isDelete ? 'Delete' : titlePopup}
+              </PrimaryButton>
+            )}
           </DialogActions>
         </Grid>
       </Grid>
@@ -104,3 +106,4 @@ export const PopupBase = (props: PopupBaseProps) => {
 export * from './PopupAdd'
 export * from './PopupAlert'
 export * from './PopupEdit'
+export * from './PopupNotification'

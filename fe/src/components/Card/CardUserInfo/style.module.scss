@@ -4,50 +4,155 @@
   color: $setColor;
 }
 
-@mixin cardContainer($bgColor) {
+@mixin cardContainer() {
+  width: 100%;
   padding: 1rem;
-  margin: 1rem;
-  background-color: $bgColor;
+  background-color: $background_blue1;
   border-radius: 1rem;
   display: flex;
-  flex-direction: column;
+  box-shadow: 0px 4px 10px rgba(12, 151, 237, 0.24);
 }
 
 .CardUserInfo {
   flex-wrap: nowrap;
-  padding: 0 2rem;
+  padding: 1rem;
+  height: auto;
   & .LeftContainer {
-    @include cardContainer($white);
-    padding-top: 8%;
-    align-items: center;
-    .Avatar {
-      width: 160px;
-      height: 160px;
-      font-size: 4rem;
-      font-weight: 500;
-      padding: 1rem 0;
-    }
-    .Name {
-      padding: 2rem 0;
-      color: $pale_dark_blue;
-      font-weight: 600;
-    }
-  }
-  & .RightContainer {
-    @include cardContainer($light_green);
-    .Title {
-      padding-bottom: 0.5rem;
-      // border-bottom: 1px solid $black_20;
-      .Text {
-        color: $white;
+    padding: 0;
+    margin-right: 0.5rem;
+    & .AvatarContainer {
+      @include cardContainer();
+      flex-direction: column;
+      padding-top: 20%;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      height: 87%;
+      .Avatar {
+        width: 160px;
+        height: 160px;
+        font-size: 4rem;
+        font-weight: 500;
+        padding: 1rem 0;
+      }
+      .Name {
+        @include set-color($pale_dark_blue);
+        padding: 2rem 0;
         font-weight: 500;
       }
     }
-    .FormProvider {
+    & .CreateAtContainer {
+      @include cardContainer();
+      flex-direction: row;
+      margin-top: 0.5rem;
+      align-items: center;
+      & .Icon {
+        @include set-color($dark_orange);
+        padding-right: 0.5rem;
+      }
+      & .Text {
+        display: flex;
+        .CreatedAt {
+          padding-left: 0.5rem;
+          font-weight: $Bold;
+          @include set-color($dark_orange);
+        }
+      }
+    }
+  }
+  & .RightContainer {
+    margin-left: 0.5rem;
+    flex-direction: column;
+    @include cardContainer();
+    .Title {
+      padding-bottom: 0.5rem;
+      .Text {
+        @include set-color($pale_dark_blue);
+        font-weight: 600;
+      }
+    }
+    & .FormProvider {
       padding: 1rem 0;
     }
-    .Button {
+    & .Button {
       min-width: 6rem;
+    }
+    & .DialogActions {
+      display: flex;
+      justify-content: space-between;
+      .ButtonLeft {
+        display: flex;
+        justify-content: start;
+      }
+      .ButtonRight {
+        display: flex;
+        justify-content: end;
+      }
+    }
+  }
+}
+
+//CardUserRent
+.Container {
+  display: flex;
+  flex-direction: column;
+  & .Header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    & .Title {
+      padding: 1rem;
+      font-weight: $Bold;
+      padding-bottom: 1rem;
+      @include set-color($primary_orange);
+    }
+    & .Chip {
+      background-color: $primary_orange;
+      @include set-color($white);
+      & .ChipLabel {
+        font-size: 1rem;
+        font-weight: $Medium;
+      }
+    }
+  }
+  & .Content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    & .UserItem {
+      @include cardContainer();
+      align-items: center;
+      & .LeftContainer {
+        & .Avatar {
+          width: 32px;
+          height: 32px;
+          margin: 0 0.5rem;
+        }
+      }
+      & .RightContainer {
+        padding-left: 0.5rem;
+        & .FullName {
+          @include set-color($pale_dark_blue);
+          font-weight: $Medium;
+          padding-bottom: 2px;
+        }
+        & .ExtraInfo {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          flex-wrap: nowrap;
+          gap: 5px;
+          padding-top: 3px;
+          & .Icon {
+            width: 1rem;
+            height: 1rem;
+            @include set-color($pale_dark_blue);
+          }
+          & .Text {
+            @include set-color($pale_dark_blue);
+          }
+        }
+      }
     }
   }
 }

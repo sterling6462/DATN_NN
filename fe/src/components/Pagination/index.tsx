@@ -8,10 +8,11 @@ import styles from './style.module.scss'
 type PaginationProps = {
   page: number
   id: string
+  manager?: boolean
 }
 
 export const Pagination = (props: PaginationProps & UsePaginationProps) => {
-  const { id } = props
+  const { id, manager } = props
   const searchParams = queryString.parse(window.location.search)
   const [page, setPage] = useState(Number(searchParams.page || 1))
   const [rowsPerPage, setRowsPerPage] = useState(
@@ -26,10 +27,9 @@ export const Pagination = (props: PaginationProps & UsePaginationProps) => {
   const data = useListViewStore((store) => store.listViewMap?.get(id)?.data)
   const onQuery = useListViewStore((store) => store.onQuery)
   const count = data?.total || 0
-
-  const handleChangePage = (newPage: number) => {
+  const handleChangePage = (newPage: number, size: number) => {
     setPage(newPage)
-    onQuery(id, { page: newPage + 1 })
+    onQuery(id, { page: newPage + 1, size }, '', manager)
   }
 
   const handleChangeRowsPerPage = (
@@ -38,7 +38,7 @@ export const Pagination = (props: PaginationProps & UsePaginationProps) => {
     const pageSize = parseInt(event.target.value, 10)
     setRowsPerPage(pageSize)
     setPage(1)
-    onQuery(id, { size: pageSize, page: 1 })
+    onQuery(id, { size: pageSize, page: 1 }, '', manager)
   }
 
   return (
@@ -48,7 +48,7 @@ export const Pagination = (props: PaginationProps & UsePaginationProps) => {
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={handleChangeRowsPerPage}
       page={page - 1}
-      onPageChange={(_, newPage) => handleChangePage(newPage)}
+      onPageChange={(_, newPage) => handleChangePage(newPage, rowsPerPage)}
       className={styles.Pagination}
       classes={{
         select: styles.Select,

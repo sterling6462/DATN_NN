@@ -16,13 +16,14 @@ export interface TableProps<T extends object = any> {
   model: Type<T>
   id: string
   /** Base URL to fetch data. */
+  manager?: boolean
   baseURL?: string
   dataSample?: Data
   pagination?: boolean
 }
 
 export const TableView = (props: TableProps) => {
-  const { id, model, dataSample, pagination } = props
+  const { id, model, dataSample, pagination, manager = false } = props
   const columns = useMemo(
     () => getMetadataColumns({ key: model.name }),
     [model.name]
@@ -46,10 +47,10 @@ export const TableView = (props: TableProps) => {
   return (
     <div className={styles.Container}>
       <Table>
-        <TableHead id={id} columns={columns} />
+        <TableHead id={id} columns={columns} manager={manager} />
         <TableRow columns={columns} data={data} />
       </Table>
-      {pagination && <Pagination id={id} page={10} />}
+      {pagination && <Pagination id={id} page={10} manager={manager} />}
       <TableRowLoading id={id} />
     </div>
   )

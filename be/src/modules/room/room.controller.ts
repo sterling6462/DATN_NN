@@ -1,7 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UsePipes } from '@nestjs/common';
 import { MainValidationPipe, ParseObjectIdPipe } from '../../pipes';
 import { RoomService } from './room.service';
-import { RoomEditDto, RoomCreateDto, RoomSearchDto } from './dto';
+import { Request } from 'express';
+import { RoomEditDto, RoomCreateDto, RoomSearchDto, RoomDropdownDto } from './dto';
 import { ObjectId } from 'mongodb';
 import { Roles } from '../../core/decorator';
 import { Role } from '../../constants';
@@ -18,14 +19,24 @@ export class RoomController {
     return this._service.getAllRoom(query);
   }
 
-  @Get('/dropdown')
+  @Get('/dropdown/bill')
   roomDropdownForBill(@Req() req: Request) {
     return this._service.roomDropdownForBill(req["user"]["houseId"]);
+  }
+
+  @Get('/dropdown')
+  roomDropdown(@Query() query:RoomDropdownDto ) {
+    return this._service.roomDropdown(query);
   }
   
   @Get(':id')
   findRoomById(@Param('id', ParseObjectIdPipe) id: ObjectId) {
     return this._service.findRoomById(id);
+  }
+
+  @Get(':houseId/type')
+  getRoomType(@Param('houseId', ParseObjectIdPipe) houseId: ObjectId) {
+    return this._service.getRoomType(houseId);
   }
 
   @Roles(Role.ADMIN)

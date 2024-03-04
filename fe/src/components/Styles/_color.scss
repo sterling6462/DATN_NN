@@ -19,6 +19,7 @@ $backgroundOverlay: rgb(47, 106, 127);
 $dark_blue: #098edf;
 $light_blue: #34aff9;
 $background_blue: #ecf8fe;
+$background_blue1: #eaf0f9;
 $btnShadowColor: 0px 4px 10px rgba(16, 156, 241, 0.24);
 
 //pale_blue
@@ -45,6 +46,9 @@ $dark_red: #dc5246;
 $default_red: #f7685b;
 $background_red: #ffeded;
 
+//pink
+$default_pink: #ff6384;
+
 // green
 $dark_green: #083b36;
 $light_green: #1c4f4a;
@@ -56,7 +60,8 @@ $chip_default_green: #28d1a9;
 $chip_background_green: #c7f2e8;
 
 // purple
-$purple: #885af8;
+$default_purple: #9966ff;
+$secondary_purple: #9d8dfc;
 
 // gradient 1
 $gradient_1: linear-gradient(90deg, #3667b2 0%, #30c0d1 100.04%);

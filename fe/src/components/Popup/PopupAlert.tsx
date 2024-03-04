@@ -28,6 +28,7 @@ export function PopupAlert(props: PopupAlertProps) {
     id = '',
     entity,
     children,
+    managerRole,
     ...rest
   } = props
   const onQuery = useListViewStore((store) => store.onQuery)
@@ -43,7 +44,7 @@ export function PopupAlert(props: PopupAlertProps) {
         method: HttpMethod.DELETE,
         onSuccess() {
           setOpen(false)
-          onQuery(id, { page, size })
+          onQuery(id, { page, size }, '', managerRole)
           dispatchNotification(
             'success',
             <Typography>

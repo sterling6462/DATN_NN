@@ -14,11 +14,11 @@
     padding: 1rem;
   }
   .CardContainer {
+    width: 100%;
     border-radius: 1rem;
     padding: 1rem;
-    background-color: $pale_light_blue;
-    width: 100%;
-    box-shadow: none;
+    background-color: $background_blue1;
+    box-shadow: 0px 4px 10px rgba(12, 151, 237, 0.24);
 
     .CardInfo {
       display: flex;

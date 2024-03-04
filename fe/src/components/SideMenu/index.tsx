@@ -1,7 +1,7 @@
 import { Menu, useAuthStore } from 'components'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { AdminMenus, ManagerMenus } from './DataMenu'
+import { AdminMenus, ManagerMenus, MemberMenus } from './DataMenu'
 
 export const SideMenu = () => {
   const auth = useAuthStore((store) => store.auth)
@@ -22,6 +22,9 @@ export const SideMenu = () => {
 
     case 'manager':
       return <Menu path={path} menus={ManagerMenus} handClick={handleClick} />
+
+    case 'member':
+      return <Menu path={path} menus={MemberMenus} handClick={handleClick} />
 
     default:
       return <></>

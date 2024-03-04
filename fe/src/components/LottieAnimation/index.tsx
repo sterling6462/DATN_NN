@@ -1,28 +1,37 @@
-import Lottie from 'react-lottie'
+import lottie, { AnimationItem } from 'lottie-web'
+import { useEffect, useRef } from 'react'
 
-type LottieProps = {
+type LottieAnimationProps = {
   animationData: any
   height?: number | string | '100%'
   width?: number | string | '100%'
   margin?: number | string
 }
 
-export const LottieAnimation = (props: LottieProps) => {
-  const { animationData, width, height, margin } = props
+export const LottieAnimation = (props: LottieAnimationProps) => {
+  const { animationData, height, width, margin } = props
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
+  const animationContainerRef = useRef<HTMLDivElement>(null)
+  let animation: AnimationItem | null = null
+
+  useEffect(() => {
+    if (animationContainerRef.current) {
+      animation = lottie.loadAnimation({
+        container: animationContainerRef.current,
+        animationData: animationData,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true
+      })
     }
-  }
 
-  return (
-    <Lottie
-      options={defaultOptions}
-      style={{ width: width, height: height, margin: margin }}
-    />
-  )
+    return () => {
+      if (animation) {
+        animation.destroy()
+        animation = null
+      }
+    }
+  }, [animationData])
+
+  return <div ref={animationContainerRef} style={{ width, height, margin }} />
 }

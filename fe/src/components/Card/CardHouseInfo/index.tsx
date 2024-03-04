@@ -7,30 +7,48 @@ import { FacilityItem } from './FacilityItem'
 import { HouseItem } from './HouseItem'
 import { LocationItem } from './LocationItem'
 import styles from './style.module.scss'
-
 interface CardHouseInfoProps {
   id: string
   data?: IHouseInfo
   managerName?: string
+  className?: string
 }
 
 export const CardHouseInfo = (props: CardHouseInfoProps) => {
-  const { id, data, managerName } = props
+  const { id, data, managerName, className } = props
 
   if (data) {
     return (
-      <Grid container className={styles.HouseInfo} rowSpacing={2}>
+      <Grid
+        container
+        className={clsx(styles.HouseInfo, className)}
+        rowSpacing={2}
+      >
         <HouseItem
           houseName={data.name}
           rate={data.rate}
           location={data.location}
+          priceDefault={data.priceDefault}
         />
         {/* TODO: add image */}
         <Grid item className={styles.Image}>
           <LottieAnimation animationData={house} margin="0px" width="100%" />
         </Grid>
         <Grid item container className={styles.ExtraInfo} columnSpacing={2}>
-          <Grid item xs={8} className={styles.GoogleMap}>
+          <Grid item xs={5} className={styles.Facilities}>
+            <Typography
+              component={'span'}
+              className={clsx(styles.Headline6, styles.Title)}
+            >
+              Facilities
+            </Typography>
+            <Grid className={styles.FacilityContainer}>
+              {dataFacility.map((item, index) => (
+                <FacilityItem key={index} label={item.label} icon={item.icon} />
+              ))}
+            </Grid>
+          </Grid>
+          <Grid item xs={7} className={styles.GoogleMap}>
             <Typography
               component={'span'}
               className={clsx(styles.Headline6, styles.Title)}
@@ -43,19 +61,6 @@ export const CardHouseInfo = (props: CardHouseInfoProps) => {
                 location={data?.location}
                 locationClasses={{ root: styles.LocationItem }}
               />
-            </Grid>
-          </Grid>
-          <Grid item xs={4} className={styles.Facilities}>
-            <Typography
-              component={'span'}
-              className={clsx(styles.Headline6, styles.Title)}
-            >
-              Facilities
-            </Typography>
-            <Grid className={styles.FacilityContainer}>
-              {dataFacility.map((item, index) => (
-                <FacilityItem key={index} label={item.label} icon={item.icon} />
-              ))}
             </Grid>
           </Grid>
         </Grid>

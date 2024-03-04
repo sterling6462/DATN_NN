@@ -1,1 +1,25 @@
-@import 'components/styles/global.scss';
+@import '../../components/styles/global.scss';
+
+@mixin setColorIcon($color) {
+  color: $color;
+  svg {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+}
+
+.UserIconHeader {
+  @include setColorIcon($chip_default_green);
+}
+
+.RoomIconHeader {
+  @include setColorIcon($default_red);
+}
+
+.BillIconHeader {
+  @include setColorIcon($primary);
+}
+
+.RevenueIconHeader {
+  @include setColorIcon($default_purple);
+}

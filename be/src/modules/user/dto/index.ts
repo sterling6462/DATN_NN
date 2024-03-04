@@ -1,4 +1,4 @@
-import { IsIn, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDateString, IsIn, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { ORDER } from "../../../constants";
 import { PaginationDto } from "../../../dto";
 import { Date } from "mongoose";
@@ -11,6 +11,10 @@ export class UserSearchDto extends PaginationDto {
     @IsOptional()
     @IsMongoId()
     houseId: string;
+
+    @IsOptional()
+    @IsMongoId()
+    role: string;
     
     @IsOptional()
     @IsString()
@@ -35,9 +39,9 @@ export class ManagerCreateDto {
     @IsNotEmpty()
     lastName:string
 
-    @IsString()
+    @IsDateString()
     @IsNotEmpty()
-    birthday:Date
+    birthday: string
 
     @IsNumber()
     @IsNotEmpty()
@@ -58,9 +62,9 @@ export class MemberCreateDto {
     @IsNotEmpty()
     lastName: string
 
-    @IsString()
+    @IsDateString()
     @IsNotEmpty()
-    birthday: Date
+    birthday: string
 
     @IsNumber()
     @IsNotEmpty()

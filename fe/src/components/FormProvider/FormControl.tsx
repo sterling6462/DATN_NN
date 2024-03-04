@@ -52,11 +52,12 @@ export const FormTextInput = <T extends FieldValues>(props: FormProps<T>) => {
       }}
       render={({ field }) => (
         <ContainerInputField
+          disabled={control.disabled}
           ref={field.ref}
           value={field.value}
           label={control.label}
           id={control.name}
-          onChange={field.onChange}
+          onChange={field.onChange as any}
           onBlur={({ target }) => {
             target.value &&
               form.setValue(field.name, target.value.trim() as any)
@@ -92,7 +93,7 @@ export const FormCheckbox = <T extends FieldValues>(props: FormProps<T>) => {
         <FormControlLabel
           control={
             <CheckBox
-              onChange={(e) => onChange(e.target.checked)}
+              // onChange={(e) => onChange(e.target.checked)}
               checked={value}
             />
           }

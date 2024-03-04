@@ -1,22 +1,17 @@
 import { Grid, Typography } from '@mui/material'
 import clsx from 'clsx'
-import {
-  BreadcrumbsNavigation,
-  CardServiceBill,
-  useHouseStore
-} from 'components'
+import { BreadcrumbsNavigation, CardServiceBill, IHouseInfo } from 'components'
 import { HiHome } from 'react-icons/hi'
 import { useLocation } from 'react-router-dom'
 import styles from './style.module.scss'
 
 export interface HeaderProps {
   bill?: boolean
-  houseDetail?: boolean
+  houseInfo?: IHouseInfo
 }
 
 export const Header = (props: HeaderProps) => {
-  const { bill, houseDetail } = props
-  const { houseInfo } = useHouseStore()
+  const { bill = false, houseInfo } = props
   const { pathname } = useLocation()
   const pathnames = pathname.split('/').filter((item) => item)
 
@@ -25,7 +20,7 @@ export const Header = (props: HeaderProps) => {
       <Grid className={styles.BreadcrumbsNavigation}>
         <BreadcrumbsNavigation pathnames={pathnames} />
       </Grid>
-      {houseDetail && (
+      {houseInfo && (
         <Grid container className={styles.InfoHeader}>
           <Grid container className={styles.HostInfo} item columnSpacing={1}>
             <Grid item>

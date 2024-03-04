@@ -74,7 +74,7 @@ $outline_disabled: #f5f7fa;
 
 .DropdownContained {
   @include setFieldset($black_40);
-
+  border-radius: 3rem;
   & .InputDisabled {
     background-color: $outline_disabled !important;
     ~ fieldset {
@@ -82,7 +82,8 @@ $outline_disabled: #f5f7fa;
     }
   }
   & .Outlined {
-    background-color: $white;
+    border-radius: 3rem;
+    // background-color: $white;
     padding: 0.5rem 1rem;
     padding-right: 2rem !important;
     @include setColor($black_100);

@@ -1,7 +1,8 @@
-@import "../styles/global.scss";
+@import '../styles/global.scss';
 
 .home {
   width: 100%;
+  height: 90vh;
   position: relative;
   display: flex;
   align-items: center;
@@ -12,7 +13,8 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background: $backgroundOverlay;
+    background: $background_green;
+    opacity: 50%;
     top: 0;
     bottom: 0;
     z-index: 1;
@@ -43,14 +45,16 @@
 
     .textDiv {
       padding: 2rem 0;
-
-      .smallText {
-        font-size: 13px;
+      .SmallText {
+        color: $light_green;
+        font-size: 1rem;
         text-transform: uppercase;
       }
-      .homeTitle {
+      .HomeTitle {
         position: relative;
-        font-size: 1.8rem;
+        font-weight: 700;
+        font-size: 2.2rem;
+        color: $dark_green;
       }
     }
 
@@ -103,7 +107,7 @@
           margin-left: 10px;
         }
 
-        .input[type="range"] {
+        .input[type='range'] {
           background: blue;
         }
       }
@@ -140,7 +144,7 @@
       .icon {
         font-size: 20px;
         margin: 0 5px;
-        color: $white;
+        color: $dark_green;
         font-weight: 600;
         &:hover {
           color: $primary_orange;
@@ -166,7 +170,7 @@
 
           &::after {
             position: absolute;
-            content: "";
+            content: '';
             background: $default_orange;
             height: 5px;
             width: 145px;

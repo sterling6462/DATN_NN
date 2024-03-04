@@ -23,8 +23,8 @@ export type PopupAddProps<T extends FieldValues = FieldValues> =
     Partial<PopupBaseProps> & {
       icon?: ReactNode
       textButton?: string
-      textAlertSuccess?: string
-      textAlertError?: string
+      textAddSuccess?: string
+      textAddError?: string
       inputsPopup: Array<Control<T>>
       dataPopup?: Record<string, any>
     }
@@ -35,8 +35,8 @@ export function PopupAdd(props: PopupAddProps) {
     className,
     required,
     textButton,
-    textAlertSuccess,
-    textAlertError,
+    textAddSuccess,
+    textAddError,
     id = '',
     baseURLPopup = '',
     baseURLReload,
@@ -51,18 +51,19 @@ export function PopupAdd(props: PopupAddProps) {
   const { dispatchNotification } = useNotificationStore()
   const { auth } = useAuthStore()
   const houseId = { houseId: auth?.houseId }
+
   const handleClickOpen = () => {
     setOpen(true)
   }
 
-  const onSubmit = (params: Record<string, unknown>) => {
-    // let params
-    // if (managerRole) {
-    //   params = { ...param, ...houseId }
-    // } else {
-    //   params = param
-    // }
-    console.log(params)
+  const onSubmit = (param: Record<string, unknown>) => {
+    let params
+    if (managerRole) {
+      params = { ...param, ...houseId }
+    } else {
+      params = param
+    }
+
     invokeRequest({
       baseURL: baseURLPopup,
       method: HttpMethod.POST,
@@ -70,13 +71,13 @@ export function PopupAdd(props: PopupAddProps) {
       onSuccess(data) {
         onData(id, data, baseURLPopup)
         setOpen(false)
-        onQuery(id, { page: 1, size: 10 }, baseURLReload)
-        textAlertSuccess && dispatchNotification('success', textAlertSuccess)
+        onQuery(id, { page: 1, size: 10 }, baseURLReload, managerRole)
+        textAddSuccess && dispatchNotification('success', textAddSuccess)
       },
       onHandleError(e) {
-        if (typeof e.message == 'string') {
+        if (typeof e.message === 'string') {
           setOpen(false)
-          dispatchNotification('error', e.message || textAlertError)
+          dispatchNotification('error', e.message || textAddError)
           console.log(e.message)
         } else
           e.message?.map((m: { field: string; message: string }) => {

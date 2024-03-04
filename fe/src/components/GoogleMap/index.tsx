@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material'
 import {
   Marker,
   GoogleMap as ReactGoogleMap,
@@ -59,7 +60,10 @@ export const GoogleMap = (props: GoogleMapProps) => {
   const [position, setPosition] = useState<LatLng | undefined>()
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: `${process.env.REACT_APP_MAP_API}`
+    googleMapsApiKey: `${process.env.REACT_APP_MAP_API}`,
+    libraries: libraries,
+    region: 'vn',
+    language: 'en'
   })
 
   useEffect(() => {
@@ -77,8 +81,17 @@ export const GoogleMap = (props: GoogleMapProps) => {
     }
     handlePosition()
   }, [address])
-  console.log(position)
 
   if (!isLoaded) return <div>Loading...</div>
-  return <Map position={position || DNPlace} />
+  if (position) {
+    return <Map position={position} />
+  }
+  return (
+    <Skeleton
+      variant="rounded"
+      width={'100%'}
+      height={'100%'}
+      sx={{ borderRadius: '1rem' }}
+    />
+  )
 }

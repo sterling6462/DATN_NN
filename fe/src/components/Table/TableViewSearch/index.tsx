@@ -4,11 +4,17 @@ import { default as queryString } from 'query-string'
 import { useDebouncedCallback } from 'use-debounce'
 import styles from './style.module.scss'
 
-export const TableViewSearch = (props: { id: string }) => {
+type Props = {
+  id: string
+  baseURL?: string
+}
+
+export const TableViewSearch = (props: Props) => {
+  const { id, baseURL } = props
   const searchParams = queryString.parse(window.location.search)
   const onQuery = useListViewStore((store) => store.onQuery)
   const debounced = useDebouncedCallback((text) => {
-    onQuery(props.id, { keyword: text || undefined, page: 1 })
+    onQuery(id, { keyword: text || undefined, page: 1 }, baseURL)
   }, 500)
 
   return (

@@ -2,18 +2,24 @@
 
 .About {
   align-items: center;
-  min-height: 90vh;
-  height: 70vh;
+  min-height: 100vh;
+  height: 100vh;
+  padding: 3rem;
   & .Content {
+    padding: 0 3rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     .Title {
       padding-bottom: 4rem;
       color: $dark_orange;
       font-weight: $Bold;
     }
-    padding: 0 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    .Details {
+      color: $light_green;
+      padding: 0.5rem 0;
+      text-align: justify;
+    }
   }
 }

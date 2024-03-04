@@ -1,15 +1,15 @@
 import Aos from 'aos'
 import 'aos/dist/aos.css'
-import videoApartment from 'assets/mp4/apartments.mp4'
+import clsx from 'clsx'
+import { PrimaryButton } from 'components'
 import { useEffect } from 'react'
 import { AiFillYoutube, AiOutlineTwitter } from 'react-icons/ai'
 import { BsFillHouseHeartFill } from 'react-icons/bs'
 import { FaTripadvisor } from 'react-icons/fa'
 import { FiChevronRight, FiSend } from 'react-icons/fi'
-
-import clsx from 'clsx'
-import { PrimaryButton } from 'components'
 import styles from './style.module.scss'
+
+const skyscrapers = require('assets/mp4/skyscrapers.mp4')
 
 const DataFooterLink = [
   {
@@ -54,7 +54,7 @@ export const Footer = () => {
   return (
     <section className={styles.Footer}>
       <div className={styles.videoDiv}>
-        <video src={videoApartment} loop autoPlay muted />
+        <video src={skyscrapers} loop autoPlay muted />
       </div>
 
       <div className={styles.Content}>

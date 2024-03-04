@@ -27,6 +27,7 @@ export type UseFormProvider<T extends FieldValues = any> = UseFormReturn<T>
 export type Control<T> = {
   name: Path<T>
   defaultValue?: any
+  disabled?: boolean
   type: FormInputEnum
   required?: { value: boolean; message: string }
   label?: string

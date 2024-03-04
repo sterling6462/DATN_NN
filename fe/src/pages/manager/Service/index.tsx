@@ -83,15 +83,16 @@ class ServiceLists {
   total?: string
 }
 
-export default function Bill() {
+export default function Service() {
   const { houseInfo } = useHouseStore()
   const houseId = houseInfo?._id
 
   if (houseId) {
     return (
       <Layout>
-        <Header bill houseDetail />
+        <Header bill houseInfo={houseInfo} />
         <ListView
+          manager
           baseURL={LIST_BILL_BY_HOUSE.replace('=id', `=${houseId}`)}
           id="service_list"
           pagination

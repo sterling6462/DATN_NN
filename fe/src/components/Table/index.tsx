@@ -17,7 +17,7 @@ export * from './TableViewDropdown'
 export * from './TableViewSearch'
 export { Column } from './decorator'
 
-type Props<T> = {
+export type Props<T> = {
   model?: Type<T>
   id: string
   baseURL?: string
@@ -29,6 +29,7 @@ type Props<T> = {
   dataSample?: Data
   cardTemplate?: (args: Record<string, unknown>) => ReactNode
   pagination?: boolean
+  manager?: boolean
 }
 
 export const ListView = <T extends object>(

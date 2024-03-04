@@ -1,8 +1,21 @@
-@import '../../components/Styles/global.scss';
+@import '../../components/styles/global.scss';
 
 .Home {
   width: 100%;
   // padding: 1.5rem;
+  .HomeContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 2rem;
+    & .FilterData {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+  }
   .Title {
     position: relative;
     width: max-content;
@@ -27,6 +40,10 @@
     justify-content: center;
     gap: 1.5rem;
   }
+}
+
+.CardHouseInfo {
+  padding: 4rem 6rem;
 }
 
 // MEDIA QUERIES
@@ -62,7 +79,7 @@
 @media screen and (min-width: 840px) {
   .ListContent {
     grid-template-columns: repeat(3, 1fr);
-
+    padding: 2rem;
     .singleDestination {
       height: auto;
     }

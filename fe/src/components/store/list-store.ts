@@ -18,21 +18,26 @@ interface IListViewStore {
   onEdit: (id: string, key: string) => void
   onLoading: (id: string) => void
   onData: (id: string, data: Data, url?: string) => void
-  onQuery: (id: string, queryString: {}, baseURLReload?: string) => void
+  onQuery: (
+    id: string,
+    queryString: {},
+    baseURLReload?: string,
+    manager?: boolean
+  ) => void
 }
 
 export const useListViewStore = create<IListViewStore>((set, get) => {
   return {
-    async onQuery(id, queryString, baseURLReload) {
+    async onQuery(id, queryString, baseURLReload, manager = false) {
       const listViewMap = onLoading(id, get, set)
       handleFetch(
-        // onUpdateQuery(listViewMap.get(id)?.url, queryString),
         //TODO: handle fetch reload data when add new
         onUpdateQuery(
           baseURLReload ? baseURLReload : listViewMap.get(id)?.url,
-          queryString
+          queryString,
+          manager
         ),
-
+        manager,
         (data) => {
           onData(id, data, listViewMap, set)
         }
@@ -101,14 +106,21 @@ const getListViewMap = (get: GetState<IListViewStore>) => {
 
 export const handleFetch = async (
   url: string,
+  manager: boolean,
   onData: (data: Data) => void
 ) => {
+  const queryString = url.split('?')[1] || ''
+  const ampersandIndex = queryString.indexOf('&')
+  const modifiedQueryString = queryString.substring(ampersandIndex + 1)
+
   invokeRequest({
     baseURL: url,
     onSuccess(data) {
       onData(data)
       // TODO replace history by window.history
-      window.history.pushState({}, '', '?' + url.split('?').pop())
+      manager
+        ? window.history.pushState({}, '', '?' + modifiedQueryString)
+        : window.history.pushState({}, '', '?' + url.split('?').pop())
     },
     onError() {
       //TODO show Notification Error

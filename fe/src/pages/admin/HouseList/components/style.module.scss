@@ -1,0 +1,11 @@
+@import '../../../../components/styles/global.scss';
+
+.TableForDetail {
+  padding-top: 1rem;
+  & .Title {
+    padding: 1rem;
+    font-weight: $Bold;
+    padding-bottom: 1rem;
+    color: $primary_orange;
+  }
+}

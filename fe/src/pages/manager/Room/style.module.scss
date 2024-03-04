@@ -1,1 +1,9 @@
 @import '../../../components/styles/global.scss';
+
+.RoomInfo {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 2rem;
+}

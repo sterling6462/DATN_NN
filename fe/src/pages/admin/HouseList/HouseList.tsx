@@ -80,19 +80,27 @@ class HouseLists {
   wifiPrice?: number
 
   @Column({
-    title: 'Location',
-    sort: true,
-    width: '14%'
-  })
-  location?: string
-
-  @Column({
     width: '3%',
     align: 'center',
     padding: 'none',
     render: (entity: Entity) => {
-      // TODO: replace fields by api
       const inputs: Array<Control<FieldValues>> = [
+        {
+          name: 'floorCount',
+          type: FormInputEnum.NUMBER,
+          label: 'Floor count *',
+          required: { value: true, message: 'Floor count is required' },
+          min: {
+            value: 1,
+            message: 'Floor count must be at least than 1'
+          },
+          max: {
+            value: 50,
+            message: "Floor count can't be higher than 50"
+          },
+          placeholder: 'Enter your Floor count',
+          defaultValue: entity.floorCount
+        },
         {
           name: 'rate',
           label: 'Rate',
@@ -103,7 +111,19 @@ class HouseLists {
           defaultValue: entity.rate
         },
         {
-          name: 'electricityPrice',
+          name: 'priceDefault',
+          type: FormInputEnum.NUMBER,
+          label: 'Room price default *',
+          placeholder: 'Enter your Room price default',
+          required: { value: true, message: 'Room price default is required' },
+          min: {
+            value: 1,
+            message: 'Room price default must be at least than 1'
+          },
+          defaultValue: entity.priceDefault
+        },
+        {
+          name: 'electricityPrice *',
           label: 'Electricity price',
           type: FormInputEnum.NUMBER,
           min: {
@@ -115,7 +135,7 @@ class HouseLists {
           defaultValue: entity.electricityPrice
         },
         {
-          name: 'waterPrice',
+          name: 'waterPrice *',
           label: 'Water price',
           type: FormInputEnum.NUMBER,
           min: {
@@ -127,7 +147,7 @@ class HouseLists {
           defaultValue: entity.waterPrice
         },
         {
-          name: 'wifiPrice',
+          name: 'wifiPrice *',
           label: 'Wifi price',
           type: FormInputEnum.NUMBER,
           min: {
@@ -137,12 +157,21 @@ class HouseLists {
           required: { value: true, message: 'Wifi price is required' },
           placeholder: 'Enter your Wifi price *',
           defaultValue: entity.wifiPrice
+        },
+        {
+          name: 'detail',
+          type: FormInputEnum.INPUT,
+          label: 'Detail *',
+          required: { value: true, message: 'Detail is required' },
+          placeholder: "Enter house's detail",
+          defaultValue: entity.detail
         }
       ]
       return (
         <TableActionEdit
           id="house_list"
           titlePopup="Edit house"
+          extraTitlePopup={` ${entity.name}`}
           entity={{ labelNoti: entity.name }}
           baseURL={`${LIST_HOUSE}/${entity.id}`}
           inputPopupEdit={inputs}
@@ -233,6 +262,17 @@ const inputsPopup = [
     data: dataDropdownRating
   },
   {
+    name: 'priceDefault',
+    type: FormInputEnum.NUMBER,
+    label: 'Room price default *',
+    placeholder: 'Enter your Room price default',
+    required: { value: true, message: 'Room price default is required' },
+    min: {
+      value: 1,
+      message: 'Room price default must be at least than 1'
+    }
+  },
+  {
     name: 'electricityPrice',
     type: FormInputEnum.NUMBER,
     label: 'Electricity price *',
@@ -252,6 +292,7 @@ const inputsPopup = [
     type: FormInputEnum.NUMBER,
     label: 'Water price *',
     placeholder: 'Enter your Water price',
+    required: { value: true, message: 'Water price is required' },
     min: {
       value: 1,
       message: 'Floor must be at least than 1'
@@ -304,6 +345,8 @@ export default function HouseList() {
             titlePopup="Add new house"
             baseURLPopup={CREATE_HOUSE}
             baseURLReload={LIST_HOUSE}
+            textAddError="Can't create new house"
+            textAddSuccess="Create new house successfully"
           />
         }
       />

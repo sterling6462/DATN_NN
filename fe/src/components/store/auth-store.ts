@@ -2,11 +2,11 @@ import { create } from 'zustand'
 import { ApiCore, IBaseSubmit } from '..'
 
 interface IAuth {
-  // scope: string
+  id: string
+  firstName: string
+  lastName: string
   username: string
   access_token: string
-  // refresh_token: string
-  // token_type: string
   exp: string
   role: string
   roles: string[]

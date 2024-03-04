@@ -170,6 +170,7 @@
   }
 
   & .InputBaseRoot {
+    border-radius: 0 3rem 3rem 0;
     &:hover {
       & .NotchedOutline {
         border-color: $dark_blue_text;
@@ -190,8 +191,8 @@
 
     &.InputBaseDisabled {
       background-color: $black_10;
-      @include border-color($black_10, 1px);
-
+      border-radius: 3rem;
+      @include border-color($black_20, 1px);
       & input {
         -webkit-text-fill-color: $black_40;
       }

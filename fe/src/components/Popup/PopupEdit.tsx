@@ -7,6 +7,7 @@ import {
   HttpMethod,
   PopupBase,
   PopupBaseProps,
+  PrimaryButton,
   UseFormProvider,
   invokeRequest,
   useAuthStore,
@@ -24,6 +25,9 @@ export type PopupEditProps<T extends FieldValues = FieldValues> =
       entity?: Entity
       detail?: boolean
       inputPopupEdit: Array<Control<T>>
+      textButton?: string
+      textEditSuccess?: string
+      textEditError?: string
     }
 
 export function PopupEdit(props: PopupEditProps) {
@@ -37,6 +41,7 @@ export function PopupEdit(props: PopupEditProps) {
     inputPopupEdit,
     children,
     managerRole,
+    textButton,
     ...rest
   } = props
   const onQuery = useListViewStore((store) => store.onQuery)
@@ -47,6 +52,10 @@ export function PopupEdit(props: PopupEditProps) {
 
   const [open, setOpen] = useState(false)
   const [isError, setError] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
 
   const onSubmitClick = () => {
     !isError && formRef.current?.handleSubmit(onSubmit)()
@@ -65,7 +74,7 @@ export function PopupEdit(props: PopupEditProps) {
       params,
       onSuccess() {
         setOpen(false)
-        onQuery(id, { page: 1, size: 10 })
+        onQuery(id, { page: 1, size: 10 }, '', managerRole)
         dispatchNotification(
           'success',
           <Typography>
@@ -96,11 +105,18 @@ export function PopupEdit(props: PopupEditProps) {
 
   return (
     <>
-      <IconButton onClick={() => setOpen(true)} className={popupClasses?.icon}>
-        {icon}
-      </IconButton>
+      {icon && (
+        <IconButton onClick={handleClickOpen} className={popupClasses?.icon}>
+          {icon}
+        </IconButton>
+      )}
+      {textButton && (
+        <PrimaryButton className={styles.Text} onClick={handleClickOpen}>
+          {textButton}
+        </PrimaryButton>
+      )}
 
-      <div onClick={() => setOpen(true)}>{children}</div>
+      <div onClick={handleClickOpen}>{children}</div>
       <PopupBase
         {...rest}
         className={clsx(styles.DialogRoot, popupClasses?.popup)}

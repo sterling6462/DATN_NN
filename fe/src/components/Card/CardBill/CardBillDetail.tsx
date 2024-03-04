@@ -1,6 +1,7 @@
 import { Card, Grid, Typography } from '@mui/material'
 import clsx from 'clsx'
 import {
+  IHouseInfo,
   TableBill,
   TableBillLoading,
   dateTimeFormat,
@@ -26,6 +27,7 @@ export type BillDetailData = {
 
 interface CardBillDetailProps {
   data?: BillDetailData
+  dataHouse?: IHouseInfo
 }
 interface BillTitleItemProps {
   title: string
@@ -55,7 +57,7 @@ export const BillTitleItem = (props: BillTitleItemProps) => {
 }
 
 export const CardBillDetail = (props: CardBillDetailProps) => {
-  const { data } = props
+  const { data, dataHouse } = props
   const { houseInfo } = useHouseStore()
 
   if (data) {
@@ -74,7 +76,7 @@ export const CardBillDetail = (props: CardBillDetailProps) => {
                 title="House"
                 xs={12}
                 columnGap={5}
-                value={houseInfo?.name}
+                value={houseInfo?.name || dataHouse?.name}
               />
               <BillTitleItem
                 xs={12}
@@ -86,7 +88,7 @@ export const CardBillDetail = (props: CardBillDetailProps) => {
                 xs={12}
                 columnGap={3}
                 title="Location"
-                value={houseInfo?.location}
+                value={houseInfo?.location || dataHouse?.location}
               />
               <BillTitleItem
                 title="Create by"

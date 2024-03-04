@@ -14,7 +14,6 @@ import {
   useNotificationStore
 } from 'components'
 import { LOGIN_ENDPOINT } from 'constants/ApiConstant'
-import { PATH } from 'constants/Paths'
 import { useEffect, useRef } from 'react'
 import styles from './style.module.scss'
 
@@ -77,6 +76,8 @@ export default function Login() {
       )
       setCookie('access', auth.access_token, '3000')
       window.location.replace(searchLocation || '/')
+      dispatchNotification &&
+        dispatchNotification('success', 'Logged in successfully')
     }
   }, [isError, auth])
 
@@ -112,13 +113,13 @@ export default function Login() {
               Get started on Accommodation today
             </Typography>
 
-            <PrimaryButton
+            {/* <PrimaryButton
               className={styles.button}
               id="register-btn"
               href={PATH.REGISTER}
             >
               Register
-            </PrimaryButton>
+            </PrimaryButton> */}
           </div>
           <div className={styles.imageLottie}>
             <LottieAnimation animationData={house} width="90%" margin="0px" />

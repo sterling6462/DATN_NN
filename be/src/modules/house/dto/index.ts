@@ -13,6 +13,10 @@ export class HouseSearchDto extends PaginationDto {
 
   @IsOptional()
   @IsString()
+  location: string;
+
+  @IsOptional()
+  @IsString()
   keyword: string;
 }
 
@@ -48,12 +52,20 @@ export class HouseCreateDto {
   @IsNumber()
   @IsNotEmpty()
   wifiPrice: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  priceDefault: number;
 }
 
 export class HouseUpdateDto {
   @IsString()
   @IsNotEmpty()
   detail: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  priceDefault: number;
 
   @IsNumber()
   @IsNotEmpty()

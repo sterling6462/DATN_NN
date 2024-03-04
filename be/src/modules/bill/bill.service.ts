@@ -23,12 +23,12 @@ export class BillService extends BaseLogger {
     const { skip, take } = getPagination(queryPage, size);
 
     const filter: any = {};
-    
+
     if (roomId) filter.roomId = new ObjectId(roomId);
     if (houseId) filter.houseId = new ObjectId(houseId);
 
     const [data, total] = await Promise.all([
-      this.billCollection.find(filter).sort(sortData(sortKey, sortOrder)).skip(skip).limit(take).toArray(),
+      this.billCollection.find(filter).sort(sortData(sortKey, sortOrder)).skip(skip).limit(take).collation({ locale: 'en_US', numericOrdering: true }).toArray(),
       this.billCollection.count(filter)
     ]);
     const bill = await Promise.all(
@@ -62,16 +62,17 @@ export class BillService extends BaseLogger {
   }
 
   async createBill(data: BillCreateDto, user: any): Promise<any> {
-    const { roomId, numberElectricity, other } = data;
-    console.log(numberElectricity);
-    
+    const { roomId, currentElectricity, other } = data;
+
     const room = await this.roomCollection.findOne({ _id: new ObjectId(roomId) });
     if (!room) throw new BadRequestException({ field: 'Id', message: 'Room is invalid' });
-    const { member, price, houseId } = room;
+    const { member, price, houseId, lastElectricity } = room;
     if (houseId.toString() !== user['houseId']) throw new BadRequestException([{ field: 'HouseId', message: 'Dont Permission' }]);
     if (!member) throw new BadRequestException([{ field: 'RoomId', message: 'This is empty room ' }]);
     const house = await this.houseCollection.findOne({ _id: new ObjectId(houseId) });
     const { electricityPrice, waterPrice, wifiPrice } = house;
+    const numberElectricity = currentElectricity - lastElectricity
+    if (!numberElectricity) throw new BadRequestException([{ field: 'currentElectricity', message: 'Electricity current is less' }]);
     const electricityBill = electricityPrice * numberElectricity;
     const waterBill = waterPrice * member;
     const wifiBill = wifiPrice;
@@ -112,13 +113,15 @@ export class BillService extends BaseLogger {
     const bill = await this.billCollection.findOne({ _id: id });
     if (!bill) throw new BadRequestException([{ field: 'Id', message: 'Bill is invalid' }]);
 
-    const { numberElectricity, other, status } = body;
+    const { currentElectricity, other, status } = body;
     const room = await this.roomCollection.findOne({ _id: new ObjectId(bill.roomId) });
 
-    const { member, price, houseId } = room;
+    const { member, price, houseId, lastElectricity } = room;
     if (houseId.toString() !== user['houseId']) throw new BadRequestException([{ field: 'HouseId', message: 'Dont Permission' }]);
     const house = await this.houseCollection.findOne({ _id: new ObjectId(houseId) });
     const { electricityPrice, waterPrice, wifiPrice } = house;
+    const numberElectricity = currentElectricity - lastElectricity
+    if (!numberElectricity) throw new BadRequestException([{ field: 'currentElectricity', message: 'Electricity current is less' }]);
     const electricityBill = electricityPrice * numberElectricity;
     const waterBill = waterPrice * member;
     const wifiBill = wifiPrice;

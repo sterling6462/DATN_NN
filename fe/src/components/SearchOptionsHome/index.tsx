@@ -1,17 +1,15 @@
+import { Grid, Typography } from '@mui/material'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
+import apartments from 'assets/mp4/apartments.mp4'
+import clsx from 'clsx'
 import { useEffect } from 'react'
 import { AiOutlineInstagram } from 'react-icons/ai'
 import { BsListTask } from 'react-icons/bs'
 import { FiFacebook } from 'react-icons/fi'
 import { GrLocation } from 'react-icons/gr'
-import { HiFilter } from 'react-icons/hi'
 import { SiTripadvisor } from 'react-icons/si'
 import { TbApps } from 'react-icons/tb'
-
-import Aos from 'aos'
-import 'aos/dist/aos.css'
-import video from 'assets/mp4/video.mp4'
-import clsx from 'clsx'
-import { PrimaryButton } from '..'
 import styles from './style.module.scss'
 
 export const SearchOptionsHome = () => {
@@ -21,18 +19,21 @@ export const SearchOptionsHome = () => {
   }, [])
 
   return (
-    <section className={styles.home}>
+    <Grid className={styles.home}>
       <div className={styles.overlay}> </div>
-      <video src={video} muted autoPlay loop></video>
+      <video src={apartments} muted autoPlay loop />
 
       <div className={clsx(styles.homeContent, 'container')}>
         <div className={styles.textDiv}>
-          <span data-aos="fade-up" className={styles.smallText}>
+          <Typography data-aos="fade-up" className={styles.SmallText}>
             Our Packages
-          </span>
-          <h1 data-aos="fade-up" className={styles.homeTitle}>
+          </Typography>
+          <Typography
+            data-aos="fade-up"
+            className={clsx(styles.Headline1, styles.HomeTitle)}
+          >
             Search your Accommodation
-          </h1>
+          </Typography>
         </div>
 
         <div className={clsx(styles.cardDiv, styles.grid)}>
@@ -43,30 +44,6 @@ export const SearchOptionsHome = () => {
               <GrLocation className={styles.icon} />
             </div>
           </div>
-
-          <div className={styles.dateInput}>
-            <label htmlFor="date">Search your date :</label>
-            <div className={clsx(styles.input, styles.flex)}>
-              <input type="date" />
-            </div>
-          </div>
-
-          <div className={styles.priceInput}>
-            <div className={clsx(styles.label_total, styles.flex)}>
-              <label htmlFor="price">Max price :</label>
-              <h3 className={styles.total}>$5000</h3>
-            </div>
-            <div className={clsx(styles.input, styles.flex)}>
-              <input type="range" max="5000" min="1000" />
-            </div>
-          </div>
-
-          <PrimaryButton
-            endIcon={<HiFilter />}
-            className={clsx(styles.searchOptions, styles.flex)}
-          >
-            More filter
-          </PrimaryButton>
         </div>
 
         <div
@@ -84,6 +61,6 @@ export const SearchOptionsHome = () => {
           </div>
         </div>
       </div>
-    </section>
+    </Grid>
   )
 }

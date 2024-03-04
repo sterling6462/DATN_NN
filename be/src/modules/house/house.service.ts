@@ -18,14 +18,16 @@ export class HouseService extends BaseLogger {
     this.roomCollection = this.connection.collection('rooms');
   }
   async getAllHouse(query: any): Promise<any> {
-    const { page: queryPage, size = 20, sortKey = '_id', sortOrder = 'desc', keyword } = query;
+    const { page: queryPage, size = 20, sortKey = '_id', sortOrder = 'desc', location, keyword } = query;
     const { skip, take } = getPagination(queryPage, size);
-    let where: any;
+    const where: any = {};
 
     if (keyword) where.name = searchKeyword(keyword);
+    if (location) where.location = searchKeyword(location);
+
     const [dataRaw, total] = await Promise.all([
       this.houseCollection.find(where).sort(sortData(sortKey, sortOrder)).skip(skip).limit(take).toArray(),
-      this.houseCollection.count()
+      this.houseCollection.count(where)
     ]);
     const data = await Promise.all(
       dataRaw.map(async (a) => {
@@ -45,6 +47,7 @@ export class HouseService extends BaseLogger {
           location: a.location,
           detail: a.detail,
           rate: a.rate,
+          priceDefault: a.priceDefault,
           electricityPrice: a.electricityPrice,
           waterPrice: a.waterPrice,
           wifiPrice: a.wifiPrice
@@ -74,12 +77,12 @@ export class HouseService extends BaseLogger {
   }
 
   async editHouseById(id: ObjectId, body: HouseUpdateDto): Promise<any> {
-    const { detail, electricityPrice, waterPrice, wifiPrice } = body;
+    const { detail, electricityPrice, waterPrice, wifiPrice, priceDefault } = body;
     const house = await this.houseCollection.findOne({ _id: id });
     if (!house) throw new BadRequestException([{ field: 'Id', message: 'House is invalid' }]);
     const result = await this.houseCollection.updateOne(
       { _id: id },
-      { $set: { detail, wifiPrice, electricityPrice, waterPrice } },
+      { $set: { detail, wifiPrice, electricityPrice, waterPrice, priceDefault } },
       { upsert: true }
     );
     return { modifiedCount: result.modifiedCount };

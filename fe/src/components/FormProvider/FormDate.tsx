@@ -24,11 +24,13 @@ export const FormDate = <T extends FieldValues>(props: FormProps<T>) => {
           <Box className={styles.ContainerBox}>
             <DatePicker
               ref={field.ref}
+              defaultValue={control.defaultValue}
               value={field.value}
               label={control.label}
-              onChange={field.onChange}
+              onChange={field.onChange as any}
               slotProps={{
                 textField: {
+                  disabled: control.disabled,
                   helperText: error?.message as ReactNode,
                   error: Boolean(error),
                   className: clsx(

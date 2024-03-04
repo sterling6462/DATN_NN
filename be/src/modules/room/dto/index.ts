@@ -2,6 +2,14 @@ import { IsIn, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from 'cla
 import { ORDER } from '../../../constants';
 import { PaginationDto } from '../../../dto/index';
 export class RoomSearchDto extends PaginationDto {
+  @IsMongoId()
+  @IsOptional()
+  houseId: string;
+
+  @IsOptional()
+  @IsString()
+  type: string;
+
   @IsOptional()
   @IsString()
   sortKey: string;
@@ -13,6 +21,13 @@ export class RoomSearchDto extends PaginationDto {
   @IsOptional()
   @IsString()
   keyword: string;
+}
+
+
+export class RoomDropdownDto extends PaginationDto {
+  @IsMongoId()
+  @IsOptional()
+  houseId: string;
 }
 
 export class RoomCreateDto {
